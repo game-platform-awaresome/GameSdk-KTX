@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ffg_login_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ffg_color_black_70">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ffg_cl_auto"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/ffg_panel_content_bg"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="10dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/ffg_tv_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="1111111"
+            android:textColor="@color/ffg_color_gray"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@id/ffg_btn_change"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/ffg_btn_change"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="120dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/ffg_btn_red_bg"
+            android:text="@string/ffg_login_btn_change"
+            android:textAllCaps="false"
+            android:textColor="@color/ffg_color_white"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ffg_tv_tips" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ffg_cl_login"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/ffg_panel_content_bg"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <ImageView
+            android:id="@+id/ffg_iv_return"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ffg_return_left_img"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideline" />
+
+        <ImageView
+            android:id="@+id/ffg_iv_login_logo"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/ffg_iv_return"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintBottom_toTopOf="@+id/ffg_tl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideline" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/ffg_tl"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_below="@id/ffg_iv_login_logo"
+            android:layout_marginTop="5dp"
+            app:layout_constraintTop_toBottomOf="@id/ffg_iv_login_logo"
+            app:tabIndicatorHeight="0dp"
+            app:tabSelectedTextColor="@color/ffg_color_white"
+            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+            app:tabTextColor="@color/ffg_color_red" />
+
+        <cn.flyfun.support.ui.NoScrollViewPager
+            android:id="@+id/ffg_vp"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@+id/ffg_tl"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ffg_tl" />
+
+        <include
+            android:id="@+id/ffg_cl_forget"
+            layout="@layout/ffg_login_forget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ffg_iv_login_logo"
+            android:layout_marginBottom="10dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ffg_iv_login_logo" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

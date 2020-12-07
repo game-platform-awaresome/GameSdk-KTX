@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ffg_bind_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ffg_color_black_70"
+    android:gravity="center"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/ffg_panel_content_bg"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
+
+        <ImageView
+            android:id="@+id/ffg_iv_close"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/ffg_close_img"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/ffg_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:textColor="@color/ffg_color_red"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/ffg_et_account"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ffg_iv_close" />
+
+
+        <cn.flyfun.ktx.gamesdk.core.ui.EventEditText
+            android:id="@+id/ffg_et_account"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/ffg_et_frame_selector_bg"
+            android:singleLine="true"
+            android:textColorHint="@color/ffg_color_gray_30"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toTopOf="@+id/ffg_et_pwd"
+            app:layout_constraintTop_toBottomOf="@+id/ffg_tv_title" />
+
+        <cn.flyfun.ktx.gamesdk.core.ui.EventEditText
+            android:id="@+id/ffg_et_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@drawable/ffg_et_frame_selector_bg"
+            android:singleLine="true"
+            android:textColorHint="@color/ffg_color_gray_30"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <Button
+            android:id="@+id/ffg_btn_bind"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/ffg_btn_red_bg"
+            android:text="@string/ffg_bind_btn_bind"
+            android:textAllCaps="false"
+            android:textColor="@color/ffg_color_white"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@+id/ffg_et_pwd" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>

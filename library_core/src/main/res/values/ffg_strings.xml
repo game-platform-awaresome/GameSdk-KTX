@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- login -->
+    <string-array name="ffg_login_tab">
+        <item>登入</item>
+        <item>註冊</item>
+    </string-array>
+    <string name="ffg_login_btn_user_login">登入</string>
+    <string name="ffg_login_tv_forget_pwd">忘記密碼</string>
+    <string name="ffg_login_tv_agreement1">我已詳細閱讀並同意</string>
+    <string name="ffg_login_tv_agreement2">定型化契约</string>
+
+    <string name="ffg_login_tv_login_google">Google帳號正在登入…</string>
+    <string name="ffg_login_tv_login_facebook">Facebook帳號正在登入…</string>
+    <string name="ffg_login_tv_login_guest">遊客帳號正在登入…</string>
+    <string name="ffg_login_tv_login_account">正在登入…</string>
+    <string name="ffg_login_btn_change">切換帳號</string>
+
+    <string name="ffg_login_btn_register">註冊會員</string>
+    <string name="ffg_login_tv_register_tips">信箱將作為您找回密碼的驗證</string>
+    <string name="ffg_login_btn_get_captcha">發送驗證碼</string>
+
+    <string name="ffg_login_tv_email_hint">請輸入您的常用信箱</string>
+    <string name="ffg_login_account_hint">請輸入帳號</string>
+    <string name="ffg_login_password_hint">請輸入6–20字元</string>
+    <string name="ffg_login_password1_hint">請輸入密碼</string>
+    <string name="ffg_login_password2_hint">請再次輸入密碼</string>
+    <string name="ffg_login_input_code_hint">請輸入驗證碼</string>
+
+    <string name="ffg_tips_empty_email">信箱帳號不能為空</string>
+    <string name="ffg_tips_empty_account">帳號不能為空</string>
+    <string name="ffg_tips_empty_password">密碼不能為空</string>
+    <string name="ffg_tips_empty_code">驗證碼不能為空</string>
+    <string name="ffg_tips_password_format_error">密碼格式不正確</string>
+    <string name="ffg_tips_email_format_error">信箱格式異常，請重新輸入</string>
+    <string name="ffg_privacy_title">網路連線遊戲服務定型化契約</string>
+
+    <string name="ffg_login_register_error">帳號注册异常</string>
+
+    <!-- bind -->
+    <string name="ffg_bind_btn_bind">綁定會員</string>
+    <string name="ffg_bind_tv_facebook">Facebook帳號綁定</string>
+    <string name="ffg_bind_tv_guest">遊客帳號綁定</string>
+    <string name="ffg_bind_tv_google">Google帳號綁定</string>
+    <string name="ffg_bind_tv_success">綁定會員帳號成功</string>
+    <string name="ffg_bind_tv_fail">綁定會員帳號失敗</string>
+
+    <string name="ffg_init_dialog_tv_title">公告</string>
+
+    <string name="ffg_gm_dialog_tv_content">您的問題是否已解決？</string>
+    <string name="ffg_gm_dialog_tv_yes">是</string>
+    <string name="ffg_gm_dialog_tv_not">否</string>
+
+    <!-- charge -->
+    <string name="ffg_charge_tv_error">支付服務異常，請稍後重試</string>
+    <string name="ffg_charge_loading_tips">正在獲取訂單信息，請稍候…</string>
+
+    <string name="ffg_btn_confirm">確認</string>
+
+    <string name="ffg_network_unavailable">網路已斷開，請檢查後重試</string>
+
+    <string name="ffg_loading_tips">信息正在載入，請稍等…</string>
+
+
+</resources>

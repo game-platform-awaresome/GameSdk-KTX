@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 3圆角，白色背景绿边按钮 -->
+    <!-- 圆角 -->
+    <corners
+        android:topLeftRadius="8dp"
+        android:topRightRadius="8dp" /><!-- 设置圆角半径 -->
+    <!-- 填充 -->
+    <!--    <solid android:color="@color/hl_color_blue" />&lt;!&ndash; 填充的颜色 &ndash;&gt;-->
+    <gradient
+        android:angle="0"
+        android:endColor="#FF8C28"
+        android:startColor="#FF3C41" />
+
+</shape>
+
+

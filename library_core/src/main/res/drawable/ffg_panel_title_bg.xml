@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 3圆角，白色背景绿边按钮 -->
+    <!-- 圆角 -->
+    <corners
+        android:topLeftRadius="8dp"
+        android:topRightRadius="8dp" /><!-- 设置圆角半径 -->
+    <!-- 填充 -->
+    <solid android:color="@color/ffg_color_white_90" /><!-- 填充的颜色 -->
+
+</shape>

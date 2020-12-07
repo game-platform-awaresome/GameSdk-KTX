@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- login -->
+    <string-array name="ffg_login_tab">
+        <item>Login</item>
+        <item>Register</item>
+    </string-array>
+    <string name="ffg_login_btn_user_login">Sign In</string>
+    <string name="ffg_login_tv_forget_pwd">Forgot Password</string>
+    <string name="ffg_login_tv_agreement1">Agreed</string>
+    <string name="ffg_login_tv_agreement2">\ standard contract</string>
+
+    <string name="ffg_login_tv_login_google">Google Account Sign In Now…</string>
+    <string name="ffg_login_tv_login_facebook">Facebook Account Sign In Now…</string>
+    <string name="ffg_login_tv_login_guest">Visitor Account Sign In Now…</string>
+    <string name="ffg_login_tv_login_account">Sign In Now…</string>
+    <string name="ffg_login_btn_change">Change Account</string>
+
+    <string name="ffg_login_btn_register">Register</string>
+    <string name="ffg_login_tv_register_tips">The email is used for verifying your finding password</string>
+    <string name="ffg_login_btn_get_captcha">Gain Code</string>
+
+    <string name="ffg_login_tv_email_hint">Please enter your email</string>
+    <string name="ffg_login_account_hint">Please enter account</string>
+    <string name="ffg_login_password_hint">6–20 character</string>
+    <string name="ffg_login_password1_hint">Please enter password</string>
+    <string name="ffg_login_password2_hint">Please re-enter password</string>
+    <string name="ffg_login_input_code_hint">Please enter verification code</string>
+
+    <string name="ffg_tips_empty_email">Invalid Email</string>
+    <string name="ffg_tips_empty_account">Invalid Account</string>
+    <string name="ffg_tips_empty_password">Invalid Password</string>
+    <string name="ffg_tips_empty_code">Invalid Verification Code</string>
+    <string name="ffg_tips_password_format_error">"Invalid Password Format</string>
+    <string name="ffg_tips_email_format_error">Invalid Email Format</string>
+    <string name="ffg_privacy_title">Online Game Standard Contract</string>
+
+    <string name="ffg_login_register_error">Account registration exception</string>
+
+    <!-- bind -->
+    <string name="ffg_bind_btn_bind">Member Binding</string>
+    <string name="ffg_bind_tv_facebook">Facebook Account Binding</string>
+    <string name="ffg_bind_tv_guest">Visitor Account Binding</string>
+    <string name="ffg_bind_tv_google">Google Account Binding</string>
+    <string name="ffg_bind_tv_success">Bind The Account Successfully</string>
+    <string name="ffg_bind_tv_fail">Failed To Bind Account</string>
+
+    <string name="ffg_init_dialog_tv_title">Announcement</string>
+
+    <string name="ffg_gm_dialog_tv_content">Has your problem been resolved?</string>
+    <string name="ffg_gm_dialog_tv_yes">Right</string>
+    <string name="ffg_gm_dialog_tv_not">No</string>
+
+
+
+    <!-- charge -->
+    <string name="ffg_charge_tv_error">Payment service exception, please try again later</string>
+    <string name="ffg_charge_loading_tips">Retrieving order information, please wait…</string>
+
+    <string name="ffg_btn_confirm">Confirm</string>
+
+    <string name="ffg_network_unavailable">The network connection is abnormal, please try again later</string>
+
+    <string name="ffg_loading_tips">Loading information, please wait…</string>
+
+
+</resources>

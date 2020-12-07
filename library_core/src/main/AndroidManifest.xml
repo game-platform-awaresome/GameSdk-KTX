@@ -1,5 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cn.flyfun.gamesdk.core">
+    package="cn.flyfun.ktx.gamesdk.core">
+    <!-- 网络权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+
+    <uses-permission android:name="com.android.vending.BILLING" />
+    <uses-permission android:name="com.farsitel.bazaar.permission.PAY_THROUGH_BAZAAR" />
+
+    <application
+        android:allowBackup="true"
+        android:supportsRtl="true"
+        android:usesCleartextTraffic="true">
+
+        <activity
+            android:name="cn.flyfun.ktx.gamesdk.core.impl.login.LoginActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:imeOptions="flagNoFullscreen|flagNoExtractUi"
+            android:launchMode="singleTask"
+            android:theme="@style/FlyFunGameTheme"
+            android:windowSoftInputMode="adjustResize|stateHidden|stateVisible" />
+        <activity
+            android:name="cn.flyfun.ktx.gamesdk.core.impl.bind.BindActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:imeOptions="flagNoFullscreen|flagNoExtractUi"
+            android:theme="@style/FlyFunGameTheme"
+            android:windowSoftInputMode="adjustResize|stateHidden|stateVisible" />
+        <!-- 保持竖屏 -->
+        <activity
+            android:name="cn.flyfun.ktx.gamesdk.core.network.FuseWebActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/FlyFunGameTheme"
+            android:windowSoftInputMode="adjustResize|stateHidden|stateVisible" />
+
+        <receiver
+            android:name="com.adjust.sdk.AdjustReferrerReceiver"
+            android:exported="true"
+            android:permission="android.permission.INSTALL_PACKAGES">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+    </application>
 
 </manifest>
