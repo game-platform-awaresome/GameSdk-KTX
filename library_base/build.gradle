@@ -1,0 +1,41 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+android {
+    compileSdkVersion VERSION_COMPILE_SDK
+    buildToolsVersion VERSION_BUILD_TOOLS
+
+    defaultConfig {
+        minSdkVersion VERSION_MIN_SDK
+        targetSdkVersion VERSION_TARGET_SDK
+        packageBuildConfig(false)
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+
+    dexOptions {
+        preDexLibraries = false
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$KOTLIN_VERSION"
+    implementation 'androidx.core:core-ktx:1.3.2'
+}
