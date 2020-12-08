@@ -20,6 +20,7 @@ import cn.flyfun.support.encryption.Md5Utils
 import cn.flyfun.support.jarvis.Toast
 import org.json.JSONException
 import org.json.JSONObject
+import kotlin.system.exitProcess
 
 /**
  * @author #Suyghur
@@ -235,6 +236,7 @@ class DemoActivity : Activity(), View.OnClickListener {
     override fun onDestroy() {
         super.onDestroy()
         FlyFunGame.getInstance().onDestroy(this)
+        exitProcess(0)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

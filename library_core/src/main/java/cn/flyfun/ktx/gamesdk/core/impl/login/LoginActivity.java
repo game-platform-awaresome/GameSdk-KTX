@@ -112,7 +112,7 @@ public class LoginActivity extends FragmentActivity {
                 signInImpl.accountLogin(session.getUserName(), session.getPwd());
                 break;
             case LoginType.TYPE_FACEBOOK_LOGIN:
-                signInImpl.fbLogin(this);
+                signInImpl.facebookLogin(this);
                 break;
             case LoginType.TYPE_GUEST_LOGIN:
                 signInImpl.guestLogin();

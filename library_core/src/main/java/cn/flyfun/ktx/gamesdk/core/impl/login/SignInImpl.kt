@@ -48,7 +48,7 @@ class SignInImpl constructor(val activity: LoginActivity, val callback: ISignInC
         this.googleSignInClient = GoogleSignIn.getClient(activity, gso)
     }
 
-    fun fbLogin(activity: Activity) {
+    fun facebookLogin(activity: Activity) {
         if (!FacebookSdk.isInitialized()) {
             callback.onFailed("Facebook SDK 初始化失败")
             return
@@ -98,7 +98,7 @@ class SignInImpl constructor(val activity: LoginActivity, val callback: ISignInC
         }
     }
 
-    fun handleGoogleSignInResult(data: Intent) {
+    private fun handleGoogleSignInResult(data: Intent) {
         val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
         try {
             val account = task.getResult(ApiException::class.java)
