@@ -12,7 +12,7 @@ import java.lang.Exception
  * @author #Suyghur.
  * Created on 2020/12/2
  */
-class SdkJsImpl constructor(val activity: Activity) {
+class SdkJsImpl constructor(val activity: Activity, val callback: IJsCallback) {
 
     private val CLICK_CLOSE = 1000
 
@@ -29,21 +29,14 @@ class SdkJsImpl constructor(val activity: Activity) {
                 if (JsonUtils.hasJsonKey(jsonObject, "ext")) {
                     ext = jsonObject.getString("ext")
                 }
-                jsCallbackImpl(type, ext)
+                callback.onCallback(type, ext)
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
-    private fun jsCallbackImpl(type: Int, ext: String) {
-        when (type) {
-            CLICK_CLOSE -> {
-                Logger.d("aaaa")
-                if (!activity.isFinishing) {
-                    activity.finish()
-                }
-            }
-        }
+    interface IJsCallback {
+        fun onCallback(tag: Int, ext: String)
     }
 }

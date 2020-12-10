@@ -23,8 +23,8 @@
         android:id="@+id/ffg_et_forget_account"
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:layout_marginTop="5dp"
         android:background="@drawable/ffg_et_frame_selector_bg"
+        android:layout_marginTop="5dp"
         app:layout_constraintBottom_toTopOf="@id/ffg_et_forget_code"
         app:layout_constraintTop_toBottomOf="@id/ffg_tv_forget_tips" />
 
@@ -33,8 +33,8 @@
         android:id="@+id/ffg_et_forget_code"
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:layout_marginTop="5dp"
         android:background="@drawable/ffg_et_frame_selector_bg"
+        android:layout_marginTop="5dp"
         app:layout_constraintBottom_toTopOf="@id/ffg_et_forget_pwd1"
         app:layout_constraintTop_toBottomOf="@id/ffg_et_forget_account" />
 
@@ -60,18 +60,25 @@
 
     <Button
         android:id="@+id/ffg_btn_confirm"
-        style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_height="35dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
         android:background="@drawable/ffg_btn_red_bg"
         android:text="@string/ffg_btn_confirm"
         android:textAllCaps="false"
         android:textColor="@color/ffg_color_white"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ffg_et_forget_pwd2" />
+
+    <!--    <androidx.constraintlayout.widget.Guideline-->
+    <!--        android:id="@+id/guideline"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:orientation="horizontal"-->
+    <!--        app:layout_constraintGuide_percent="0.5" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

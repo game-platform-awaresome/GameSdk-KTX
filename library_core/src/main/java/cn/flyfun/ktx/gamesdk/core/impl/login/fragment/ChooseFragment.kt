@@ -62,13 +62,13 @@ class ChooseFragment : Fragment(), View.OnClickListener {
     private var isShowText = false
     private var privacyDialog: PrivacyDialog? = null
     private val mEventEditTextListener = object : EventEditText.EventEditTextListener {
-        override fun beforeTextChanged(v: View?, s: CharSequence?, start: Int, count: Int, after: Int) {
+        override fun beforeTextChanged(v: View, s: CharSequence?, start: Int, count: Int, after: Int) {
         }
 
-        override fun onTextChanged(v: View?, s: CharSequence?, start: Int, before: Int, count: Int) {
+        override fun onTextChanged(v: View, s: CharSequence?, start: Int, before: Int, count: Int) {
         }
 
-        override fun afterTextChanged(v: View?, s: Editable?) {
+        override fun afterTextChanged(v: View, s: Editable?) {
         }
 
         override fun onViewClick(v: View?) {
@@ -85,7 +85,7 @@ class ChooseFragment : Fragment(), View.OnClickListener {
                         etPassword!!.rightImageView.setBackgroundResource(imageShow)
                         etPassword!!.editText.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD or InputType.TYPE_CLASS_TEXT
                     }
-                    etPassword!!.editText.setSelection(etPassword!!.editText.length())
+                    etPassword?.editText?.setSelection(etPassword!!.editText.length())
                 }
             }
         }
@@ -172,46 +172,46 @@ class ChooseFragment : Fragment(), View.OnClickListener {
         ivGuest?.setOnClickListener(this)
         ivFacebook?.setOnClickListener(this)
         tvForget?.setOnClickListener(this)
-        etAccount?.setEventEditTextListener(mEventEditTextListener)
-        etPassword?.setEventEditTextListener(mEventEditTextListener)
+        etAccount?.eventEditTextListener = mEventEditTextListener
+        etPassword?.eventEditTextListener = mEventEditTextListener
         clAgreement?.setOnClickListener(this)
     }
 
     private fun autoFillUserInfo() {
-        val temp = SessionUtils.getInstance().getLocalSessionLimit5(requireActivity())
-        if (temp == null || temp.size == 0) {
+        val temp: MutableList<Session> = SessionUtils.getInstance().getLocalSessionLimit5(requireActivity())
+        if (temp.size == 0) {
             etAccount?.rightImageView?.visibility = View.GONE
             return
-        }
-        for (session in temp) {
-            if (session.loginType != 0) {
-                continue
+        } else {
+            temp.forEach { session ->
+                if (session.loginType != 0) {
+                    return@forEach
+                }
+                if (userLists == null) {
+                    userLists = ArrayList()
+                }
+                Logger.d(session.toString())
+                userLists!!.add(session)
             }
-            if (userLists == null) {
-                userLists = ArrayList()
-            }
-            Logger.d(session.toString())
-            userLists!!.add(session)
-        }
 
-
-        userLists?.apply {
-            if (size > 0) {
-                val session = this[0]
-                etAccount?.editText?.setText(session.userName)
-                etPassword?.editText?.setText(session.pwd)
+            userLists?.apply {
+                if (size > 0) {
+                    val session = this[0]
+                    etAccount?.editText?.setText(session.userName)
+                    etPassword?.editText?.setText(session.pwd)
+                }
+                if (size > 1) {
+                    initAccountList()
+                    etAccount?.rightImageView?.visibility = View.VISIBLE
+                } else {
+                    etAccount?.rightImageView?.visibility = View.GONE
+                    rlAccountList?.visibility = View.GONE
+                }
             }
-            if (size > 1) {
-                initAccountList()
-                etAccount?.rightImageView?.visibility = View.VISIBLE
-            } else {
+
+            if (userLists == null || userLists?.size!! <= 0) {
                 etAccount?.rightImageView?.visibility = View.GONE
-                rlAccountList?.visibility = View.GONE
             }
-        }
-
-        if (userLists == null || userLists?.size!! <= 0) {
-            etAccount?.rightImageView?.visibility = View.GONE
         }
     }
 

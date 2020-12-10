@@ -55,14 +55,14 @@ class RegisterFragment : Fragment() {
             rightImageView.setBackgroundResource(imageShow)
             editText.hint = ResUtils.getResString(requireActivity(), "ffg_login_password_hint")
             editText.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD or InputType.TYPE_CLASS_TEXT
-            setEventEditTextListener(object : EventEditText.EventEditTextListener {
-                override fun beforeTextChanged(v: View?, s: CharSequence?, start: Int, count: Int, after: Int) {
+            eventEditTextListener = object : EventEditText.EventEditTextListener {
+                override fun beforeTextChanged(v: View, s: CharSequence?, start: Int, count: Int, after: Int) {
                 }
 
-                override fun onTextChanged(v: View?, s: CharSequence?, start: Int, before: Int, count: Int) {
+                override fun onTextChanged(v: View, s: CharSequence?, start: Int, before: Int, count: Int) {
                 }
 
-                override fun afterTextChanged(v: View?, s: Editable?) {
+                override fun afterTextChanged(v: View, s: Editable?) {
                 }
 
                 override fun onViewClick(v: View?) {
@@ -84,7 +84,7 @@ class RegisterFragment : Fragment() {
 
                 override fun onFocusChange(v: View?, hasFocus: Boolean) {
                 }
-            })
+            }
 
             val btnRegister = view.findViewById<Button>(ResUtils.getResId(requireActivity(), "ffg_btn_register", "id"))
             btnRegister.setOnClickListener(object : View.OnClickListener {

@@ -112,7 +112,7 @@ class BindActivity : Activity(), View.OnClickListener, EventEditText.EventEditTe
     private fun initViewListener() {
         ivClose?.setOnClickListener(this)
         btnBind?.setOnClickListener(this)
-        etPassword?.setEventEditTextListener(this)
+        etPassword?.eventEditTextListener = this
     }
 
     private fun doBind() {
@@ -193,13 +193,13 @@ class BindActivity : Activity(), View.OnClickListener, EventEditText.EventEditTe
     }
 
 
-    override fun beforeTextChanged(v: View?, s: CharSequence?, start: Int, count: Int, after: Int) {
+    override fun beforeTextChanged(v: View, s: CharSequence?, start: Int, count: Int, after: Int) {
     }
 
-    override fun onTextChanged(v: View?, s: CharSequence?, start: Int, before: Int, count: Int) {
+    override fun onTextChanged(v: View, s: CharSequence?, start: Int, before: Int, count: Int) {
     }
 
-    override fun afterTextChanged(v: View?, s: Editable?) {
+    override fun afterTextChanged(v: View, s: Editable?) {
     }
 
     override fun onViewClick(v: View?) {
@@ -214,7 +214,7 @@ class BindActivity : Activity(), View.OnClickListener, EventEditText.EventEditTe
                     etPassword!!.rightImageView.setBackgroundResource(imageShow)
                     etPassword!!.editText.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD or InputType.TYPE_CLASS_TEXT
                 }
-                etPassword!!.editText.setSelection(etPassword!!.editText.length())
+                etPassword?.editText?.setSelection(etPassword!!.editText.length())
             }
         }
     }

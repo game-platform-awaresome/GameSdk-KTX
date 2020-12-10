@@ -7,8 +7,8 @@ package cn.flyfun.ktx.gamesdk.core
 @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
 annotation class Version {
     companion object {
-        const val CORE_VERSION_NAME = "1.1.0"
-        const val CORE_VERSION_CODE = 110
+        const val CORE_VERSION_NAME = "1.0.1"
+        const val CORE_VERSION_CODE = 101
         const val SERVER_VERSION_NAME = "1.0.0"
     }
 }

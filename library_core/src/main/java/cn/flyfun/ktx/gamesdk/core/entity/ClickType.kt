@@ -15,4 +15,5 @@ object ClickType {
     const val ACTION_CLICK_CHECK = 0x000003EF
     const val ACTION_CLICK_AGREEMENT = 0x000003F0
     const val ACTION_BIND_ACCOUNT = 0x000003F1
+    const val ACTION_CONFIRM = 0x000003F2
 }

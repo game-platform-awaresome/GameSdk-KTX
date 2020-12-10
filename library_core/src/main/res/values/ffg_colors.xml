@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="ffg_transparent">#00FFFFFF</color>
-    <color name="ffg_color_white">#FAFAFA</color>
+    <color name="ffg_color_white">#FFFFFF</color>
     <color name="ffg_color_white_90">#E6FFFFFF</color>
     <color name="ffg_color_white_70">#B3FFFFFF</color>
     <color name="ffg_color_red">#FF4C2B</color>

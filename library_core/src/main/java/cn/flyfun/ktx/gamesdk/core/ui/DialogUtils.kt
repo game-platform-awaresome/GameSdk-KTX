@@ -13,13 +13,14 @@ import cn.flyfun.support.ui.circleprogress.CircleProgressLoadingDialog
  * Created on 2020/12/3
  */
 object DialogUtils {
-    @JvmStatic
+
+
     fun newInitNoticeDialog(context: Context, url: String, onClickListener: View.OnClickListener): InitDialog? {
         if (TextUtils.isEmpty(url)) {
             return null
         }
         val dialog = InitDialog(context, url)
-        dialog.setOnclickListener(onClickListener)
+        dialog.button.setOnClickListener(onClickListener)
         return dialog
     }
 
@@ -28,29 +29,25 @@ object DialogUtils {
         if (TextUtils.isEmpty(content)) {
             return null
         }
-        val tipsDialog = TipsDialog(context, false, true)
-        tipsDialog.setTitleText("")
-        tipsDialog.setContentText(content)
-        tipsDialog.setLeftText(leftText)
-        tipsDialog.setRightText(rightText)
-        tipsDialog.setLeftListener(leftListener)
-        tipsDialog.setRightListener(rightListener)
+        val tipsDialog = TipsDialog(context, true)
+        tipsDialog.content.text = content
+        tipsDialog.leftButton.text = leftText
+        tipsDialog.rightButton.text = rightText
+        tipsDialog.leftButton.setOnClickListener(leftListener)
+        tipsDialog.rightButton.setOnClickListener(rightListener)
         return tipsDialog
     }
 
-    @JvmStatic
     fun newExitDialog(context: Context, leftListener: View.OnClickListener, rightListener: View.OnClickListener): TipsDialog {
-        val tipsDialog = TipsDialog(context, false, true)
-        tipsDialog.setTitleText("")
-        tipsDialog.setContentText("您确定立即退出游戏吗？")
-        tipsDialog.setLeftText("下次再见")
-        tipsDialog.setRightText("再玩一下")
-        tipsDialog.setLeftListener(leftListener)
-        tipsDialog.setRightListener(rightListener)
+        val tipsDialog = TipsDialog(context, true)
+        tipsDialog.content.text = "您确定立即退出游戏吗？"
+        tipsDialog.leftButton.text = "下次再见"
+        tipsDialog.rightButton.text = "再玩一下"
+        tipsDialog.leftButton.setOnClickListener(leftListener)
+        tipsDialog.rightButton.setOnClickListener(rightListener)
         return tipsDialog
     }
 
-    @JvmStatic
     fun showCircleProgressLoadingDialog(context: Context, msg: String): CircleProgressLoadingDialog {
         return if (TextUtils.isEmpty(msg)) {
             CircleProgressLoadingDialog.Builder(context)

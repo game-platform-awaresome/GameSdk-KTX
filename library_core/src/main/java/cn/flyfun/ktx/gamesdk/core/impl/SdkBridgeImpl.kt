@@ -20,7 +20,7 @@ import cn.flyfun.ktx.gamesdk.core.impl.charge.ChargeImpl
 import cn.flyfun.ktx.gamesdk.core.impl.login.LoginActivity
 import cn.flyfun.ktx.gamesdk.core.inter.IRequestCallback
 import cn.flyfun.ktx.gamesdk.core.inter.ImplCallback
-import cn.flyfun.ktx.gamesdk.core.network.FuseWebActivity
+import cn.flyfun.ktx.gamesdk.core.network.HybridActivity
 import cn.flyfun.ktx.gamesdk.core.network.ParamsMap
 import cn.flyfun.ktx.gamesdk.core.network.SdkRequest
 import cn.flyfun.ktx.gamesdk.core.ui.DialogUtils
@@ -143,13 +143,9 @@ class SdkBridgeImpl {
                         isShowInitDialog = false
                         initNoticeDialog?.dismiss()
                         callback.onResult(0, "SDK初始化成功")
-
                     }
 
-                    initNoticeDialog?.apply {
-                        showConfirmButton()
-                        show()
-                    }
+                    initNoticeDialog?.show()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -326,7 +322,7 @@ class SdkBridgeImpl {
                     dismiss()
                     exitTipsDialog = null
                 }
-                callback.onResult(-1, "继续游戏")
+                callback.onResult(0, "退出游戏")
             }
         }) {
             exitTipsDialog?.apply {
@@ -334,9 +330,10 @@ class SdkBridgeImpl {
                     dismiss()
                     exitTipsDialog = null
                 }
-                callback.onResult(0, "退出游戏")
+                callback.onResult(-1, "继续游戏")
             }
         }
+        exitTipsDialog?.show()
     }
 
     fun bindPlatformAccount(activity: Activity, callback: ICallback) {
@@ -385,7 +382,7 @@ class SdkBridgeImpl {
                     .append("&user_id=").append(URLEncoder.encode(SdkBackLoginInfo.instance.userId, "UTF-8"))
                     .append("&pic=").append(URLEncoder.encode(initBean!!.initGm.logoUrl, "UTF-8"))
             Logger.d(url)
-            FuseWebActivity.start(activity, url.toString())
+            HybridActivity.start(activity, url.toString())
         }
     }
 

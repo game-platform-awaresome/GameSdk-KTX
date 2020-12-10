@@ -30,7 +30,7 @@
             android:windowSoftInputMode="adjustResize|stateHidden|stateVisible" />
         <!-- 保持竖屏 -->
         <activity
-            android:name="cn.flyfun.ktx.gamesdk.core.network.FuseWebActivity"
+            android:name="cn.flyfun.ktx.gamesdk.core.network.HybridActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/FlyFunGameTheme"
