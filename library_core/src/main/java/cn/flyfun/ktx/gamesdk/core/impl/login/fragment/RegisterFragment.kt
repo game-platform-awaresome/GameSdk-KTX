@@ -90,6 +90,7 @@ class RegisterFragment : Fragment() {
             btnRegister.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View?) {
                     v?.apply {
+                        loginImpl?.showLoadingDialog()
                         val userName = etAccount?.editText?.text.toString()
                         val pwd = etPassword?.editText?.text.toString()
                         if (TextUtils.isEmpty(userName)) {
@@ -108,7 +109,6 @@ class RegisterFragment : Fragment() {
                             Toast.toastInfo(requireActivity(), resources.getString(ResUtils.getResId(requireActivity(), "ffg_tips_password_format_error", "string")))
                             return
                         }
-
                         loginImpl?.userRegister(userName, pwd)
                     }
                 }

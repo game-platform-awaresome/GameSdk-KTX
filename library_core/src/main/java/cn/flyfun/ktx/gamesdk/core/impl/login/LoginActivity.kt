@@ -82,12 +82,7 @@ class LoginActivity : FragmentActivity() {
                         return
                     }
                     session?.apply {
-                        if (loginLoadingDialog != null && loginLoadingDialog!!.isShowing) {
-                            loginLoadingDialog!!.dismiss()
-                            loginLoadingDialog = null
-                        }
-                        loginLoadingDialog = DialogUtils.showCircleProgressLoadingDialog(this@LoginActivity, "")
-                        loginLoadingDialog?.show()
+                        showLoadingDialog()
                         userAutoLogin()
                     }
                 }
@@ -110,10 +105,7 @@ class LoginActivity : FragmentActivity() {
     fun userLoginVerify(loginParams: JSONObject) {
         SdkRequest.getInstance().userLoginVerify(this, loginParams, object : IRequestCallback {
             override fun onResponse(resultInfo: ResultInfo) {
-                if (loginLoadingDialog != null && loginLoadingDialog!!.isShowing) {
-                    loginLoadingDialog!!.dismiss()
-                    loginLoadingDialog = null
-                }
+                hideLoadingDialog()
                 if (resultInfo.code == 0 && !TextUtils.isEmpty(resultInfo.data)) {
                     try {
                         val jsonObject = JSONObject(resultInfo.data)
@@ -154,6 +146,7 @@ class LoginActivity : FragmentActivity() {
     fun userRegister(userName: String, pwd: String) {
         SdkRequest.getInstance().userRegister(this, userName, pwd, object : IRequestCallback {
             override fun onResponse(resultInfo: ResultInfo) {
+                hideLoadingDialog()
                 if (resultInfo.code == 0 && !TextUtils.isEmpty(resultInfo.data)) {
                     try {
                         val jsonObject = JSONObject(resultInfo.data)
@@ -201,6 +194,7 @@ class LoginActivity : FragmentActivity() {
         signInImpl = SignInImpl(this, object : SignInImpl.ISignInCallback {
             override fun onSuccess(result: String) {
                 try {
+                    showLoadingDialog()
                     userLoginVerify(JSONObject(result))
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -557,7 +551,6 @@ class LoginActivity : FragmentActivity() {
         var newUiOptions = uiOptions
         val isImmersiveModeEnabled = uiOptions or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY == uiOptions
         if (!isImmersiveModeEnabled) {
-//            Log.i(TAG, "Turning immersive mode mode on. ");
             if (Build.VERSION.SDK_INT >= 14) {
                 newUiOptions = newUiOptions or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
             }
@@ -568,6 +561,22 @@ class LoginActivity : FragmentActivity() {
                 newUiOptions = newUiOptions or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
             }
             window.decorView.systemUiVisibility = newUiOptions
+        }
+    }
+
+    fun showLoadingDialog() {
+        if (loginLoadingDialog != null && loginLoadingDialog!!.isShowing) {
+            loginLoadingDialog!!.dismiss()
+            loginLoadingDialog = null
+        }
+        loginLoadingDialog = DialogUtils.showCircleProgressLoadingDialog(this@LoginActivity, "")
+        loginLoadingDialog?.show()
+    }
+
+    fun hideLoadingDialog() {
+        if (loginLoadingDialog != null && loginLoadingDialog!!.isShowing) {
+            loginLoadingDialog!!.dismiss()
+            loginLoadingDialog = null
         }
     }
 
@@ -602,7 +611,6 @@ class LoginActivity : FragmentActivity() {
             signInImpl?.onActivityResult(requestCode, resultCode, this)
         }
     }
-
 
     companion object {
         var implCallback: ImplCallback? = null

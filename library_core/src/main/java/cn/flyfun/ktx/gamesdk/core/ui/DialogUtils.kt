@@ -1,6 +1,7 @@
 package cn.flyfun.ktx.gamesdk.core.ui
 
 import android.content.Context
+import android.graphics.Color
 import android.text.TextUtils
 import android.view.View
 import cn.flyfun.ktx.gamesdk.core.ui.dialog.InitDialog

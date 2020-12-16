@@ -35,7 +35,6 @@ import cn.flyfun.support.jarvis.Toast
  */
 class ChooseFragment : Fragment(), View.OnClickListener {
 
-
     private var loginImpl: LoginActivity? = null
     private var mInflater: LayoutInflater? = null
     private var mView: View? = null

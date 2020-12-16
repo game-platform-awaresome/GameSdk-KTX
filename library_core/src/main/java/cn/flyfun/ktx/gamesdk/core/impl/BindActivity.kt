@@ -18,11 +18,13 @@ import cn.flyfun.ktx.gamesdk.core.entity.*
 import cn.flyfun.ktx.gamesdk.core.inter.IRequestCallback
 import cn.flyfun.ktx.gamesdk.core.inter.ImplCallback
 import cn.flyfun.ktx.gamesdk.core.network.SdkRequest
+import cn.flyfun.ktx.gamesdk.core.ui.DialogUtils
 import cn.flyfun.ktx.gamesdk.core.ui.EventEditText
 import cn.flyfun.ktx.gamesdk.core.utils.AndroidBug5497Workaround
 import cn.flyfun.ktx.gamesdk.core.utils.SessionUtils
 import cn.flyfun.support.ResUtils
 import cn.flyfun.support.jarvis.Toast
+import cn.flyfun.support.ui.circleprogress.CircleProgressLoadingDialog
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -32,18 +34,6 @@ import org.json.JSONObject
  * Created on 2020/12/3
  */
 class BindActivity : Activity(), View.OnClickListener, EventEditText.EventEditTextListener {
-
-    companion object {
-        fun bind(activity: Activity, callback: ImplCallback) {
-            val intent = Intent(activity, BindActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            activity.startActivity(intent)
-            Companion.callback = callback
-        }
-
-        private var callback: ImplCallback? = null
-    }
-
     private var ivClose: ImageView? = null
     private var etAccount: EventEditText? = null
     private var etPassword: EventEditText? = null
@@ -51,6 +41,7 @@ class BindActivity : Activity(), View.OnClickListener, EventEditText.EventEditTe
     private var imageShow = 0
     private var imageHide: Int = 0
     private var isShowText = false
+    private var loadingDialog: CircleProgressLoadingDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -115,6 +106,7 @@ class BindActivity : Activity(), View.OnClickListener, EventEditText.EventEditTe
 
     private fun doBind() {
         try {
+            showLoadingDialog()
             val jsonObject = JSONObject()
             jsonObject.put("bind_type", SdkBackLoginInfo.instance.loginType)
             jsonObject.put("user_name", etAccount!!.editText.text.toString())
@@ -129,6 +121,7 @@ class BindActivity : Activity(), View.OnClickListener, EventEditText.EventEditTe
     private fun doBindAccount(jsonObject: JSONObject) {
         SdkRequest.getInstance().userBind(this, jsonObject, object : IRequestCallback {
             override fun onResponse(resultInfo: ResultInfo) {
+                hideLoadingDialog()
                 if (resultInfo.code == 0) {
                     try {
                         val session = Session()
@@ -217,6 +210,22 @@ class BindActivity : Activity(), View.OnClickListener, EventEditText.EventEditTe
         }
     }
 
+    private fun showLoadingDialog() {
+        if (loadingDialog != null && loadingDialog!!.isShowing) {
+            loadingDialog!!.dismiss()
+            loadingDialog = null
+        }
+        loadingDialog = DialogUtils.showCircleProgressLoadingDialog(this@BindActivity, "")
+        loadingDialog?.show()
+    }
+
+    private fun hideLoadingDialog() {
+        if (loadingDialog != null && loadingDialog!!.isShowing) {
+            loadingDialog!!.dismiss()
+            loadingDialog = null
+        }
+    }
+
     override fun onFocusChange(v: View?, hasFocus: Boolean) {
 
     }
@@ -230,4 +239,16 @@ class BindActivity : Activity(), View.OnClickListener, EventEditText.EventEditTe
             }
         }
     }
+
+    companion object {
+        fun bind(activity: Activity, callback: ImplCallback) {
+            val intent = Intent(activity, BindActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            activity.startActivity(intent)
+            Companion.callback = callback
+        }
+
+        private var callback: ImplCallback? = null
+    }
+
 }
