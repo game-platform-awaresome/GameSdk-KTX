@@ -8,19 +8,16 @@ class ResultInfo {
     /**
      * 0是成功，其他是错误。
      */
-    @JvmField
     var code: Int = -1
 
     /**
      * 返回信息
      */
-    @JvmField
     var msg: String = ""
 
     /**
      * 返回的数据
      */
-    @JvmField
     var data: String = ""
 
     override fun toString(): String {

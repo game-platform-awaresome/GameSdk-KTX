@@ -1,0 +1,90 @@
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+def GROUP_ID = 'cn.flyfun.gamesdk'
+def ARTIFACT_ID = 'core-ktx'
+
+def siteUrl = 'https://github.com/Suyghur/FlyFunGameSdk' // 项目的主页
+def gitUrl = 'https://github.com/Suyghur/FlyFunGameSdk.git' // Git仓库的url
+
+group = GROUP_ID
+
+archivesBaseName = ARTIFACT_ID
+
+version = "0.0.2"
+
+
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom {
+            artifactId = ARTIFACT_ID
+
+            project {
+                packaging 'aar'
+                // Add your description here
+                name = "${GROUP_ID}:${ARTIFACT_ID}"
+                //项目描述
+                description 'FlyFun Game support library project'// 可选，项目描述。
+                url siteUrl
+                // Set your license
+                licenses {
+                    license {
+                        name 'Apache License 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'suyghur'    //填写的一些基本信息
+                        name 'Mai Jinpei'
+                        email 'Suyghurmjp@Outlook.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    options.encoding = "utf-8"
+    options.charSet = "utf-8"
+    failOnError false
+}
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+//    archives javadocJar  //提交注释文档
+//    archives sourcesJar //不需要传源码
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    configurations = ['archives']
+    pkg {
+        repo = 'maven'
+        name = "${GROUP_ID}:${ARTIFACT_ID}"    //发布到JCenter上的项目名字
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ['Apache-2.0']
+        publish = true
+        override = true
+    }
+
+}

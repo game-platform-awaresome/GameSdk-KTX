@@ -26,8 +26,6 @@ class EventTraceImpl : IEventTrace {
     private var logBean: LogBean? = null
 
     companion object {
-
-        @JvmStatic
         fun getInstance(): EventTraceImpl {
             return EventTraceImplHolder.INSTANCE
         }
@@ -49,7 +47,6 @@ class EventTraceImpl : IEventTrace {
             Logger.e("EventTrace初始化失败，读取assets/log_event.json异常")
             return
         }
-
         val config = AdjustConfig(context, appToken, AdjustConfig.ENVIRONMENT_PRODUCTION)
         config.setLogLevel(LogLevel.VERBOSE)
         Adjust.onCreate(config)
@@ -120,7 +117,7 @@ class EventTraceImpl : IEventTrace {
             chargeEvent.setRevenue(0.00, "USD")
         }
         if (eventMap.containsKey("order_id")) {
-            chargeEvent.setOrderId(java.lang.String.valueOf(eventMap["order_id"]))
+            chargeEvent.setOrderId(eventMap["order_id"].toString())
         } else {
             chargeEvent.setOrderId("")
         }

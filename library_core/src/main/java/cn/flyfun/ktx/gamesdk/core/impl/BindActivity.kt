@@ -1,4 +1,4 @@
-package cn.flyfun.ktx.gamesdk.core.impl.bind
+package cn.flyfun.ktx.gamesdk.core.impl
 
 import android.app.Activity
 import android.content.Intent
@@ -15,7 +15,6 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import cn.flyfun.ktx.gamesdk.core.entity.*
-import cn.flyfun.ktx.gamesdk.core.impl.SdkBridgeImpl
 import cn.flyfun.ktx.gamesdk.core.inter.IRequestCallback
 import cn.flyfun.ktx.gamesdk.core.inter.ImplCallback
 import cn.flyfun.ktx.gamesdk.core.network.SdkRequest
@@ -35,12 +34,11 @@ import org.json.JSONObject
 class BindActivity : Activity(), View.OnClickListener, EventEditText.EventEditTextListener {
 
     companion object {
-        @JvmStatic
         fun bind(activity: Activity, callback: ImplCallback) {
             val intent = Intent(activity, BindActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             activity.startActivity(intent)
-            this.callback = callback
+            Companion.callback = callback
         }
 
         private var callback: ImplCallback? = null

@@ -1,10 +1,9 @@
-package cn.flyfun.ktx.gamesdk.core.network
+package cn.flyfun.ktx.gamesdk.core.impl
 
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
-import android.graphics.Bitmap
 import android.graphics.PixelFormat
 import android.graphics.Rect
 import android.net.Uri
@@ -23,6 +22,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import cn.flyfun.ktx.gamesdk.base.utils.Logger
 import cn.flyfun.ktx.gamesdk.core.entity.ClickType
+import cn.flyfun.ktx.gamesdk.core.network.SdkJsImpl
 import cn.flyfun.ktx.gamesdk.core.ui.DialogUtils
 import cn.flyfun.ktx.gamesdk.core.ui.dialog.TipsDialog
 import cn.flyfun.ktx.gamesdk.core.utils.AndroidBug5497Workaround
@@ -81,7 +81,9 @@ class HybridActivity : Activity() {
 
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(ResUtils.getResId(this, "ffg_hybrid", "layout"))
+//        if (!DeviceInfoUtils.isEmulator(this)) {
         AndroidBug5497Workaround.assistActivity(this)
+//        }
 
         //强制竖屏
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
@@ -112,6 +114,7 @@ class HybridActivity : Activity() {
         }
 
         view = findViewById(ResUtils.getResId(this, "ffg_empty_view", "id"))
+//        if (!DeviceInfoUtils.isEmulator(this)) {
         val params = view.layoutParams as ConstraintLayout.LayoutParams
         if (FullScreenUtils.isNavigationBarShow(this)) {
             params.height = FullScreenUtils.getNavigationBarHeight(this)
@@ -119,7 +122,7 @@ class HybridActivity : Activity() {
             params.height = 0
         }
         view.layoutParams = params
-
+//        }
         initWebView()
     }
 
@@ -388,13 +391,12 @@ class HybridActivity : Activity() {
     }
 
     companion object {
-        private const val FILE_CHOOSER_RESULT_CODE = 1
         private const val FILE_CHOOSER_RESULT_CODE_FOR_ANDROID_5 = 2
 
         private var url = ""
 
         fun start(activity: Activity, url: String) {
-            this.url = url
+            Companion.url = url
             activity.startActivity(Intent(activity, HybridActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         }
     }

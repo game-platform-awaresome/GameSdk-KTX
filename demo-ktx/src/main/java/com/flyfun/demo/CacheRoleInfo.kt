@@ -40,7 +40,7 @@ class CacheRoleInfo {
                     //没有则创建
                     setDemoRoleInfo(context, userId)
                 } else {
-                    val jsonObject = JSONObject(info)
+                    val jsonObject = JSONObject(info!!)
                     RoleInfo(
                             roleId = jsonObject.getString("role_id"),
                             roleName = jsonObject.getString("role_name"),

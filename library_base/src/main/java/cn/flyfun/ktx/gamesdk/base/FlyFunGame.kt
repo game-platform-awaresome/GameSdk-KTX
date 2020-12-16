@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Handler
 import android.text.TextUtils
 import android.webkit.WebView
+import androidx.annotation.Keep
 import cn.flyfun.ktx.gamesdk.base.entity.FunctionName
 import cn.flyfun.ktx.gamesdk.base.entity.GameChargeInfo
 import cn.flyfun.ktx.gamesdk.base.entity.GameRoleInfo
@@ -22,20 +23,6 @@ import cn.flyfun.support.AppUtils
  * Created on 2020/11/30
  */
 class FlyFunGame private constructor() {
-
-    companion object {
-
-        @JvmStatic
-        fun getInstance(): FlyFunGame {
-            return FlyFunGameHolder.INSTANCE
-        }
-
-        private const val CLICK_INTERVAL: Int = 1500
-    }
-
-    private object FlyFunGameHolder {
-        val INSTANCE: FlyFunGame = FlyFunGame()
-    }
 
     private var mSdkBridge: Any? = null
 
@@ -467,7 +454,7 @@ class FlyFunGame private constructor() {
      *
      * @return
      */
-    private fun getCurrentSdkVersion(): String {
+    fun getCurrentSdkVersion(): String {
         if (mSdkBridge == null) {
             Logger.e("getCurrentSdkVersion error ... SdkBridgeManager is null")
             return ""
@@ -477,5 +464,19 @@ class FlyFunGame private constructor() {
 
     fun logHandler(handler: Handler?) {
         Logger.handler = handler
+    }
+
+    companion object {
+        @JvmStatic
+        @Keep
+        fun getInstance(): FlyFunGame {
+            return FlyFunGameHolder.INSTANCE
+        }
+
+        private const val CLICK_INTERVAL: Int = 1500
+
+        private object FlyFunGameHolder {
+            val INSTANCE: FlyFunGame = FlyFunGame()
+        }
     }
 }

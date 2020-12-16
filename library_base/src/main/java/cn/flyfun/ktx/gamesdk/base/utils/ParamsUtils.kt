@@ -12,17 +12,11 @@ import java.lang.Exception
 object ParamsUtils {
 
     private const val CONFIG_FILE: String = "flyfun_cfg.properties"
-
     private const val FLYFUN_GAME_CODE: String = "FLYFUN_GAME_CODE"
-
     private const val FLYFUN_TRACE_ID: String = "FLYFUN_TRACE_ID"
-
     private const val FLYFUN_GOOGLE_APP_ID: String = "FLYFUN_GOOGLE_APP_ID"
-
     private const val FLYFUN_GOOGLE_CLIENT_ID: String = "FLYFUN_GOOGLE_CLIENT_ID"
 
-
-    @JvmStatic
     fun getGameCode(context: Context): String {
         try {
             val code = PropertiesUtils.getValue4Properties(context, CONFIG_FILE, "flyfun", FLYFUN_GAME_CODE)
@@ -35,7 +29,6 @@ object ParamsUtils {
         return ""
     }
 
-    @JvmStatic
     fun getTraceId(context: Context): String {
         try {
             val traceId = PropertiesUtils.getValue4Properties(context, CONFIG_FILE, "flyfun", FLYFUN_TRACE_ID)
@@ -48,7 +41,6 @@ object ParamsUtils {
         return ""
     }
 
-    @JvmStatic
     fun getGoogleAppId(context: Context): String {
         try {
             val appId = PropertiesUtils.getValue4Properties(context, CONFIG_FILE, "flyfun", FLYFUN_GOOGLE_APP_ID)
@@ -61,7 +53,6 @@ object ParamsUtils {
         return ""
     }
 
-    @JvmStatic
     fun getGoogleClientId(context: Context): String {
         try {
             val clientId = PropertiesUtils.getValue4Properties(context, CONFIG_FILE, "flyfun", FLYFUN_GOOGLE_CLIENT_ID)

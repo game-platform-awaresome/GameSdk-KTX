@@ -20,7 +20,6 @@ object SPUtils {
         editor.commit()
     }
 
-    @JvmStatic
     fun getDialogShowTimeByTypeId(activity: Activity, typeId: String): Boolean {
         val sp = activity.getSharedPreferences("app_dialog_show_time_type_$typeId", Context.MODE_PRIVATE)
         val time = sp.getString("time", "")
@@ -40,7 +39,6 @@ object SPUtils {
         return false
     }
 
-    @JvmStatic
     fun saveCacheOrder(context: Context, orderId: String) {
         val sp = context.getSharedPreferences("app_cache_order", Context.MODE_PRIVATE)
         val editor = sp.edit()
@@ -48,7 +46,6 @@ object SPUtils {
         editor.commit()
     }
 
-    @JvmStatic
     fun getCacheOrder(context: Context): String {
         val sp = context.getSharedPreferences("app_cache_order", Context.MODE_PRIVATE)
         return sp.getString("order_info", "") + ""

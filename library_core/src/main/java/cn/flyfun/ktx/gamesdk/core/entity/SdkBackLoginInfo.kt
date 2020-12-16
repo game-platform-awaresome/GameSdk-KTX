@@ -11,29 +11,11 @@ import org.json.JSONObject
  */
 class SdkBackLoginInfo private constructor() {
 
-    companion object {
-        @JvmStatic
-        val instance: SdkBackLoginInfo by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
-            SdkBackLoginInfo()
-        }
-    }
-
-    @JvmField
     var userId = ""
-
-    @JvmField
     var timestamp = ""
-
-    @JvmField
     var cpSign = ""
-
-    @JvmField
     var isRegUser = 0
-
-    @JvmField
     var isBindPlatform = 0
-
-    @JvmField
     var loginType = -1
 
     fun reset() {
@@ -66,6 +48,12 @@ class SdkBackLoginInfo private constructor() {
                 ", isBindPlatform=" + isBindPlatform +
                 ", loginType=" + loginType +
                 '}'
+    }
+
+    companion object {
+        val instance: SdkBackLoginInfo by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+            SdkBackLoginInfo()
+        }
     }
 
 }

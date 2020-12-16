@@ -23,14 +23,14 @@
             android:theme="@style/FlyFunGameTheme"
             android:windowSoftInputMode="adjustResize|stateHidden|stateVisible" />
         <activity
-            android:name="cn.flyfun.ktx.gamesdk.core.impl.bind.BindActivity"
+            android:name="cn.flyfun.ktx.gamesdk.core.impl.BindActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:imeOptions="flagNoFullscreen|flagNoExtractUi"
             android:theme="@style/FlyFunGameTheme"
             android:windowSoftInputMode="adjustResize|stateHidden|stateVisible" />
         <!-- 保持竖屏 -->
         <activity
-            android:name="cn.flyfun.ktx.gamesdk.core.network.HybridActivity"
+            android:name="cn.flyfun.ktx.gamesdk.core.impl.HybridActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/FlyFunGameTheme"

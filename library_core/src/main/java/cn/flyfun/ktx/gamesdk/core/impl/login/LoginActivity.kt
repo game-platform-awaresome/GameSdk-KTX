@@ -579,7 +579,7 @@ class LoginActivity : FragmentActivity() {
     override fun onRestart() {
         super.onRestart()
         if (!SdkBridgeImpl.isLandscape && rootContainer != null) {
-            rootContainer!!.setBackgroundColor(Color.WHITE)
+            rootContainer!!.setBackgroundColor(Color.BLACK)
         }
     }
 

@@ -1,6 +1,5 @@
 package cn.flyfun.ktx.gamesdk.core.inter
 
-import androidx.annotation.NonNull
 import cn.flyfun.ktx.gamesdk.core.entity.ResultInfo
 
 /**
@@ -9,5 +8,5 @@ import cn.flyfun.ktx.gamesdk.core.entity.ResultInfo
  */
 interface IRequestCallback {
 
-    fun onResponse(@NonNull resultInfo: ResultInfo)
+    fun onResponse(resultInfo: ResultInfo)
 }

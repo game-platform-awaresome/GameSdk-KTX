@@ -15,7 +15,6 @@ import org.json.JSONObject
 class SdkRequest {
 
     companion object {
-        @JvmStatic
         fun getInstance(): SdkRequest {
             return RequestHolder.INSTANCE
         }

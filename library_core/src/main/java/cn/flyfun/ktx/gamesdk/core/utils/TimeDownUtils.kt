@@ -8,7 +8,6 @@ import cn.flyfun.ktx.gamesdk.base.utils.Logger
  */
 object TimeDownUtils {
 
-
     private var isRunning = false
     private var isCancel = false
 

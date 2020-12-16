@@ -21,7 +21,6 @@ object ParamsMap {
     private var isDefaultInit = false
 
     @Synchronized
-    @JvmStatic
     fun init(context: Context) {
         if (isDefaultInit) {
             return
@@ -58,7 +57,6 @@ object ParamsMap {
         }
     }
 
-    @JvmStatic
     fun get(key: String): String {
         paramsMap?.let {
             return if (it.containsKey(key)) {
@@ -70,7 +68,6 @@ object ParamsMap {
         return ""
     }
 
-    @JvmStatic
     fun put(key: String, any: Any) {
         if (paramsMap == null) {
             paramsMap = HashMap()
@@ -80,7 +77,6 @@ object ParamsMap {
         }
     }
 
-    @JvmStatic
     fun containsKey(key: String): Boolean {
         paramsMap?.let {
             return it.containsKey(key)

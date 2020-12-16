@@ -1,4 +1,4 @@
-package cn.flyfun.ktx.gamesdk.core.impl.charge
+package cn.flyfun.ktx.gamesdk.core.impl
 
 import android.app.Activity
 import android.content.Context
@@ -36,7 +36,6 @@ import org.json.JSONObject
 class ChargeImpl private constructor() {
 
     companion object {
-        @JvmStatic
         val instance: ChargeImpl by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
             ChargeImpl()
         }
@@ -179,7 +178,7 @@ class ChargeImpl private constructor() {
                             if (JsonUtils.hasJsonKey(cacheJson, "original_json")) {
                                 cacheOriginalJson = cacheJson.getString("original_json")
                             }
-                            if (cacheOriginalJson.equals(this[0].originalJson)) {
+                            if (cacheOriginalJson == this[0].originalJson) {
                                 notifyOrder2Backend(activity, cacheOrderId, cacheOriginalJson, this[0].signature, true)
                             } else {
                                 notifyOrder2Backend(activity, cacheOrderId, this[0].originalJson, this[0].signature, true)
@@ -211,11 +210,6 @@ class ChargeImpl private constructor() {
                 override fun onSkuDetailsResponse(billingResult: BillingResult, list: MutableList<SkuDetails>?) {
                     logBillingResult("onSkuDetailsResponse", billingResult)
                     dismissDialog()
-                    if (list == null) {
-                        callback?.onFailed("查询计费点失败")
-                        return
-                    }
-
                     list?.apply {
                         if (size == 0) {
                             callback?.onFailed("查询计费点失败")
@@ -227,6 +221,10 @@ class ChargeImpl private constructor() {
                             Logger.d("price : " + skuDetails.price)
                             launchBillingFlow(activity, this[0])
                         }
+                    }
+                    if (list == null) {
+                        callback?.onFailed("查询计费点失败")
+                        return
                     }
                 }
             })

@@ -24,7 +24,7 @@ object DialogUtils {
         return dialog
     }
 
-    @JvmStatic
+
     fun newTipsDialog(context: Context, content: String, leftText: String, rightText: String, leftListener: View.OnClickListener, rightListener: View.OnClickListener): TipsDialog? {
         if (TextUtils.isEmpty(content)) {
             return null
