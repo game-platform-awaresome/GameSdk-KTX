@@ -37,7 +37,6 @@ import cn.flyfun.support.ui.circleprogress.CircleProgressLoadingDialog
  */
 class HybridActivity : Activity() {
 
-    //    private var uploadMessage: ValueCallback<Uri>? = null
     private var uploadMessageForAndroid5: ValueCallback<Array<Uri>>? = null
     private lateinit var tvTitle: TextView
     private lateinit var ivReturn: ImageView
@@ -56,7 +55,6 @@ class HybridActivity : Activity() {
 
             }
         }
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,9 +79,7 @@ class HybridActivity : Activity() {
 
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(ResUtils.getResId(this, "ffg_hybrid", "layout"))
-//        if (!DeviceInfoUtils.isEmulator(this)) {
         AndroidBug5497Workaround.assistActivity(this)
-//        }
 
         //强制竖屏
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
@@ -114,15 +110,11 @@ class HybridActivity : Activity() {
         }
 
         view = findViewById(ResUtils.getResId(this, "ffg_empty_view", "id"))
-//        if (!DeviceInfoUtils.isEmulator(this)) {
         val params = view.layoutParams as ConstraintLayout.LayoutParams
         if (FullScreenUtils.isNavigationBarShow(this)) {
             params.height = FullScreenUtils.getNavigationBarHeight(this)
-        } else {
-            params.height = 0
         }
         view.layoutParams = params
-//        }
         initWebView()
     }
 

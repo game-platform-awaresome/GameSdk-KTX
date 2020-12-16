@@ -38,14 +38,6 @@ import java.net.URLEncoder
  */
 class SdkBridgeImpl {
 
-    companion object {
-        @JvmField
-        var isLandscape = false
-
-        @JvmField
-        var initBean: InitBean? = null
-    }
-
     private var mActivity: Activity? = null
     private var roleInfo: GameRoleInfo? = null
     private var initNoticeDialog: InitDialog? = null
@@ -436,5 +428,11 @@ class SdkBridgeImpl {
         return if (initBean == null || initBean!!.initGm == null) {
             false
         } else initBean!!.initGm!!.gmSwitch == 1
+    }
+
+    companion object {
+        var isLandscape = false
+
+        var initBean: InitBean? = null
     }
 }
