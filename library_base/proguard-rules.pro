@@ -128,12 +128,12 @@
 
 
 -keep class cn.flyfun.support.**{*;}
--keep class cn.flyfun.ktx.gamesdk.base.entity.GameChargeInfo{public <fields>; public <methods>;}
--keep class cn.flyfun.ktx.gamesdk.base.entity.GameRoleInfo{public <fields>; public <methods>;}
--keep class cn.flyfun.ktx.gamesdk.base.inter.ICallback{public <fields>; public <methods>;}
--keep class cn.flyfun.ktx.gamesdk.base.utils.Logger{public <fields>; public <methods>;}
--keep class cn.flyfun.ktx.gamesdk.base.utils.ParamsUtils{public <fields>; public <methods>;}
--keep class cn.flyfun.ktx.gamesdk.base.FlyFunGame{public <fields>; public <methods>;}
+-keep class cn.flyfun.gamesdk.base.entity.GameChargeInfo{public <fields>; public <methods>;}
+-keep class cn.flyfun.gamesdk.base.entity.GameRoleInfo{public <fields>; public <methods>;}
+-keep class cn.flyfun.gamesdk.base.inter.ICallback{public <fields>; public <methods>;}
+-keep class cn.flyfun.gamesdk.base.utils.Logger{public <fields>; public <methods>;}
+-keep class cn.flyfun.gamesdk.base.utils.ParamsUtils{public <fields>; public <methods>;}
+-keep class cn.flyfun.gamesdk.base.FlyFunGame{public <fields>; public <methods>;}
 
 
 

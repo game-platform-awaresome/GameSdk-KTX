@@ -129,5 +129,6 @@
 
 -keep class cn.flyfun.support.**{*;}
 -keep class cn.flyfun.ktx.gamesdk.base.**{*;}
--keep class cn.flyfun.ktx.gamesdk.core.SdkBridge{public <fields>; public <methods>;}
+-keep class cn.flyfun.gamesdk.core.network.SdkJsImpl{public <fields>; public <methods>;}
+-keep class cn.flyfun.gamesdk.core.SdkBridge{public <fields>; public <methods>;}
 

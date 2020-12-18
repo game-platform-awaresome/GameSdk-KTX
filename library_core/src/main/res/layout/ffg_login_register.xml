@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center">
 
-    <cn.flyfun.ktx.gamesdk.core.ui.EventEditText
+    <cn.flyfun.gamesdk.core.ui.EventEditText
         android:id="@+id/ffg_et_account"
         android:layout_width="match_parent"
         android:layout_height="35dp"
@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <cn.flyfun.ktx.gamesdk.core.ui.EventEditText
+    <cn.flyfun.gamesdk.core.ui.EventEditText
         android:id="@+id/ffg_et_pwd"
         android:layout_width="match_parent"
         android:layout_height="35dp"

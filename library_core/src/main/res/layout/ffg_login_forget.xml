@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <cn.flyfun.ktx.gamesdk.core.ui.EventEditText
+    <cn.flyfun.gamesdk.core.ui.EventEditText
         android:id="@+id/ffg_et_forget_account"
         android:layout_width="match_parent"
         android:layout_height="35dp"
@@ -29,7 +29,7 @@
         app:layout_constraintTop_toBottomOf="@id/ffg_tv_forget_tips" />
 
 
-    <cn.flyfun.ktx.gamesdk.core.ui.VerifyCodeEditText
+    <cn.flyfun.gamesdk.core.ui.VerifyCodeEditText
         android:id="@+id/ffg_et_forget_code"
         android:layout_width="match_parent"
         android:layout_height="35dp"
@@ -39,7 +39,7 @@
         app:layout_constraintTop_toBottomOf="@id/ffg_et_forget_account" />
 
 
-    <cn.flyfun.ktx.gamesdk.core.ui.EventEditText
+    <cn.flyfun.gamesdk.core.ui.EventEditText
         android:id="@+id/ffg_et_forget_pwd1"
         android:layout_width="match_parent"
         android:layout_height="35dp"
@@ -48,7 +48,7 @@
         app:layout_constraintBottom_toTopOf="@id/ffg_et_forget_pwd2"
         app:layout_constraintTop_toBottomOf="@id/ffg_et_forget_code" />
 
-    <cn.flyfun.ktx.gamesdk.core.ui.EventEditText
+    <cn.flyfun.gamesdk.core.ui.EventEditText
         android:id="@+id/ffg_et_forget_pwd2"
         android:layout_width="match_parent"
         android:layout_height="35dp"

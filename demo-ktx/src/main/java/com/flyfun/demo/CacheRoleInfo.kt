@@ -2,7 +2,7 @@ package com.flyfun.demo
 
 import android.content.Context
 import android.text.TextUtils
-import cn.flyfun.ktx.gamesdk.base.utils.Logger
+import cn.flyfun.gamesdk.base.utils.Logger
 import org.json.JSONException
 import org.json.JSONObject
 

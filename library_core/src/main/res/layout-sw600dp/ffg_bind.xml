@@ -45,7 +45,7 @@
             app:layout_constraintTop_toBottomOf="@+id/ffg_iv_close" />
 
 
-        <cn.flyfun.ktx.gamesdk.core.ui.EventEditText
+        <cn.flyfun.gamesdk.core.ui.EventEditText
             android:id="@+id/ffg_et_account"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -57,7 +57,7 @@
             app:layout_constraintBottom_toTopOf="@+id/ffg_et_pwd"
             app:layout_constraintTop_toBottomOf="@+id/ffg_tv_title" />
 
-        <cn.flyfun.ktx.gamesdk.core.ui.EventEditText
+        <cn.flyfun.gamesdk.core.ui.EventEditText
             android:id="@+id/ffg_et_pwd"
             android:layout_width="match_parent"
             android:layout_height="40dp"

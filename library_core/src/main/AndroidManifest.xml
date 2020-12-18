@@ -16,21 +16,21 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name="cn.flyfun.ktx.gamesdk.core.impl.login.LoginActivity"
+            android:name="cn.flyfun.gamesdk.core.impl.login.LoginActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:imeOptions="flagNoFullscreen|flagNoExtractUi"
             android:launchMode="singleTask"
             android:theme="@style/FlyFunGameTheme"
             android:windowSoftInputMode="adjustResize|stateHidden|stateVisible" />
         <activity
-            android:name="cn.flyfun.ktx.gamesdk.core.impl.BindActivity"
+            android:name="cn.flyfun.gamesdk.core.impl.BindActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:imeOptions="flagNoFullscreen|flagNoExtractUi"
             android:theme="@style/FlyFunGameTheme"
             android:windowSoftInputMode="adjustResize|stateHidden|stateVisible" />
         <!-- 保持竖屏 -->
         <activity
-            android:name="cn.flyfun.ktx.gamesdk.core.impl.HybridActivity"
+            android:name="cn.flyfun.gamesdk.core.impl.HybridActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/FlyFunGameTheme"

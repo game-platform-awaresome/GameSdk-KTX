@@ -9,7 +9,7 @@ import android.os.Message
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.LinearLayout
-import cn.flyfun.ktx.gamesdk.base.utils.Logger
+import cn.flyfun.gamesdk.base.utils.Logger
 import cn.flyfun.support.ResUtils
 
 /**

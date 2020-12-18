@@ -12,10 +12,10 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
-import cn.flyfun.ktx.gamesdk.base.FlyFunGame
-import cn.flyfun.ktx.gamesdk.base.entity.GameChargeInfo
-import cn.flyfun.ktx.gamesdk.base.entity.GameRoleInfo
-import cn.flyfun.ktx.gamesdk.base.inter.ICallback
+import cn.flyfun.gamesdk.base.FlyFunGame
+import cn.flyfun.gamesdk.base.entity.GameChargeInfo
+import cn.flyfun.gamesdk.base.entity.GameRoleInfo
+import cn.flyfun.gamesdk.base.inter.ICallback
 import cn.flyfun.support.encryption.Md5Utils
 import cn.flyfun.support.jarvis.Toast
 import org.json.JSONException
