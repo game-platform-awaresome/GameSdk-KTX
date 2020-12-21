@@ -13,8 +13,8 @@ annotation class FunctionName {
         const val LOGIN = "login"
         const val LOGOUT = "logout"
         const val CHARGE = "charge"
-        const val SHOW_EXIT_VIEW = "showExitView"
-        const val BIND_PLATFORM_ACCOUNT = "bindPlatformAccount"
+        const val OPEN_EXIT_VIEW = "openExitView"
+        const val OPEN_BIND_ACCOUNT = "openBindAccount"
         const val OPEN_GM_CENTER = "openGmCenter"
         const val ROLE_CREATE = "roleCreate"
         const val ROLE_LAUNCHER = "roleLauncher"
@@ -31,7 +31,7 @@ annotation class FunctionName {
         const val ON_REQUEST_PERMISSIONS_RESULT = "onRequestPermissionsResult"
         const val GET_CURRENT_USER_ID = "getCurrentUserId"
         const val GET_CURRENT_SDK_VERSION = "getCurrentSdkVersion"
-        const val IS_BIND_PLATFORM_ACCOUNT = "isBindPlatformAccount"
+        const val HAS_BIND_ACCOUNT = "hasBindAccount"
         const val IS_GM_CENTER_ENABLE = "isGmCenterEnable"
     }
 }

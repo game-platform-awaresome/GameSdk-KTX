@@ -121,7 +121,7 @@ class DemoActivity : Activity(), View.OnClickListener {
                     }
 
                 })
-                7 -> FlyFunGame.getInstance().bindPlatformAccount(this@DemoActivity, object : ICallback {
+                7 -> FlyFunGame.getInstance().openBindAccount(this@DemoActivity, object : ICallback {
                     override fun onResult(code: Int, result: String) {
                         if (code == 0) {
                             Toast.toastInfo(this@DemoActivity, "(demo提示)绑定账号成功")
@@ -196,7 +196,7 @@ class DemoActivity : Activity(), View.OnClickListener {
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            FlyFunGame.getInstance().showExitView(this, object : ICallback {
+            FlyFunGame.getInstance().openExitView(this, object : ICallback {
                 override fun onResult(code: Int, result: String) {
                     if (code == 0) {
                         finish()
@@ -274,7 +274,7 @@ class DemoActivity : Activity(), View.OnClickListener {
                     Toast.toastInfo(this, "(demo提示)登录成功，user_id : $userId")
                     cacheRoleInfo = CacheRoleInfo.getDemoRoleInfo(this, userId)
                     //登录校验成功后判断当前用户是否已经绑定平台账号，否则在游戏中显示入口
-                    if (FlyFunGame.getInstance().isBindPlatformAccount()) {
+                    if (FlyFunGame.getInstance().hasBindAccount()) {
                         //隐藏绑定平台账号的入口
                         DemoButtons.hideBindButton()
                     } else {

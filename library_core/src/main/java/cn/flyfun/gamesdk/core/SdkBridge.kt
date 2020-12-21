@@ -38,15 +38,11 @@ class SdkBridge constructor(context: Context) {
     }
 
     fun attachBaseContext(application: Application, context: Context) {
-        mImpl?.apply {
-            attachBaseContext(application, context)
-        }
+        mImpl?.attachBaseContext(application, context)
     }
 
     fun initApplication(application: Application) {
-        mImpl?.apply {
-            initApplication(application)
-        }
+        mImpl?.initApplication(application)
     }
 
 
@@ -56,142 +52,106 @@ class SdkBridge constructor(context: Context) {
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE")
         val networkChangeReceiver = NetworkChangeReceiver()
         activity.registerReceiver(networkChangeReceiver, intentFilter)
-        mImpl?.apply {
-            initialize(activity, isLandScape, callback)
-        }
+        mImpl?.initialize(activity, isLandScape, callback)
     }
 
     fun login(activity: Activity, isAutoLogin: Boolean, callback: ICallback) {
         this.mActivity = activity
-        mImpl?.apply {
-            login(activity, isAutoLogin, callback)
-        }
+        mImpl?.login(activity, isAutoLogin, callback)
     }
 
     fun logout(activity: Activity, callback: ICallback) {
         this.mActivity = activity
-        mImpl?.apply {
-            logout(activity, callback)
-        }
+        mImpl?.logout(activity, callback)
     }
 
     fun charge(activity: Activity, chargeInfo: GameChargeInfo, callback: ICallback) {
         this.mActivity = activity
-        mImpl?.apply {
-            charge(activity, chargeInfo, callback)
-        }
+        mImpl?.charge(activity, chargeInfo, callback)
     }
 
     fun roleCreate(activity: Activity, roleInfo: GameRoleInfo) {
         this.mActivity = activity
-        mImpl?.apply {
-            roleCreate(activity, roleInfo)
-        }
+        mImpl?.roleCreate(activity, roleInfo)
     }
 
     fun roleLauncher(activity: Activity, roleInfo: GameRoleInfo) {
         this.mActivity = activity
-        mImpl?.apply {
-            roleLauncher(activity, roleInfo)
-        }
+        mImpl?.roleLauncher(activity, roleInfo)
     }
 
     fun roleUpgrade(activity: Activity, roleInfo: GameRoleInfo) {
         this.mActivity = activity
-        mImpl?.apply {
-            roleUpgrade(activity, roleInfo)
-        }
+        mImpl?.roleUpgrade(activity, roleInfo)
     }
 
-    fun showExitView(activity: Activity, callback: ICallback) {
+    fun openExitView(activity: Activity, callback: ICallback) {
         this.mActivity = activity
-        mImpl?.apply {
-            showExitView(activity, callback)
-        }
+        mImpl?.openExitView(activity, callback)
+
     }
 
-    fun bindPlatformAccount(activity: Activity, callback: ICallback) {
+    fun openBindAccount(activity: Activity, callback: ICallback) {
         this.mActivity = activity
-        mImpl?.apply {
-            bindPlatformAccount(activity, callback)
-        }
+        mImpl?.openBindAccount(activity, callback)
+
     }
 
     fun openGmCenter(activity: Activity, callback: ICallback) {
         this.mActivity = activity
-        mImpl?.apply {
-            openGmCenter(activity, callback)
-        }
+        mImpl?.openGmCenter(activity, callback)
     }
 
     fun onStart(activity: Activity) {
         this.mActivity = activity
-        mImpl?.apply {
-            onStart(activity)
-        }
+        mImpl?.onStart(activity)
+
     }
 
     fun onResume(activity: Activity) {
         this.mActivity = activity
-        mImpl?.apply {
-            onResume(activity)
-        }
+        mImpl?.onResume(activity)
     }
+
 
     fun onRestart(activity: Activity) {
         this.mActivity = activity
-        mImpl?.apply {
-            onRestart(activity)
-        }
+        mImpl?.onRestart(activity)
     }
 
     fun onPause(activity: Activity) {
         this.mActivity = activity
-        mImpl?.apply {
-            onPause(activity)
-        }
+        mImpl?.onPause(activity)
     }
 
     fun onStop(activity: Activity) {
         this.mActivity = activity
-        mImpl?.apply {
-            onStop(activity)
-        }
+        mImpl?.onStop(activity)
     }
 
     fun onDestroy(activity: Activity) {
         this.mActivity = activity
-        mImpl?.apply {
-            onDestroy(activity)
-        }
+        mImpl?.onDestroy(activity)
     }
 
     fun onActivityResult(activity: Activity, requestCode: Int, resultCode: Int, data: Intent?) {
         this.mActivity = activity
-        mImpl?.apply {
-            onActivityResult(activity, requestCode, resultCode, data)
-        }
+        mImpl?.onActivityResult(activity, requestCode, resultCode, data)
     }
 
     fun onNewIntent(activity: Activity, intent: Intent) {
         this.mActivity = activity
-        mImpl?.apply {
-            onNewIntent(activity, intent)
-        }
+        mImpl?.onNewIntent(activity, intent)
     }
 
     fun onConfigurationChanged(activity: Activity, newConfig: Configuration) {
         this.mActivity = activity
-        mImpl?.apply {
-            onConfigurationChanged(activity, newConfig)
-        }
+        mImpl?.onConfigurationChanged(activity, newConfig)
     }
 
     fun onRequestPermissionsResult(activity: Activity, requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         this.mActivity = activity
-        mImpl?.apply {
-            onRequestPermissionsResult(activity, requestCode, permissions, grantResults)
-        }
+        mImpl?.onRequestPermissionsResult(activity, requestCode, permissions, grantResults)
     }
 
     fun getCurrentSdkVersion(): String {
@@ -205,9 +165,9 @@ class SdkBridge constructor(context: Context) {
         return ""
     }
 
-    fun isBindPlatformAccount(): Boolean {
+    fun hasBindAccount(): Boolean {
         mImpl?.let {
-            return it.isBindPlatformAccount()
+            return it.hasBindAccount()
         }
         return false
     }

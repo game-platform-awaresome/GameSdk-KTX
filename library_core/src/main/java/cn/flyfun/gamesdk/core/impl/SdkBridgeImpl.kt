@@ -297,7 +297,7 @@ class SdkBridgeImpl {
         })
     }
 
-    fun showExitView(activity: Activity, callback: ICallback) {
+    fun openExitView(activity: Activity, callback: ICallback) {
         this.mActivity = activity
         exitTipsDialog?.apply {
             if (isShowing) {
@@ -325,7 +325,7 @@ class SdkBridgeImpl {
         exitTipsDialog?.show()
     }
 
-    fun bindPlatformAccount(activity: Activity, callback: ICallback) {
+    fun openBindAccount(activity: Activity, callback: ICallback) {
         this.mActivity = activity
         BindActivity.bind(activity, object : ImplCallback {
             override fun onSuccess(result: String) {
@@ -420,7 +420,7 @@ class SdkBridgeImpl {
         return SdkBackLoginInfo.instance.userId
     }
 
-    fun isBindPlatformAccount(): Boolean {
+    fun hasBindAccount(): Boolean {
         return SdkBackLoginInfo.instance.isBindPlatform == 1
     }
 

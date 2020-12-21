@@ -1,11 +1,10 @@
-
-[TOC]
-
 # 修订记录
 
 |	日期 	|	版本	|	说明	|	 作者	|
-| :--: | :--: | :--: | :--: |
+| :--: | :--: | :-- | :--: |
 |	2020-11-13	|	1.0.0	|	文档建立	| 麦锦培 |
+|	2020-12-07	|	1.0.1	|	1）优化SDK客服功能；<br/>2）增加对外接口getCurrentSdkVersion()获取SDK版本；<br/>3）谷歌IAB支付SDK3.0.2升级；<br/>4）修复一些已知问题	| 麦锦培 |
+|	2020-12-21	|	1.0.2	|	1）优化SDK客服功能，修复个别机型UI显示问题；<br/>2）增加对外接口openExitView()显示SDK退出框；<br/>3）接口hasBindPlatformAccount()更改为hasBindAccount()，调用时机和方式无变更；<br/>4）接口bindPlatformAccount更改为openBindAccount()，调用时机和方式无变更；<br/>5）sdk新增kotlin版本，接入方式和java一致，具体看SDK资源接入说明中的远程依赖部分<br/>6）修复一些已知问题	| 麦锦培 |
 
 # 1.接入前检查
 
@@ -14,10 +13,10 @@
 - Android Gradle Plugin Version : 3.5.0+
 - Gradle Version : 5.4.1+
 - Android Studio开启Android X支持，请在游戏项目根目录的**`gradle.properties`**中设置
-```properties
-	android.useAndroidX=true
 
-	android.enableJetifier=true
+```properties
+android.useAndroidX=true
+android.enableJetifier=true
 ```
 
 - 请务必使用我们提供的keystore签名文件进行签名，否则SDK功能会异常
@@ -62,14 +61,16 @@
 > <font color=red size=4>**1.远程依赖（推荐）**：</font>
 
 ```groovy
-	implementation 'cn.flyfun.gamesdk:core:1.0.0'
+	implementation 'cn.flyfun.gamesdk:core:1.0.2'
+	//kotlin版本目前只提供远程依赖
+	//implementation 'cn.flyfun.gamesdk:core-ktx:1.0.2'
 ```
 
 > <font size=4>**2.本地aar依赖：**</font>
-拷贝lib目录下**`flyfun_core_1.0.0.aar`**到项目中，并在引入
+拷贝lib目录下**`flyfun_core_1.0.2.aar`**到项目中，并在引入
 
 ```groovy
-	api(name: 'flyfun_core_1.0.0.aar', ext: 'aar')
+	api(name: 'flyfun_core_1.0.2.aar', ext: 'aar')
 ```
 
 	添加谷歌、Facebook等第三方库资源
@@ -81,7 +82,7 @@
 	implementation 'com.android.installreferrer:installreferrer:2.1'
 	implementation 'com.facebook.android:facebook-login:5.15.3'
 	implementation 'com.google.android.gms:play-services-auth:19.0.0'
-	implementation 'com.android.billingclient:billing:3.0.1'
+	implementation 'com.android.billingclient:billing:3.0.2'
 	implementation 'com.adjust.sdk:adjust-android:4.24.1'
 	implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 ```
@@ -487,7 +488,7 @@
 	 *
 	 * @return
 	 */
-	public Boolean hasBindPlatformAccount()
+	public Boolean hasBindAccount()
 ```
 
 显示绑定页面
@@ -499,13 +500,13 @@
 	 * @param activity Activity上下文
 	 * @param callback 绑定回调对象
 	 */
-	public void bindPlatformAccount(Activity activity, ICallback callback)
+	public void openBindAccount(Activity activity, ICallback callback)
 ```
 
 - 示例
 
 ```java
-	FlyFunGame.getInstance().bindPlatformAccount(this, new ICallback() {
+	FlyFunGame.getInstance().openBindAccount(this, new ICallback() {
 		@Override
 		public void onResult(int code, String result) {
 			if (code == 0) {
@@ -535,7 +536,7 @@
 跳转到客服中心
 
 ```java
- 	/**
+	/**
 	 * 跳转到客服中心
 	 *
 	 * @param activity Activity上下文
@@ -554,4 +555,65 @@
 			}
 		}
 	});
+```
+
+## 11）显示SDK退出框（选接）
+
+> 用户（玩家）按下返回键时调用，接入方需要实现Activity的onKeyDown，并判断keyCode为KeyEvent.KEYCODE_BACK时调用该接口
+
+```java
+	/**
+	 * 显示退出框
+	 *
+	 * @param activity Activity上下文
+	 * @param callback 退出回调对象
+	 */
+	public void openExitView(Activity activity, ICallback callback)
+```
+
+- 示例
+
+```java
+	//重写Activity的onKeyDown并判断KeyDown事件
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			FlyFunGame.getInstance().openExitView(this, new ICallback() {
+				@Override
+				public void onResult(int code, String result) {
+					if (code == 0) {
+						//结束当前Activity
+						finish();
+					}
+				}
+			});
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		FlyFunGame.getInstance().onDestroy(this);
+		//结束当前应用进程
+		System.exit(0);
+	}
+```
+
+## 12）获取SDK当前版本（选接）
+
+```java
+	/**
+	 * 获取当前SDK版本
+	 *
+	 * @return
+	 */
+	public String getCurrentSdkVersion()
+```
+
+- 示例
+
+```java
+	FlyFunGame.getInstance().getCurrentSdkVersion();
 ```

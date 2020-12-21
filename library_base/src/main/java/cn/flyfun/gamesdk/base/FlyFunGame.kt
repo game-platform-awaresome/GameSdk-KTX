@@ -228,13 +228,13 @@ class FlyFunGame private constructor() {
      *
      * @param activity
      */
-    fun showExitView(activity: Activity, callback: ICallback) {
+    fun openExitView(activity: Activity, callback: ICallback) {
         if (mSdkBridge == null) {
-            Logger.e("showExitView error ... SdkBridgeManager is null")
+            Logger.e("openExitView error ... SdkBridgeManager is null")
             return
         }
-        Logger.i("FlyFunGameSdk showExitView ...")
-        SdkBridgeManager.call(FunctionName.SHOW_EXIT_VIEW, arrayOf(Activity::class.java, ICallback::class.java), arrayOf(activity, callback))
+        Logger.i("FlyFunGameSdk openExitView ...")
+        SdkBridgeManager.call(FunctionName.OPEN_EXIT_VIEW, arrayOf(Activity::class.java, ICallback::class.java), arrayOf(activity, callback))
     }
 
     /**
@@ -243,13 +243,13 @@ class FlyFunGame private constructor() {
      * @param activity Activity上下文
      * @param callback 绑定回调对象
      */
-    fun bindPlatformAccount(activity: Activity, callback: ICallback) {
+    fun openBindAccount(activity: Activity, callback: ICallback) {
         if (mSdkBridge == null) {
-            Logger.e("bindPlatformAccount error ... SdkBridgeManager is null")
+            Logger.e("openBindAccount error ... SdkBridgeManager is null")
             return
         }
-        Logger.i("FlyFunGameSdk bindPlatformAccount ...")
-        SdkBridgeManager.call(FunctionName.BIND_PLATFORM_ACCOUNT, arrayOf(Activity::class.java, ICallback::class.java), arrayOf(activity, callback))
+        Logger.i("FlyFunGameSdk openBindAccount ...")
+        SdkBridgeManager.call(FunctionName.OPEN_BIND_ACCOUNT, arrayOf(Activity::class.java, ICallback::class.java), arrayOf(activity, callback))
     }
 
     /**
@@ -428,12 +428,12 @@ class FlyFunGame private constructor() {
      *
      * @return
      */
-    fun isBindPlatformAccount(): Boolean {
+    fun hasBindAccount(): Boolean {
         if (mSdkBridge == null) {
-            Logger.e("hasBindPlatformAccount error ... SdkBridgeManager is null")
+            Logger.e("hasBindAccount error ... SdkBridgeManager is null")
             return false
         }
-        return SdkBridgeManager.callback(FunctionName.IS_BIND_PLATFORM_ACCOUNT, emptyArray(), emptyArray()) as Boolean
+        return SdkBridgeManager.callback(FunctionName.HAS_BIND_ACCOUNT, emptyArray(), emptyArray()) as Boolean
     }
 
     /**

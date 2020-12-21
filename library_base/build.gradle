@@ -35,7 +35,7 @@ android {
     }
 
     compileOptions {
-        kotlinOptions.freeCompilerArgs += ['-module-name', "cn.flyfun.gamesdk.ktx.base"]
+        kotlinOptions.freeCompilerArgs += ['-module-name', "cn.flyfun.gamesdk.base"]
     }
 }
 
