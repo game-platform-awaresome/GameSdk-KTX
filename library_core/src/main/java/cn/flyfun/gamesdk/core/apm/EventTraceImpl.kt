@@ -20,7 +20,7 @@ import java.io.InputStreamReader
  * @author #Suyghur.
  * Created on 2020/12/1
  */
-class EventTraceImpl : IEventTrace {
+class EventTraceImpl private constructor() : IEventTrace {
 
     private var isInitSuccess = false
     private var logBean: LogBean? = null
@@ -47,6 +47,7 @@ class EventTraceImpl : IEventTrace {
             Logger.e("EventTrace初始化失败，读取assets/log_event.json异常")
             return
         }
+
         val config = AdjustConfig(context, appToken, AdjustConfig.ENVIRONMENT_PRODUCTION)
         config.setLogLevel(LogLevel.VERBOSE)
         Adjust.onCreate(config)
