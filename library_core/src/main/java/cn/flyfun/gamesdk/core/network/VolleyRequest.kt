@@ -4,6 +4,7 @@ import android.content.Context
 import cn.flyfun.gamesdk.base.utils.Logger
 import cn.flyfun.gamesdk.core.entity.ResultInfo
 import cn.flyfun.gamesdk.core.inter.IRequestCallback
+import cn.flyfun.gamesdk.core.utils.NTools
 import cn.flyfun.support.JsonUtils
 import cn.flyfun.support.StrUtils
 import cn.flyfun.support.encryption.aes.AesUtils
@@ -33,23 +34,48 @@ object VolleyRequest {
             //A. 随机产生一个128位(16字节)的AES钥匙，使用AES对数据进行加密得到加密的数据。
             //B. 使用RSA公钥对上面的随机AES钥匙进行加密，得到加密后的AES钥匙。
             //val aesKey = "1234567890abcdef"
-            val time = (System.currentTimeMillis() / 1000).toString()
-            val aesKey = StrUtils.getRandomString(16)
-            val content = jsonObject.toString()
-
-            val p = URLEncoder.encode(AesUtils.encrypt(aesKey, content), "UTF-8")
-            val ts = URLEncoder.encode(RsaUtils.encryptByPublicKey(aesKey), "UTF-8")
-
-            val logTag = "logTag $time : "
-            Logger.logHandler("请求地址 : $url \n")
-            Logger.logHandler("请求参数 : $content \n")
-            Logger.d("请求参数 : $content")
-            Logger.d("$logTag$url?p=$p&ts=$ts")
-
-            val requestJson = JSONObject()
-            requestJson.put("p", p)
-            requestJson.put("ts", ts)
-            postByVolley(context, url, requestJson, callback)
+            var requestJson: JSONObject? = null
+            try {
+                requestJson = JSONObject(NTools.invokeFuseJob(context, url, jsonObject.toString()))
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            val request: JsonRequest<JSONObject> = object : JsonObjectRequest(Method.POST, url, requestJson, Response.Listener {
+                val resultInfo = ResultInfo()
+                resultInfo.code = -1
+                resultInfo.msg = "接口请求出错"
+                it?.apply {
+                    try {
+                        resultInfo.code = it.getInt("code")
+                        resultInfo.msg = it.getString("message")
+                        if (JsonUtils.hasJsonKey(it, "data")) {
+                            resultInfo.data = NTools.parseFuseJob(context, it.getString("data"))
+                        } else {
+                            resultInfo.data = ""
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                        resultInfo.code = -1
+                        resultInfo.msg = "解析数据异常"
+                    }
+                }
+                callback.onResponse(resultInfo)
+            }, Response.ErrorListener {
+                it?.apply {
+                    Logger.e("postByVolley onErrorResponse : $it")
+                    callback.onResponse(getErrorResultInfo(it))
+                }
+            }) {
+                override fun getHeaders(): MutableMap<String, String> {
+                    val headers: HashMap<String, String> = HashMap()
+                    headers["Accept"] = "application/json"
+                    headers["Content-Type"] = "application/json;charset=UTF-8"
+                    return headers
+                }
+            }
+            //设置超时时间
+            request.retryPolicy = DefaultRetryPolicy(MAX_TIMEOUT, 1, 1.0f)
+            VolleySingleton.getInstance(context.applicationContext).addToRequestQueue(request)
         } catch (e: Exception) {
             e.printStackTrace()
         }

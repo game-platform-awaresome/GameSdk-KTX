@@ -10,6 +10,13 @@ android {
         minSdkVersion VERSION_MIN_SDK
         targetSdkVersion VERSION_TARGET_SDK
         packageBuildConfig(false)
+
+        externalNativeBuild {
+            cmake {
+                cppFlags '-std=c++11 -frtti -fexceptions'
+                abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+            }
+        }
     }
 
     buildTypes {
@@ -33,7 +40,14 @@ android {
         preDexLibraries = false
     }
 
-    compileOptions{
+    externalNativeBuild {
+        cmake {
+            path 'CMakeLists.txt'
+            version "3.10.2"
+        }
+    }
+
+    compileOptions {
         kotlinOptions.freeCompilerArgs += ['-module-name', "cn.flyfun.gamesdk.core"]
     }
 }

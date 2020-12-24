@@ -23,6 +23,7 @@ import cn.flyfun.gamesdk.core.network.SdkRequest
 import cn.flyfun.gamesdk.core.ui.DialogUtils
 import cn.flyfun.gamesdk.core.ui.dialog.InitDialog
 import cn.flyfun.gamesdk.core.ui.dialog.TipsDialog
+import cn.flyfun.gamesdk.core.utils.NTools
 import cn.flyfun.gamesdk.core.utils.SPUtils
 import cn.flyfun.support.BeanUtils
 import cn.flyfun.support.DensityUtils
@@ -61,12 +62,12 @@ class SdkBridgeImpl {
         ADIDUtils.initGoogleAdid(application) { code: Int, _ ->
             if (code == 0) {
                 Logger.d("谷歌框架可以访问，请求adid")
-                ParamsMap.put("device_id", ADIDUtils.getGoogleAdid())
-                ParamsMap.put("adid", ADIDUtils.getGoogleAdid())
+                NTools.putParam("device_id", ADIDUtils.getGoogleAdid())
+                NTools.putParam("adid", ADIDUtils.getGoogleAdid())
             } else {
                 Logger.e("谷歌框架不可以访问，使用android_id替代")
-                ParamsMap.put("device_id", DeviceInfoUtils.getAndroidDeviceId(application))
-                ParamsMap.put("adid", DeviceInfoUtils.getAndroidDeviceId(application))
+                NTools.putParam("device_id", DeviceInfoUtils.getAndroidDeviceId(application))
+                NTools.putParam("adid", DeviceInfoUtils.getAndroidDeviceId(application))
             }
         }
     }

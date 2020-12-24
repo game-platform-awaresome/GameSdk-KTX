@@ -14,6 +14,7 @@ import cn.flyfun.gamesdk.base.inter.ICallback
 import cn.flyfun.gamesdk.base.utils.Logger
 import cn.flyfun.gamesdk.core.impl.SdkBridgeImpl
 import cn.flyfun.gamesdk.core.network.Host
+import cn.flyfun.gamesdk.core.utils.NTools
 import cn.flyfun.support.ResUtils
 import cn.flyfun.support.device.DeviceInfoUtils
 import cn.flyfun.support.jarvis.OwnDebugUtils
@@ -32,6 +33,7 @@ class SdkBridge constructor(context: Context) {
     init {
         Host.initHostModel(context)
         Logger.debug = OwnDebugUtils.isOwnDebug(context)
+        NTools.init(context)
         if (mImpl == null) {
             mImpl = SdkBridgeImpl()
         }

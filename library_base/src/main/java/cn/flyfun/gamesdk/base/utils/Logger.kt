@@ -27,6 +27,7 @@ object Logger {
         }
     }
 
+    @JvmStatic
     fun logHandler(msg: String) {
         handler?.apply {
             LogRvds.logHandler(this, msg)

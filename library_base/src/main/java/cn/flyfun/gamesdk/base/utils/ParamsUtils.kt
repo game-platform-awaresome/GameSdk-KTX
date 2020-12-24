@@ -17,6 +17,7 @@ object ParamsUtils {
     private const val FLYFUN_GOOGLE_APP_ID: String = "FLYFUN_GOOGLE_APP_ID"
     private const val FLYFUN_GOOGLE_CLIENT_ID: String = "FLYFUN_GOOGLE_CLIENT_ID"
 
+    @JvmStatic
     fun getGameCode(context: Context): String {
         try {
             val code = PropertiesUtils.getValue4Properties(context, CONFIG_FILE, "flyfun", FLYFUN_GAME_CODE)

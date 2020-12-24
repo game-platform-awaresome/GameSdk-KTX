@@ -26,27 +26,27 @@ class SdkRequest {
 
     fun initSdk(context: Context, callback: IRequestCallback) {
         val jsonObject = JSONObject()
-        try {
-            jsonObject.put("common", getCommon(context))
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
+//        try {
+//            jsonObject.put("common", getCommon(context))
+//        } catch (e: JSONException) {
+//            e.printStackTrace()
+//        }
         VolleyRequest.post(context, Host.BASIC_URL_INIT_SDK, jsonObject, callback)
     }
 
     fun userLoginVerify(context: Context, loginParams: JSONObject, callback: IRequestCallback) {
-        try {
-            loginParams.put("common", getCommon(context))
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
+//        try {
+//            loginParams.put("common", getCommon(context))
+//        } catch (e: JSONException) {
+//            e.printStackTrace()
+//        }
         VolleyRequest.post(context, Host.BASIC_URL_USER_VERIFY, loginParams, callback)
     }
 
     fun userRegister(context: Context, userName: String, pwd: String, callback: IRequestCallback) {
         val jsonObject = JSONObject()
         try {
-            jsonObject.put("common", getCommon(context))
+//            jsonObject.put("common", getCommon(context))
             jsonObject.put("user_name", userName)
             jsonObject.put("pwd", pwd)
         } catch (e: JSONException) {
@@ -56,18 +56,18 @@ class SdkRequest {
     }
 
     fun userBind(context: Context, bindParams: JSONObject, callback: IRequestCallback) {
-        try {
-            bindParams.put("common", getCommon(context))
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
+//        try {
+//            bindParams.put("common", getCommon(context))
+//        } catch (e: JSONException) {
+//            e.printStackTrace()
+//        }
         VolleyRequest.post(context, Host.BASIC_URL_USER_BIND, bindParams, callback)
     }
 
     fun getCaptcha(context: Context, userName: String, callback: IRequestCallback) {
         val jsonObject = JSONObject()
         try {
-            jsonObject.put("common", getCommon(context))
+//            jsonObject.put("common", getCommon(context))
             jsonObject.put("user_name", userName)
         } catch (e: JSONException) {
             e.printStackTrace()
@@ -78,7 +78,7 @@ class SdkRequest {
     fun forgetPassword(context: Context, userName: String, pwd: String, code: String, callback: IRequestCallback) {
         val jsonObject = JSONObject()
         try {
-            jsonObject.put("common", getCommon(context))
+//            jsonObject.put("common", getCommon(context))
             jsonObject.put("user_name", userName)
             jsonObject.put("pwd", pwd)
             jsonObject.put("sms_code", code)
@@ -90,18 +90,18 @@ class SdkRequest {
 
     fun getOrderId(context: Context, chargeInfo: GameChargeInfo, callback: IRequestCallback) {
         val jsonObject = assembleChargeParams(chargeInfo)
-        try {
-            jsonObject.put("common", getCommon(context))
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
+//        try {
+//            jsonObject.put("common", getCommon(context))
+//        } catch (e: JSONException) {
+//            e.printStackTrace()
+//        }
         VolleyRequest.post(context, Host.BASIC_URL_GET_ORDER_ID, jsonObject, callback)
     }
 
     fun notifyOrder(context: Context, orderId: String, originalJson: String, signature: String, callback: IRequestCallback) {
         val jsonObject = JSONObject()
         try {
-            jsonObject.put("common", getCommon(context))
+//            jsonObject.put("common", getCommon(context))
             jsonObject.put("order_id", orderId)
             jsonObject.put("third_plat_content", originalJson)
             jsonObject.put("third_plat_sign", signature)
@@ -115,11 +115,11 @@ class SdkRequest {
 
     fun submitRoleData(context: Context, roleInfo: GameRoleInfo, callback: IRequestCallback) {
         val jsonObject = assembleRoleParams(roleInfo)
-        try {
-            jsonObject.put("common", getCommon(context))
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
+//        try {
+//            jsonObject.put("common", getCommon(context))
+//        } catch (e: JSONException) {
+//            e.printStackTrace()
+//        }
         VolleyRequest.post(context, Host.BASIC_URL_SUBMIT_ROLE, jsonObject, callback)
     }
 
