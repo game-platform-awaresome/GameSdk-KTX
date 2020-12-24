@@ -199,6 +199,10 @@ class EventTraceImpl private constructor() : IEventTrace {
         Adjust.onPause()
     }
 
+    fun getAaid(): String {
+        return Adjust.getAdid()
+    }
+
     private fun addCommonSessionParams(context: Context) {
         Adjust.addSessionCallbackParameter("game_code", ParamsUtils.getGameCode(context))
         Adjust.addSessionCallbackParameter("package_name", context.packageName)

@@ -66,6 +66,7 @@ class SdkBridgeImpl {
                 NTools.putParam("adid", ADIDUtils.getGoogleAdid())
             } else {
                 Logger.e("谷歌框架不可以访问，使用android_id替代")
+                Logger.e("谷歌框架不可以访问，Adjust上报使用SDK的aaid : " + EventTraceImpl.getInstance().getAaid())
                 NTools.putParam("device_id", DeviceInfoUtils.getAndroidDeviceId(application))
                 NTools.putParam("adid", DeviceInfoUtils.getAndroidDeviceId(application))
             }
