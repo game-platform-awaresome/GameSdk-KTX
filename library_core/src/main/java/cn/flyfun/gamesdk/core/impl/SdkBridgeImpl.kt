@@ -18,7 +18,6 @@ import cn.flyfun.gamesdk.core.entity.bean.InitBean
 import cn.flyfun.gamesdk.core.impl.login.LoginActivity
 import cn.flyfun.gamesdk.core.inter.IRequestCallback
 import cn.flyfun.gamesdk.core.inter.ImplCallback
-import cn.flyfun.gamesdk.core.network.ParamsMap
 import cn.flyfun.gamesdk.core.network.SdkRequest
 import cn.flyfun.gamesdk.core.ui.DialogUtils
 import cn.flyfun.gamesdk.core.ui.dialog.InitDialog
@@ -27,9 +26,9 @@ import cn.flyfun.gamesdk.core.utils.NTools
 import cn.flyfun.gamesdk.core.utils.SPUtils
 import cn.flyfun.support.BeanUtils
 import cn.flyfun.support.DensityUtils
-import cn.flyfun.support.adid.ADIDUtils
 import cn.flyfun.support.device.DeviceInfoUtils
 import cn.flyfun.support.encryption.Md5Utils
+import cn.flyfun.support.gaid.GAIDUtils
 import java.net.URLEncoder
 
 
@@ -59,11 +58,11 @@ class SdkBridgeImpl {
     private var gameCode = ""
 
     fun attachBaseContext(application: Application, context: Context) {
-        ADIDUtils.initGoogleAdid(application) { code: Int, _ ->
+        GAIDUtils.initGoogleAdid(application) { code: Int, _ ->
             if (code == 0) {
                 Logger.d("谷歌框架可以访问，请求adid")
-                NTools.putParam("device_id", ADIDUtils.getGoogleAdid())
-                NTools.putParam("adid", ADIDUtils.getGoogleAdid())
+                NTools.putParam("device_id", GAIDUtils.getGoogleAdid())
+                NTools.putParam("adid", GAIDUtils.getGoogleAdid())
             } else {
                 Logger.e("谷歌框架不可以访问，使用android_id替代")
                 Logger.e("谷歌框架不可以访问，Adjust上报使用SDK的aaid : " + EventTraceImpl.getInstance().getAaid())
@@ -94,7 +93,7 @@ class SdkBridgeImpl {
         }
 
         //获取当前屏幕尺寸
-        ParamsMap.put("screen", DensityUtils.getResolutionByFullScreen(activity))
+        NTools.putParam("screen", DensityUtils.getResolutionByFullScreen(activity))
         startSdkInit(activity, callback)
     }
 

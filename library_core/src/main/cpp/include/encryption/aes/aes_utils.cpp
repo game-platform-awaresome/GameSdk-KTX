@@ -10,8 +10,8 @@
 
 string AES::encrypt(JNIEnv *env, const string &key, const string &raw) {
     jclass _clz = env->FindClass(AES_CLZ_NAME);
-    if (_clz == NULL) {
-        Logger::loge("aes impl _clz is NULL !!!");
+    if (_clz == nullptr) {
+        Logger::loge("aes impl clz is nullptr !!!");
         return "";
     }
     const char *method_name = "encrypt";
@@ -25,8 +25,8 @@ string AES::encrypt(JNIEnv *env, const string &key, const string &raw) {
 
 string AES::decrypt(JNIEnv *env, const string &key, const string &enc) {
     jclass _clz = env->FindClass(AES_CLZ_NAME);
-    if (_clz == NULL) {
-        Logger::loge("aes impl _clz is NULL !!!");
+    if (_clz == nullptr) {
+        Logger::loge("aes impl clz is nullptr !!!");
         return "";
     }
     const char *method_name = "decrypt";

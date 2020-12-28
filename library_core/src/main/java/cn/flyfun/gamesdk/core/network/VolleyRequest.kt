@@ -104,56 +104,6 @@ object VolleyRequest {
         VolleySingleton.getInstance(context.applicationContext).addToRequestQueue(request)
     }
 
-    private fun postByVolley(context: Context, url: String, params: JSONObject, callback: IRequestCallback) {
-        val request: JsonRequest<JSONObject> = object : JsonObjectRequest(Method.POST, url, params, Response.Listener {
-            val resultInfo = ResultInfo()
-            resultInfo.code = -1
-            resultInfo.msg = "接口请求出错"
-            it?.apply {
-                try {
-                    resultInfo.code = it.getInt("code")
-                    resultInfo.msg = it.getString("message")
-                    if (JsonUtils.hasJsonKey(it, "data")) {
-                        resultInfo.data = decodeResult(it.getJSONObject("data"))
-                    } else {
-                        resultInfo.data = ""
-                    }
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                    resultInfo.code = -1
-                    resultInfo.msg = "解析数据异常"
-                }
-            }
-            Logger.logHandler("返回内容 : $resultInfo")
-            Logger.d("postByVolley : $resultInfo")
-            callback.onResponse(resultInfo)
-        }, Response.ErrorListener {
-            it?.apply {
-                Logger.e("postByVolley onErrorResponse : $it")
-                callback.onResponse(getErrorResultInfo(it))
-            }
-        }) {
-            override fun getHeaders(): MutableMap<String, String> {
-                val headers: HashMap<String, String> = HashMap()
-                headers["Accept"] = "application/json"
-                headers["Content-Type"] = "application/json;charset=UTF-8"
-                return headers
-            }
-        }
-        //设置超时时间
-        request.retryPolicy = DefaultRetryPolicy(MAX_TIMEOUT, 1, 1.0f)
-        VolleySingleton.getInstance(context.applicationContext).addToRequestQueue(request)
-    }
-
-    @Throws(Exception::class)
-    private fun decodeResult(jsonObject: JSONObject): String {
-        val p = URLDecoder.decode(jsonObject.getString("p"), "UTF-8")
-        val ts = URLDecoder.decode(jsonObject.getString("ts"), "UTF-8")
-        val aesKey = RsaUtils.decryptByPublicKey(ts)
-        return AesUtils.decrypt(aesKey, p)
-    }
-
-
     private fun getErrorResultInfo(volleyError: VolleyError): ResultInfo {
         val resultInfo = ResultInfo()
         resultInfo.code = 400

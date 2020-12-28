@@ -28,8 +28,8 @@ invoke_fuse_job(JNIEnv *env, jclass clazz, jobject context, jstring url, jstring
 
     Logger::log_handler(env, "请求地址 : " + _url + "\n");
     Logger::log_handler(env, "请求参数 : " + _data + "\n");
-    Logger::logd("请求地址 : " + _url);
-    Logger::logd("请求参数 : " + _data);
+    Logger::logd(env, "请求地址 : " + _url);
+    Logger::logd(env, "请求参数 : " + _data);
 
     return env->NewStringUTF(_result.c_str());
 }
@@ -37,13 +37,19 @@ invoke_fuse_job(JNIEnv *env, jclass clazz, jobject context, jstring url, jstring
 extern "C"
 JNIEXPORT jstring JNICALL
 parse_fuse_job(JNIEnv *env, jclass clazz, jobject context, jstring data) {
+
     string _response = JTools::jstring2str(env, data);
+    if (_response == "{}") {
+        Logger::log_handler(env, "返回内容 : {} \n");
+        Logger::logd(env,"返回内容 : {}");
+        return env->NewStringUTF("");
+    }
+
     Json::CharReaderBuilder _builder;
     Json::CharReader *reader_ptr(_builder.newCharReader());
     JSONCPP_STRING _errs;
     Json::Value _root;
     string _result;
-
     if (reader_ptr->parse(_response.c_str(), _response.c_str() + _response.length(), &_root,
                           &_errs)) {
         string _p = _root["p"].asString();
@@ -58,8 +64,7 @@ parse_fuse_job(JNIEnv *env, jclass clazz, jobject context, jstring data) {
     }
 
     Logger::log_handler(env, "返回内容 : " + _result + "\n");
-    Logger::logd("返回内容 : " + _result);
-
+    Logger::logd(env, "返回内容 : " + _result);
     return env->NewStringUTF(_result.c_str());
 }
 

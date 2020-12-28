@@ -21,6 +21,8 @@ public:
 
     static void logd(const string &msg);
 
+    static void logd(JNIEnv *env, const string &msg);
+
     static void loge(const string &msg);
 
     static void log_handler(JNIEnv *env, const string &msg);

@@ -118,7 +118,7 @@ class HybridActivity : Activity() {
         initWebView()
     }
 
-    @SuppressLint("SetJavaScriptEnabled", "NewApi")
+    @SuppressLint("SetJavaScriptEnabled", "NewApi", "AddJavascriptInterface")
     private fun initWebView() {
         webView = WebView(this)
         webView.isVerticalScrollBarEnabled = true

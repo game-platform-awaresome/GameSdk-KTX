@@ -58,24 +58,10 @@ string generate_random_str(int len) {
     return _result;
 }
 
-string JTools::n2j(JNIEnv *env, jobject context, int method_id) {
-    jclass _clz = env->FindClass("cn/flyfun/gamesdk/core/utils/NTools");
-    if (_clz == NULL) {
-        Logger::loge("NTools impl clz is NULL !!!");
-        return "";
-    }
-
-    const char *method_name = "n2j";
-    const char *sig = "(Landroid/content/Context;I)Ljava/lang/String;";
-    jmethodID jmethod_id = env->GetStaticMethodID(_clz, method_name, sig);
-    jstring jresult = (jstring) env->CallStaticObjectMethod(_clz, jmethod_id, context, method_id);
-    return jstring2str(env, jresult);
-}
-
 string JTools::get_game_code(JNIEnv *env, jobject context) {
     jclass _clz = env->FindClass("cn/flyfun/gamesdk/base/utils/ParamsUtils");
-    if (_clz == NULL) {
-        Logger::loge("ParamsUtils impl clz is NULL !!!");
+    if (_clz == nullptr) {
+        Logger::loge("ParamsUtils impl clz is nullptr !!!");
         return "";
     }
 
@@ -88,8 +74,8 @@ string JTools::get_game_code(JNIEnv *env, jobject context) {
 
 string JTools::get_package_name(JNIEnv *env, jobject context) {
     jclass _clz = env->GetObjectClass(context);
-    if (_clz == NULL) {
-        Logger::loge("Context clz is NULL !!!");
+    if (_clz == nullptr) {
+        Logger::loge("Context clz is nullptr !!!");
         return "";
     }
     const char *method_name = "getPackageName";
@@ -101,8 +87,8 @@ string JTools::get_package_name(JNIEnv *env, jobject context) {
 
 string JTools::get_imei(JNIEnv *env, jobject context) {
     jclass _clz = env->FindClass("cn/flyfun/support/device/DeviceInfoUtils");
-    if (_clz == NULL) {
-        Logger::loge("DeviceInfoUtils impl clz is NULL !!!");
+    if (_clz == nullptr) {
+        Logger::loge("DeviceInfoUtils impl clz is nullptr !!!");
         return "";
     }
 
@@ -115,8 +101,8 @@ string JTools::get_imei(JNIEnv *env, jobject context) {
 
 string JTools::get_local_language(JNIEnv *env, jobject context) {
     jclass _clz = env->FindClass("cn/flyfun/support/LocaleUtils");
-    if (_clz == NULL) {
-        Logger::loge("LocaleUtils impl clz is NULL !!!");
+    if (_clz == nullptr) {
+        Logger::loge("LocaleUtils impl clz is nullptr !!!");
         return "";
     }
 
@@ -129,8 +115,8 @@ string JTools::get_local_language(JNIEnv *env, jobject context) {
 
 string JTools::get_network(JNIEnv *env, jobject context) {
     jclass _clz = env->FindClass("cn/flyfun/support/device/DeviceInfoUtils");
-    if (_clz == NULL) {
-        Logger::loge("DeviceInfoUtils impl clz is NULL !!!");
+    if (_clz == nullptr) {
+        Logger::loge("DeviceInfoUtils impl clz is nullptr !!!");
         return "";
     }
 
@@ -143,8 +129,8 @@ string JTools::get_network(JNIEnv *env, jobject context) {
 
 string JTools::get_mac(JNIEnv *env, jobject context) {
     jclass _clz = env->FindClass("cn/flyfun/support/device/DeviceInfoUtils");
-    if (_clz == NULL) {
-        Logger::loge("DeviceInfoUtils impl clz is NULL !!!");
+    if (_clz == nullptr) {
+        Logger::loge("DeviceInfoUtils impl clz is nullptr !!!");
         return "";
     }
 
@@ -157,8 +143,8 @@ string JTools::get_mac(JNIEnv *env, jobject context) {
 
 string JTools::get_android_id(JNIEnv *env, jobject context) {
     jclass _clz = env->FindClass("cn/flyfun/support/device/DeviceInfoUtils");
-    if (_clz == NULL) {
-        Logger::loge("DeviceInfoUtils impl clz is NULL !!!");
+    if (_clz == nullptr) {
+        Logger::loge("DeviceInfoUtils impl clz is nullptr !!!");
         return "";
     }
 
@@ -170,17 +156,37 @@ string JTools::get_android_id(JNIEnv *env, jobject context) {
 }
 
 string JTools::get_server_version(JNIEnv *env, jobject context) {
-    return n2j(env, context, N2J_METHOD_GET_SERVER_VERSION);
+    jclass _clz = env->FindClass("cn/flyfun/gamesdk/Version");
+    if (_clz == nullptr) {
+        Logger::loge("Version impl clz is nullptr !!! ");
+        return "";
+    }
+
+    const char *field_name = "SERVER_VERSION_NAME";
+    const char *sig = "Ljava/lang/String;";
+    jfieldID jfield_id = env->GetStaticFieldID(_clz, field_name, sig);
+    jstring jresult = (jstring) env->GetStaticObjectField(_clz, jfield_id);
+    return jstring2str(env, jresult);
 }
 
 string JTools::get_client_version(JNIEnv *env, jobject context) {
-    return n2j(env, context, N2J_METHOD_GET_CLIENT_VERSION);
+    jclass _clz = env->FindClass("cn/flyfun/gamesdk/Version");
+    if (_clz == nullptr) {
+        Logger::loge("Version impl clz is nullptr !!! ");
+        return "";
+    }
+
+    const char *field_name = "CORE_VERSION_NAME";
+    const char *sig = "Ljava/lang/String;";
+    jfieldID jfield_id = env->GetStaticFieldID(_clz, field_name, sig);
+    jstring jresult = (jstring) env->GetStaticObjectField(_clz, jfield_id);
+    return jstring2str(env, jresult);
 }
 
 string JTools::get_version_code(JNIEnv *env, jobject context) {
     jclass _clz = env->FindClass("cn/flyfun/support/AppUtils");
-    if (_clz == NULL) {
-        Logger::loge("DeviceInfoUtils impl clz is NULL !!!");
+    if (_clz == nullptr) {
+        Logger::loge("DeviceInfoUtils impl clz is nullptr !!!");
         return "0";
     }
 
@@ -195,8 +201,8 @@ string JTools::get_version_code(JNIEnv *env, jobject context) {
 
 string JTools::get_version_name(JNIEnv *env, jobject context) {
     jclass _clz = env->FindClass("cn/flyfun/support/AppUtils");
-    if (_clz == NULL) {
-        Logger::loge("DeviceInfoUtils impl clz is NULL !!!");
+    if (_clz == nullptr) {
+        Logger::loge("DeviceInfoUtils impl clz is nullptr !!!");
         return "";
     }
 
@@ -216,8 +222,8 @@ string JTools::get_os_version() {
 string JTools::is_simulator(JNIEnv *env, jobject context) {
 
     jclass _clz = env->FindClass("cn/flyfun/support/device/DeviceInfoUtils");
-    if (_clz == NULL) {
-        Logger::loge("DeviceInfoUtils impl clz is NULL !!!");
+    if (_clz == nullptr) {
+        Logger::loge("DeviceInfoUtils impl clz is nullptr !!!");
         return "0";
     }
 

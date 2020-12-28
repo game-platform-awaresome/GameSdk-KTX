@@ -21,7 +21,6 @@ import cn.flyfun.support.device.DeviceInfoUtils
  */
 class InitDialog constructor(context: Context, val url: String) : Dialog(context) {
 
-    //    private lateinit var tvTitle: TextView
     lateinit var button: Button private set
     private lateinit var webView: WebView
 

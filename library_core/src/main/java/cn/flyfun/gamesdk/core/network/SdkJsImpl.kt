@@ -13,8 +13,6 @@ import java.lang.Exception
  */
 class SdkJsImpl constructor(val activity: Activity, val callback: IJsCallback) {
 
-    private val CLICK_CLOSE = 1000
-
     @JavascriptInterface
     fun jsCallback(result: String) {
         try {

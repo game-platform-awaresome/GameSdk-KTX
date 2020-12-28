@@ -36,9 +36,6 @@ add_library(
 
         src/main/cpp/include/bean/common.h
 
-        src/main/cpp/include/encryption/base64.h
-        src/main/cpp/include/encryption/base64.cpp
-
         src/main/cpp/include/encryption/url_utils.h
         src/main/cpp/include/encryption/url_utils.cpp
 

@@ -22,7 +22,6 @@ public:
 
     static string jstring2str(JNIEnv *env, jstring jstr);
 
-    static string n2j(JNIEnv *env, jobject context, int method_id);
 
     static string get_game_code(JNIEnv *env, jobject context);
 

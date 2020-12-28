@@ -21,9 +21,15 @@ object Logger {
         LogRvds.e(TAG, msg)
     }
 
+    @JvmStatic
     fun d(any: Any) {
+        d(TAG, any)
+    }
+
+    @JvmStatic
+    fun d(tag: String, any: Any) {
         if (debug) {
-            LogRvds.d(TAG, any)
+            LogRvds.d(tag, any)
         }
     }
 

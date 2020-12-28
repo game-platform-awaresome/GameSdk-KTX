@@ -9,8 +9,8 @@
 
 string RSA::encrypt_by_public_key(JNIEnv *env, const string &raw) {
     jclass _clz = env->FindClass(RSA_CLZ_NAME);
-    if (_clz == NULL) {
-        Logger::loge("rsa impl clz is NULL !!!");
+    if (_clz == nullptr) {
+        Logger::loge("rsa impl clz is nullptr !!!");
         return "";
     }
 
@@ -26,8 +26,8 @@ string RSA::encrypt_by_public_key(JNIEnv *env, const string &raw) {
 
 string RSA::decrypt_by_public_key(JNIEnv *env, const string & enc) {
     jclass _clz = env->FindClass(RSA_CLZ_NAME);
-    if (_clz == NULL) {
-        Logger::loge("rsa impl clz is NULL !!!");
+    if (_clz == nullptr) {
+        Logger::loge("rsa impl clz is nullptr !!!");
         return "";
     }
 

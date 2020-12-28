@@ -17,7 +17,7 @@ object SPUtils {
         val sp = activity.getSharedPreferences("app_dialog_show_time_type_$typeId", Context.MODE_PRIVATE)
         val editor = sp.edit()
         editor.putString("time", time)
-        editor.commit()
+        editor.apply()
     }
 
     fun getDialogShowTimeByTypeId(activity: Activity, typeId: String): Boolean {
@@ -43,7 +43,7 @@ object SPUtils {
         val sp = context.getSharedPreferences("app_cache_order", Context.MODE_PRIVATE)
         val editor = sp.edit()
         editor.putString("order_info", orderId)
-        editor.commit()
+        editor.apply()
     }
 
     fun getCacheOrder(context: Context): String {

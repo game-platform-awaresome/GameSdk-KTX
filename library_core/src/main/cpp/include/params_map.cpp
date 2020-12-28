@@ -84,7 +84,7 @@ Json::Value ParamsMap::getCommon(JNIEnv *env, jobject context) {
 }
 
 string ParamsMap::addCommon(JNIEnv *env, jobject context, jstring param) {
-    if (param == NULL) {
+    if (param == nullptr) {
         Json::Value _root;
         Json::StreamWriterBuilder _builder;
         string _data;
