@@ -11,8 +11,7 @@ import cn.flyfun.gamesdk.core.impl.login.fragment.RegisterFragment
  * @author #Suyghur.
  * Created on 2020/12/10
  */
-class LoginFragmentPagerAdapter constructor(private val titles: Array<String>, var fm: FragmentManager) : FragmentPagerAdapter(fm) {
-
+class LoginFragmentPagerAdapter constructor(private val titles: Array<String>, fm: FragmentManager, behavior: Int = 0) : FragmentPagerAdapter(fm, behavior) {
 
     var currentFragment: Fragment? = null
         private set

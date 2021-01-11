@@ -137,8 +137,13 @@ class DemoActivity : Activity(), View.OnClickListener {
                         }
                     }
                 })
+                9 -> createCrash()
             }
         }
+    }
+
+    private fun createCrash() {
+        throw RuntimeException("test crash")
     }
 
     private fun getGameRoleInfo(): GameRoleInfo {

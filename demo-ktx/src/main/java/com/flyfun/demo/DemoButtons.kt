@@ -20,7 +20,9 @@ object DemoButtons {
             Item(5, "05 角色升级上报"),
             Item(6, "06 定额充值"),
             Item(7, "07 绑定平台账号"),
-            Item(8, "08 打开客服中心"))
+            Item(8, "08 打开客服中心"),
+            Item(9, "09 崩溃测试"))
+
 
     private var bindButton: Button? = null
     private var gmButton: Button? = null

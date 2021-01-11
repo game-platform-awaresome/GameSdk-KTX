@@ -5,6 +5,7 @@
 |	2020-11-13	|	1.0.0	|	文档建立	| 麦锦培 |
 |	2020-12-07	|	1.0.1	|	1）优化SDK客服功能；<br/>2）增加对外接口getCurrentSdkVersion()获取SDK版本；<br/>3）谷歌IAB支付SDK3.0.2升级；<br/>4）修复一些已知问题	| 麦锦培 |
 |	2020-12-21	|	1.0.2	|	1）优化SDK客服功能，修复个别机型UI显示问题；<br/>2）增加对外接口openExitView()显示SDK退出框；<br/>3）接口hasBindPlatformAccount()更改为hasBindAccount()，调用时机和方式无变更；<br/>4）接口bindPlatformAccount更改为openBindAccount()，调用时机和方式无变更；<br/>5）sdk新增kotlin版本，接入方式和java一致，具体看SDK资源接入说明中的远程依赖部分<br/>6）修复一些已知问题	| 麦锦培 |
+|	2021-1-08	|	1.1.0	|	1）Adjust上报SDK4.25.0更新；<br/>2）Facebook SDK7.1.0更新；<br/>3）SDK部分feature迁移至native层；<br/>4）修复一些已知问题	| 麦锦培 |
 
 # 1.接入前检查
 
@@ -35,7 +36,7 @@ android.enableJetifier=true
 		<!-- Facebook start-->
 		<meta-data
 			android:name="com.facebook.sdk.ApplicationId"
-			android:value="填入我方提供的Facebook appid，注意前面有'\'" />
+			android:value="填入我方提供的Facebook appid，注意前面有'\'，如appid为12345678，则填写为\12345678" />
 
 		<activity
 			android:name="com.facebook.FacebookActivity"
@@ -61,16 +62,16 @@ android.enableJetifier=true
 > <font color=red size=4>**1.远程依赖（推荐）**：</font>
 
 ```groovy
-	implementation 'cn.flyfun.gamesdk:core:1.0.2'
-	//kotlin版本目前只提供远程依赖
-	//implementation 'cn.flyfun.gamesdk:core-ktx:1.0.2'
+	implementation 'cn.flyfun.gamesdk:core:1.1.0'
+	//kotlin版本目前只提供远程依赖，需本地aar请联系我方技术获取
+	//implementation 'cn.flyfun.gamesdk:core-ktx:1.1.0'
 ```
 
 > <font size=4>**2.本地aar依赖：**</font>
-拷贝lib目录下**`flyfun_core_1.0.2.aar`**到项目中，并在引入
+拷贝lib目录下**`flyfun_core_1.1.0.aar`**到项目中，并在引入
 
 ```groovy
-	api(name: 'flyfun_core_1.0.2.aar', ext: 'aar')
+	api(name: 'flyfun_core_1.1.0.aar', ext: 'aar')
 ```
 
 	添加谷歌、Facebook等第三方库资源
@@ -79,11 +80,11 @@ android.enableJetifier=true
 	implementation 'androidx.core:core:1.3.2'
 	implementation 'androidx.fragment:fragment:1.2.5'
 	implementation 'com.google.android.material:material:1.2.1'
-	implementation 'com.android.installreferrer:installreferrer:2.1'
-	implementation 'com.facebook.android:facebook-login:5.15.3'
+	implementation 'com.android.installreferrer:installreferrer:2.2'
+	implementation 'com.facebook.android:facebook-login:7.1.0'
 	implementation 'com.google.android.gms:play-services-auth:19.0.0'
 	implementation 'com.android.billingclient:billing:3.0.2'
-	implementation 'com.adjust.sdk:adjust-android:4.24.1'
+	implementation 'com.adjust.sdk:adjust-android:4.25.0'
 	implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 ```
 

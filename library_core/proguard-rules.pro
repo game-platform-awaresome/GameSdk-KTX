@@ -128,7 +128,7 @@
 -keep class **JNI* {*;}
 
 -keep class cn.flyfun.support.**{*;}
--keep class cn.flyfun.ktx.gamesdk.base.**{*;}
+-keep class cn.flyfun.gamesdk.base.**{*;}
 -keep class cn.flyfun.gamesdk.Version{*;}
 -keep class cn.flyfun.gamesdk.core.utils.NTools{public <fields>; public <methods>;}
 -keep class cn.flyfun.gamesdk.core.network.SdkJsImpl{public <fields>; public <methods>;}
