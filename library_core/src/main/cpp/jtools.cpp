@@ -2,13 +2,13 @@
 // Created by #Suyghur, on 2020/12/18.
 //
 
-#include <include/encryption/aes/aes_utils.h>
-#include <include/encryption/rsa/rsa_utils.h>
-#include <include/encryption/url_utils.h>
-#include <include/bean/common.h>
-#include "jtools.h"
-#include "logger.h"
-#include "constant.h"
+#include "include/aes_utils.h"
+#include "include/rsa_utils.h"
+#include "include/url_utils.h"
+#include "include/common.h"
+#include "include/jtools.h"
+#include "include/logger.h"
+#include "include/constant.h"
 
 char *JTools::jbytearray2chars(JNIEnv *env, jbyteArray byte_array) {
     char *chars = NULL;
@@ -22,7 +22,7 @@ char *JTools::jbytearray2chars(JNIEnv *env, jbyteArray byte_array) {
     return chars;
 }
 
-string JTools::jstring2str(JNIEnv *env, jstring jstr) {
+std::string JTools::jstring2str(JNIEnv *env, jstring jstr) {
     char *tmp_ptr = NULL;
     jclass _clz = env->FindClass("java/lang/String");
     jstring encode_model = env->NewStringUTF("UTF-8");
@@ -42,23 +42,23 @@ string JTools::jstring2str(JNIEnv *env, jstring jstr) {
         tmp_ptr[_len] = 0;
     }
     env->ReleaseByteArrayElements(byte_array, byte, JNI_FALSE);
-    string _result(tmp_ptr);
+    std::string _result(tmp_ptr);
     free(tmp_ptr);
     return _result;
 }
 
-string generate_random_str(int len) {
-    string _str = KEY_RANDOM_SOURCE_POOL;
-    string _result;
+std::string generate_random_str(int len) {
+    std::string _str = KEY_RANDOM_SOURCE_POOL;
+    std::string _result;
     for (int i = 0; i < len; ++i) {
         int _num = rand() % _str.length();
-        string _tmp(1, _str.at(_num));
+        std::string _tmp(1, _str.at(_num));
         _result.append(_tmp);
     }
     return _result;
 }
 
-string JTools::get_game_code(JNIEnv *env, jobject context) {
+std::string JTools::getGameCode(JNIEnv *env, jobject context) {
     jclass _clz = env->FindClass("cn/flyfun/gamesdk/base/utils/ParamsUtils");
     if (_clz == nullptr) {
         Logger::loge("ParamsUtils impl clz is nullptr !!!");
@@ -72,7 +72,7 @@ string JTools::get_game_code(JNIEnv *env, jobject context) {
     return jstring2str(env, jresult);
 }
 
-string JTools::get_package_name(JNIEnv *env, jobject context) {
+std::string JTools::getPackageName(JNIEnv *env, jobject context) {
     jclass _clz = env->GetObjectClass(context);
     if (_clz == nullptr) {
         Logger::loge("Context clz is nullptr !!!");
@@ -85,7 +85,7 @@ string JTools::get_package_name(JNIEnv *env, jobject context) {
     return jstring2str(env, jresult);
 }
 
-string JTools::get_imei(JNIEnv *env, jobject context) {
+std::string JTools::getImei(JNIEnv *env, jobject context) {
     jclass _clz = env->FindClass("cn/flyfun/support/device/DeviceInfoUtils");
     if (_clz == nullptr) {
         Logger::loge("DeviceInfoUtils impl clz is nullptr !!!");
@@ -99,7 +99,7 @@ string JTools::get_imei(JNIEnv *env, jobject context) {
     return jstring2str(env, jresult);
 }
 
-string JTools::get_local_language(JNIEnv *env, jobject context) {
+std::string JTools::getLocalLanguage(JNIEnv *env, jobject context) {
     jclass _clz = env->FindClass("cn/flyfun/support/LocaleUtils");
     if (_clz == nullptr) {
         Logger::loge("LocaleUtils impl clz is nullptr !!!");
@@ -113,7 +113,7 @@ string JTools::get_local_language(JNIEnv *env, jobject context) {
     return jstring2str(env, jresult);
 }
 
-string JTools::get_network(JNIEnv *env, jobject context) {
+std::string JTools::getNetwork(JNIEnv *env, jobject context) {
     jclass _clz = env->FindClass("cn/flyfun/support/device/DeviceInfoUtils");
     if (_clz == nullptr) {
         Logger::loge("DeviceInfoUtils impl clz is nullptr !!!");
@@ -127,7 +127,7 @@ string JTools::get_network(JNIEnv *env, jobject context) {
     return jstring2str(env, jresult);
 }
 
-string JTools::get_mac(JNIEnv *env, jobject context) {
+std::string JTools::getMac(JNIEnv *env, jobject context) {
     jclass _clz = env->FindClass("cn/flyfun/support/device/DeviceInfoUtils");
     if (_clz == nullptr) {
         Logger::loge("DeviceInfoUtils impl clz is nullptr !!!");
@@ -141,7 +141,7 @@ string JTools::get_mac(JNIEnv *env, jobject context) {
     return jstring2str(env, jresult);
 }
 
-string JTools::get_android_id(JNIEnv *env, jobject context) {
+std::string JTools::getAndroidId(JNIEnv *env, jobject context) {
     jclass _clz = env->FindClass("cn/flyfun/support/device/DeviceInfoUtils");
     if (_clz == nullptr) {
         Logger::loge("DeviceInfoUtils impl clz is nullptr !!!");
@@ -155,7 +155,7 @@ string JTools::get_android_id(JNIEnv *env, jobject context) {
     return jstring2str(env, jresult);
 }
 
-string JTools::get_server_version(JNIEnv *env, jobject context) {
+std::string JTools::getServerVersion(JNIEnv *env, jobject context) {
     jclass _clz = env->FindClass("cn/flyfun/gamesdk/Version");
     if (_clz == nullptr) {
         Logger::loge("Version impl clz is nullptr !!! ");
@@ -169,7 +169,7 @@ string JTools::get_server_version(JNIEnv *env, jobject context) {
     return jstring2str(env, jresult);
 }
 
-string JTools::get_client_version(JNIEnv *env, jobject context) {
+std::string JTools::getClientVersion(JNIEnv *env, jobject context) {
     jclass _clz = env->FindClass("cn/flyfun/gamesdk/Version");
     if (_clz == nullptr) {
         Logger::loge("Version impl clz is nullptr !!! ");
@@ -183,7 +183,7 @@ string JTools::get_client_version(JNIEnv *env, jobject context) {
     return jstring2str(env, jresult);
 }
 
-string JTools::get_version_code(JNIEnv *env, jobject context) {
+std::string JTools::getVersionCode(JNIEnv *env, jobject context) {
     jclass _clz = env->FindClass("cn/flyfun/support/AppUtils");
     if (_clz == nullptr) {
         Logger::loge("DeviceInfoUtils impl clz is nullptr !!!");
@@ -199,7 +199,7 @@ string JTools::get_version_code(JNIEnv *env, jobject context) {
     return result;
 }
 
-string JTools::get_version_name(JNIEnv *env, jobject context) {
+std::string JTools::getVersionName(JNIEnv *env, jobject context) {
     jclass _clz = env->FindClass("cn/flyfun/support/AppUtils");
     if (_clz == nullptr) {
         Logger::loge("DeviceInfoUtils impl clz is nullptr !!!");
@@ -213,13 +213,13 @@ string JTools::get_version_name(JNIEnv *env, jobject context) {
     return jstring2str(env, jresult);
 }
 
-string JTools::get_os_version() {
+std::string JTools::getOsVersion() {
     char version[128] = "0";
     __system_property_get("ro.build.version.release", version);
-    return string(version);
+    return std::string(version);
 }
 
-string JTools::is_simulator(JNIEnv *env, jobject context) {
+std::string JTools::isSimulator(JNIEnv *env, jobject context) {
 
     jclass _clz = env->FindClass("cn/flyfun/support/device/DeviceInfoUtils");
     if (_clz == nullptr) {
@@ -238,46 +238,45 @@ string JTools::is_simulator(JNIEnv *env, jobject context) {
     }
 }
 
-string JTools::get_mobile_brand() {
+std::string JTools::getMobileBrand() {
     char brand[128] = "0";
     __system_property_get("ro.product.brand", brand);
-    return string(brand);
+    return std::string(brand);
 }
 
-string JTools::get_model() {
+std::string JTools::getModel() {
     char model[128] = "0";
     __system_property_get("ro.product.model", model);
-    return string(model);
+    return std::string(model);
 }
 
-string JTools::get_manufacturer() {
+std::string JTools::getManufacturer() {
     char manufacturer[128] = "0";
     __system_property_get("ro.product.manufacturer", manufacturer);
-    return string(manufacturer);
+    return std::string(manufacturer);
 }
 
-string JTools::encrypt_request(JNIEnv *env, const string &data) {
+std::string JTools::encryptRequest(JNIEnv *env, const std::string &data) {
+    std::string aes_key = generate_random_str(16);
 
-    string aes_key = generate_random_str(16);
-
-    string _p = url_encode(AES::encrypt(env, aes_key, data));
-    string _ts = url_encode(RSA::encrypt_by_public_key(env, aes_key));
+    std::string _p = urlEncode(AES::encrypt(env, aes_key, data));
+    std::string _ts = urlEncode(RSA::encryptByPublicKey(env, aes_key));
 
     Json::Value _root;
     Json::StreamWriterBuilder _builder;
-    ostringstream _oss;
+    std::ostringstream _oss;
     //无格式输出
     _builder.settings_["indentation"] = "";
 
     _root["p"] = _p;
     _root["ts"] = _ts;
 
-    unique_ptr<Json::StreamWriter> json_writer(_builder.newStreamWriter());
+    std::unique_ptr<Json::StreamWriter> json_writer(_builder.newStreamWriter());
     json_writer->write(_root, &_oss);
     return _oss.str();
 }
 
-string JTools::decrypt_response(JNIEnv *env, const string &p, const string &ts) {
-    string aes_key = RSA::decrypt_by_public_key(env, url_decode(ts));
-    return AES::decrypt(env, aes_key, url_decode(p));
+std::string JTools::decryptResponse(JNIEnv *env, const std::string &p, const std::string &ts) {
+    std::string aes_key = RSA::decryptByPublicKey(env, urlDecode(ts));
+    return AES::decrypt(env, aes_key, urlDecode(p));
 }

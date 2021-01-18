@@ -7,6 +7,7 @@ import cn.flyfun.gamesdk.base.utils.ParamsUtils
 import cn.flyfun.gamesdk.core.entity.SdkBackLoginInfo
 import cn.flyfun.gamesdk.core.entity.bean.LogBean
 import cn.flyfun.gamesdk.core.inter.IEventTrace
+import cn.flyfun.gamesdk.core.utils.NTools
 import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustConfig
 import com.adjust.sdk.AdjustEvent
@@ -207,6 +208,7 @@ class EventTraceImpl private constructor() : IEventTrace {
         Adjust.addSessionCallbackParameter("game_code", ParamsUtils.getGameCode(context))
         Adjust.addSessionCallbackParameter("package_name", context.packageName)
         Adjust.addSessionCallbackParameter("platform", "android")
+        Adjust.addSessionCallbackParameter("device_id", NTools.getParam("device_id"))
     }
 
 

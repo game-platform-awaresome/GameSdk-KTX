@@ -2,15 +2,13 @@
 // Created by #Suyghur, on 2020/12/18.
 //
 
-#ifndef FLYFUNGAMESDK_JTOOLS_H
-#define FLYFUNGAMESDK_JTOOLS_H
+#ifndef FLYFUNGAMESDK_KTX_JTOOLS_H
+#define FLYFUNGAMESDK_KTX_JTOOLS_H
 
 #include <string>
 #include <jni.h>
-#include <include/json/json.h>
+#include "json.h"
 #include <sys/system_properties.h>
-
-using namespace std;
 
 #define KEY_RANDOM_SOURCE_POOL "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
@@ -20,44 +18,44 @@ public:
 
     static char *jbytearray2chars(JNIEnv *env, jbyteArray byte_array);
 
-    static string jstring2str(JNIEnv *env, jstring jstr);
+    static std::string jstring2str(JNIEnv *env, jstring jstr);
 
 
-    static string get_game_code(JNIEnv *env, jobject context);
+    static std::string getGameCode(JNIEnv *env, jobject context);
 
-    static string get_package_name(JNIEnv *env, jobject context);
+    static std::string getPackageName(JNIEnv *env, jobject context);
 
-    static string get_imei(JNIEnv *env, jobject context);
+    static std::string getImei(JNIEnv *env, jobject context);
 
-    static string get_local_language(JNIEnv *env, jobject context);
+    static std::string getLocalLanguage(JNIEnv *env, jobject context);
 
-    static string get_network(JNIEnv *env, jobject context);
+    static std::string getNetwork(JNIEnv *env, jobject context);
 
-    static string get_mac(JNIEnv *env, jobject context);
+    static std::string getMac(JNIEnv *env, jobject context);
 
-    static string get_android_id(JNIEnv *env, jobject context);
+    static std::string getAndroidId(JNIEnv *env, jobject context);
 
-    static string get_server_version(JNIEnv *env, jobject context);
+    static std::string getServerVersion(JNIEnv *env, jobject context);
 
-    static string get_client_version(JNIEnv *env, jobject context);
+    static std::string getClientVersion(JNIEnv *env, jobject context);
 
-    static string get_version_code(JNIEnv *env, jobject context);
+    static std::string getVersionCode(JNIEnv *env, jobject context);
 
-    static string get_version_name(JNIEnv *env, jobject context);
+    static std::string getVersionName(JNIEnv *env, jobject context);
 
-    static string get_os_version();
+    static std::string getOsVersion();
 
-    static string is_simulator(JNIEnv *env, jobject context);
+    static std::string isSimulator(JNIEnv *env, jobject context);
 
-    static string get_mobile_brand();
+    static std::string getMobileBrand();
 
-    static string get_model();
+    static std::string getModel();
 
-    static string get_manufacturer();
+    static std::string getManufacturer();
 
-    static string encrypt_request(JNIEnv *env, const string &data);
+    static std::string encryptRequest(JNIEnv *env, const std::string &data);
 
-    static string decrypt_response(JNIEnv *env, const string &p, const string &ts);
+    static std::string decryptResponse(JNIEnv *env, const std::string &p, const std::string &ts);
 };
 
-#endif //FLYFUNGAMESDK_JTOOLS_H
+#endif //FLYFUNGAMESDK_KTX_JTOOLS_H

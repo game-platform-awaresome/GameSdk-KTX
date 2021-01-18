@@ -21,6 +21,9 @@ object NTools {
     external fun putParam(key: String, value: String)
 
     @JvmStatic
+    external fun getParam(key: String): String
+
+    @JvmStatic
     external fun invokeFuseJob(context: Context, url: String, data: String): String
 
     @JvmStatic

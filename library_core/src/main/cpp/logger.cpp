@@ -2,7 +2,7 @@
 // Created by #Suyghur, on 2020/12/18.
 //
 
-#include "logger.h"
+#include "include/logger.h"
 
 bool Logger::is_debug = false;
 
@@ -21,13 +21,13 @@ void Logger::init(JNIEnv *env, jobject context) {
 }
 
 
-void Logger::logd(const string &msg) {
+void Logger::logd(const std::string &msg) {
     if (is_debug) {
         LOGD("JNI -> %s", msg.c_str());
     }
 }
 
-void Logger::logd(JNIEnv *env, const string &msg) {
+void Logger::logd(JNIEnv *env, const std::string &msg) {
     if (is_debug) {
         jclass _clz = env->FindClass("cn/flyfun/gamesdk/base/utils/Logger");
         if (_clz == nullptr) {
@@ -43,11 +43,11 @@ void Logger::logd(JNIEnv *env, const string &msg) {
     }
 }
 
-void Logger::loge(const string &msg) {
+void Logger::loge(const std::string &msg) {
     LOGE("JNI -> %s", msg.c_str());
 }
 
-void Logger::log_handler(JNIEnv *env, const string &msg) {
+void Logger::logHandler(JNIEnv *env, const std::string &msg) {
     if (is_debug) {
         jclass _clz = env->FindClass("cn/flyfun/gamesdk/base/utils/Logger");
         if (_clz == nullptr) {

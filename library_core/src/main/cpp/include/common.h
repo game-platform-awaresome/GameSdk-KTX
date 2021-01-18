@@ -2,21 +2,20 @@
 // Created by #Suyghur, on 2020/12/23.
 //
 
-#ifndef FLYFUNGAMESDK_COMMON_H
-#define FLYFUNGAMESDK_COMMON_H
+#ifndef FLYFUNGAMESDK_KTX_COMMON_H
+#define FLYFUNGAMESDK_KTX_COMMON_H
 
 #include <string>
 #include <map>
 #include <memory>
 
-using namespace std;
 
 class Common {
 public:
 
-    map<string, string> paramsMap;
+    std::map<std::string, std::string> paramsMap;
 
-    static Common &get_instance() {
+    static Common &getInstance() {
         static Common instance;
         return instance;
     }
@@ -28,4 +27,4 @@ private:
 
 };
 
-#endif //FLYFUNGAMESDK_COMMON_H
+#endif //FLYFUNGAMESDK_KTX_COMMON_H

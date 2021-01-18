@@ -3,12 +3,12 @@
 //
 
 #include "include/constant.h"
-#include "aes_utils.h"
+#include "include/aes_utils.h"
 #include "include/logger.h"
 #include "include/jtools.h"
 
 
-string AES::encrypt(JNIEnv *env, const string &key, const string &raw) {
+std::string AES::encrypt(JNIEnv *env, const std::string &key, const std::string &raw) {
     jclass _clz = env->FindClass(AES_CLZ_NAME);
     if (_clz == nullptr) {
         Logger::loge("aes impl clz is nullptr !!!");
@@ -23,7 +23,7 @@ string AES::encrypt(JNIEnv *env, const string &key, const string &raw) {
     return JTools::jstring2str(env, jresult);
 }
 
-string AES::decrypt(JNIEnv *env, const string &key, const string &enc) {
+std::string AES::decrypt(JNIEnv *env, const std::string &key, const std::string &enc) {
     jclass _clz = env->FindClass(AES_CLZ_NAME);
     if (_clz == nullptr) {
         Logger::loge("aes impl clz is nullptr !!!");

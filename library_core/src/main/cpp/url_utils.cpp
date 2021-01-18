@@ -2,7 +2,7 @@
 // Created by #Suyghur, on 2020/12/18.
 //
 
-#include "url_utils.h"
+#include "include/url_utils.h"
 
 inline unsigned char to_hex(unsigned char c) {
     return c > 9 ? c + 55 : c + 48;
@@ -23,8 +23,8 @@ unsigned char from_hex(unsigned char in) {
 }
 
 
-string url_encode(const string &str) {
-    string _result;
+std::string urlEncode(const std::string &str) {
+    std::string _result;
     size_t _len = str.length();
     for (size_t i = 0; i < _len; i++) {
         if (isalnum((unsigned char) str[i]) || (str[i] == '-') || (str[i] == '_') ||
@@ -41,8 +41,8 @@ string url_encode(const string &str) {
     return _result;
 }
 
-string url_decode(const string &str) {
-    string _result;
+std::string urlDecode(const std::string &str) {
+    std::string _result;
     size_t _len = str.length();
     for (size_t i = 0; i < _len; i++) {
         if (str[i] == '+') _result += ' ';

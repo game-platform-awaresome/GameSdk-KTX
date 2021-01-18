@@ -8,13 +8,11 @@
 #include <string>
 #include <jni.h>
 
-using namespace std;
-
 class RSA {
 public:
-    static string encrypt_by_public_key(JNIEnv *env, const string &raw);
+    static std::string encryptByPublicKey(JNIEnv *env, const std::string &raw);
 
-    static string decrypt_by_public_key(JNIEnv *env, const string &enc);
+    static std::string decryptByPublicKey(JNIEnv *env, const std::string &enc);
 };
 
 #endif //FLYFUNGAMESDK_RSA_UTILS_H
