@@ -45,6 +45,7 @@ class HybridActivity : Activity() {
     private var loadingDialog: CircleProgressLoadingDialog? = null
     private var exitDialog: TipsDialog? = null
     private var returnDialog: TipsDialog? = null
+    private var sslErrorDialog: TipsDialog? = null
     private val callback = object : SdkJsImpl.IJsCallback {
         override fun onCallback(tag: Int, ext: String) {
             when (tag) {
@@ -189,9 +190,11 @@ class HybridActivity : Activity() {
                 return false
             }
 
-            override fun onReceivedSslError(arg0: WebView, handler: SslErrorHandler, error: SslError) {
+            override fun onReceivedSslError(view: WebView, handler: SslErrorHandler, error: SslError) {
                 //部分手机浏览器不支持https，所以此处需要接受证书
-                handler.proceed()
+//                handler.proceed()
+                showSslErrorDialog(handler)
+
             }
         }
 
@@ -270,6 +273,26 @@ class HybridActivity : Activity() {
         loadingDialog?.show()
     }
 
+
+    private fun showSslErrorDialog(handler: SslErrorHandler) {
+        if (sslErrorDialog != null) {
+            sslErrorDialog!!.dismiss()
+            sslErrorDialog = null
+        }
+        sslErrorDialog = DialogUtils.newTipsDialog(
+                this,
+                ResUtils.getResString(this, "ffg_ssl_error_dialog_content"),
+                ResUtils.getResString(this, "ffg_ssl_error_dialog_not"),
+                ResUtils.getResString(this, "ffg_ssl_error_dialog_yes"),
+                {
+                    handler.cancel()
+                },
+                {
+                    handler.proceed()
+                }
+        )
+        sslErrorDialog?.show()
+    }
 
     private fun showReturnDialog() {
         if (returnDialog != null) {

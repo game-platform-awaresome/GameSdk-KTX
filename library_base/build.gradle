@@ -4,12 +4,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion VERSION_COMPILE_SDK
-    buildToolsVersion VERSION_BUILD_TOOLS
-
+    compileSdkVersion COMPILE_SDK_VERSION
+    buildToolsVersion BUILD_TOOLS_VERSION
     defaultConfig {
-        minSdkVersion VERSION_MIN_SDK
-        targetSdkVersion VERSION_TARGET_SDK
+        minSdkVersion MIN_SDK_VERSION
+        targetSdkVersion TARGET_SDK_VERSION
         packageBuildConfig(false)
     }
 
@@ -40,7 +39,8 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.3.2'
+    compileOnly 'androidx.core:core-ktx:1.3.2'
+    compileOnly 'cn.flyfun.zap:zap-ktx:0.0.1'
     api files('libs/flyfun_support_1.0.2.jar')
 }
 

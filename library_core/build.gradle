@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion VERSION_COMPILE_SDK
-    buildToolsVersion VERSION_BUILD_TOOLS
+    compileSdkVersion COMPILE_SDK_VERSION
+    buildToolsVersion BUILD_TOOLS_VERSION
     defaultConfig {
-        minSdkVersion VERSION_MIN_SDK
-        targetSdkVersion VERSION_TARGET_SDK
+        minSdkVersion MIN_SDK_VERSION
+        targetSdkVersion TARGET_SDK_VERSION
         packageBuildConfig(false)
 
         externalNativeBuild {
@@ -59,11 +59,12 @@ dependencies {
     implementation 'androidx.fragment:fragment-ktx:1.2.5'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'com.android.installreferrer:installreferrer:2.2'
-    implementation 'com.facebook.android:facebook-login:7.1.0'
+    implementation 'com.facebook.android:facebook-login:9.0.0'
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation 'com.android.billingclient:billing-ktx:3.0.2'
     implementation 'com.adjust.sdk:adjust-android:4.25.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'cn.flyfun.zap:zap-ktx:0.0.1'
 
     api files('libs/flyfun_base_1.1.0.jar')
 //    api project(':library_base')

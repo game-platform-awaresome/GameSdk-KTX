@@ -61,5 +61,9 @@
 
     <string name="ffg_loading_tips">信息正在載入，請稍等…</string>
 
+    <string name="ffg_ssl_error_dialog_content">SSL密鑰證書驗證異常，您是否繼續訪問？</string>
+    <string name="ffg_ssl_error_dialog_yes">是</string>
+    <string name="ffg_ssl_error_dialog_not">否</string>
+
 
 </resources>

@@ -63,5 +63,9 @@
 
     <string name="ffg_loading_tips">Loading information, please wait…</string>
 
+    <string name="ffg_ssl_error_dialog_content">SSL certificate verification is abnormal, do you continue to access？</string>
+    <string name="ffg_ssl_error_dialog_yes">Right</string>
+    <string name="ffg_ssl_error_dialog_not">Not</string>
+
 
 </resources>

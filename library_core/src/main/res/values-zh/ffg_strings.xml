@@ -62,4 +62,8 @@
 
     <string name="ffg_loading_tips">正在加载信息，请稍等…</string>
 
+    <string name="ffg_ssl_error_dialog_content">SSL证书验证异常，您是否继续访问？</string>
+    <string name="ffg_ssl_error_dialog_yes">是</string>
+    <string name="ffg_ssl_error_dialog_not">否</string>
+
 </resources>
