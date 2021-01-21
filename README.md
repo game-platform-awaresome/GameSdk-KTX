@@ -6,6 +6,7 @@
 |	2020-12-07	|	1.0.1	|	1）优化SDK客服功能；<br/>2）增加对外接口getCurrentSdkVersion()获取SDK版本；<br/>3）谷歌IAB支付SDK3.0.2升级；<br/>4）修复一些已知问题	| 麦锦培 |
 |	2020-12-21	|	1.0.2	|	1）优化SDK客服功能，修复个别机型UI显示问题；<br/>2）增加对外接口openExitView()显示SDK退出框；<br/>3）接口hasBindPlatformAccount()更改为hasBindAccount()，调用时机和方式无变更；<br/>4）接口bindPlatformAccount更改为openBindAccount()，调用时机和方式无变更；<br/>5）sdk新增kotlin版本，接入方式和java一致，具体看SDK资源接入说明中的远程依赖部分<br/>6）修复一些已知问题	| 麦锦培 |
 |	2021-1-08	|	1.1.0	|	1）Adjust上报SDK4.25.0更新；<br/>2）Facebook SDK7.1.0更新；<br/>3）SDK部分feature迁移至native层；<br/>4）修复一些已知问题	| 麦锦培 |
+|	2021-1-21	|	1.1.1	|	1）Facebook SDK9.0.0更新；<br/>2）调整Webview中SslErrorHandler回调的默认处理方案；| 麦锦培 |
 
 # 1.接入前检查
 
@@ -68,10 +69,10 @@ android.enableJetifier=true
 ```
 
 > <font size=4>**2.本地aar依赖：**</font>
-拷贝lib目录下**`flyfun_core_1.1.0.aar`**到项目中，并在引入
+拷贝lib目录下**`flyfun_core_1.1.1.aar`**到项目中，并在引入
 
 ```groovy
-	api(name: 'flyfun_core_1.1.0.aar', ext: 'aar')
+	api(name: 'flyfun_core_1.1.1.aar', ext: 'aar')
 ```
 
 	添加谷歌、Facebook等第三方库资源
