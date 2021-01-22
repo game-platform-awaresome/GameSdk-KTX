@@ -370,8 +370,8 @@ class HybridActivity : Activity() {
         finish()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
+        super.onActivityResult(requestCode, resultCode, intent)
         if (requestCode == FILE_CHOOSER_RESULT_CODE_FOR_ANDROID_5) {
             Logger.d("onActivityResult FILE_CHOOSER_RESULT_CODE_FOR_ANDROID_5")
             if (uploadMessageForAndroid5 == null) {
@@ -386,7 +386,6 @@ class HybridActivity : Activity() {
                 uploadMessageForAndroid5!!.onReceiveValue(arrayOf(this))
             }
             uploadMessageForAndroid5 = null
-
         }
     }
 

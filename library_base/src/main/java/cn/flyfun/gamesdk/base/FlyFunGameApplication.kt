@@ -3,7 +3,6 @@ package cn.flyfun.gamesdk.base
 import android.app.Application
 import android.content.Context
 import cn.flyfun.support.multidex.MultiDex
-import cn.flyfun.zap.Zap
 
 /**
  * @author #Suyghur.
