@@ -2,13 +2,12 @@ package cn.flyfun.gamesdk.core.network
 
 import android.content.Context
 import cn.flyfun.gamesdk.base.utils.Logger
+import cn.flyfun.gamesdk.core.entity.FileEntity
 import cn.flyfun.gamesdk.core.entity.ResultInfo
+import cn.flyfun.gamesdk.core.inter.IFileRequestCallback
 import cn.flyfun.gamesdk.core.inter.IRequestCallback
 import cn.flyfun.gamesdk.core.utils.NTools
 import cn.flyfun.support.JsonUtils
-import cn.flyfun.support.StrUtils
-import cn.flyfun.support.encryption.aes.AesUtils
-import cn.flyfun.support.encryption.rsa.RsaUtils
 import cn.flyfun.support.volley.DefaultRetryPolicy
 import cn.flyfun.support.volley.Response
 import cn.flyfun.support.volley.VolleyError
@@ -17,8 +16,7 @@ import cn.flyfun.support.volley.toolbox.JsonRequest
 import cn.flyfun.support.volley.toolbox.StringRequest
 import org.json.JSONException
 import org.json.JSONObject
-import java.net.URLDecoder
-import java.net.URLEncoder
+import java.io.File
 
 
 /**
@@ -102,6 +100,30 @@ object VolleyRequest {
         //设置超时时间
         request.retryPolicy = DefaultRetryPolicy(MAX_TIMEOUT, 1, 1.0f)
         VolleySingleton.getInstance(context.applicationContext).addToRequestQueue(request)
+    }
+
+    fun postFile(context: Context, url: String, file: File, params: HashMap<String, Any>, callback: IFileRequestCallback) {
+        if (!file.exists()) {
+            Logger.e("upload log file : ${file.absolutePath} is not exists ")
+            return
+        }
+        Logger.d("do upload log file")
+        val fileEntity = FileEntity("file", file.name, file)
+        val multipartRequest = MultipartRequest(
+                url,
+                params,
+                fileEntity,
+                {
+                    Logger.d("post file result $it")
+                    callback.onResponse(it)
+                },
+                {
+                    Logger.e("post file error $it")
+                    callback.onErrorResponse(it)
+                }
+        )
+        VolleySingleton.getInstance(context.applicationContext).addToRequestQueue(multipartRequest)
+
     }
 
     private fun getErrorResultInfo(volleyError: VolleyError): ResultInfo {

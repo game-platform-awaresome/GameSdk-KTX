@@ -2,6 +2,7 @@ package cn.flyfun.gamesdk.base.utils
 
 import android.os.Handler
 import cn.flyfun.support.jarvis.LogRvds
+import cn.flyfun.zap.Zap
 
 /**
  * @author #Suyghur.
@@ -12,13 +13,23 @@ object Logger {
     private const val TAG: String = "flyfun_game"
     var debug: Boolean = true
     var handler: Handler? = null
+    var zapInitSuccess = false
 
     fun i(any: Any) {
-        LogRvds.i(TAG, any)
+//        LogRvds.i(TAG, any)
+        if (zapInitSuccess) {
+            Zap.i(TAG, any)
+        } else {
+            LogRvds.i(TAG, any)
+        }
     }
 
     fun e(msg: String) {
-        LogRvds.e(TAG, msg)
+        if (zapInitSuccess) {
+            Zap.e(TAG, msg)
+        } else {
+            LogRvds.e(TAG, msg)
+        }
     }
 
     @JvmStatic
@@ -29,7 +40,11 @@ object Logger {
     @JvmStatic
     fun d(tag: String, any: Any) {
         if (debug) {
-            LogRvds.d(tag, any)
+            if (zapInitSuccess) {
+                Zap.d(tag, any)
+            } else {
+                LogRvds.d(tag, any)
+            }
         }
     }
 

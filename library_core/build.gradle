@@ -66,8 +66,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 //    implementation 'cn.flyfun.zap:zap-ktx:0.0.1'
 
-    api files('libs/flyfun_base_1.1.0.jar')
-//    api project(':library_base')
+//    api files('libs/flyfun_base_1.1.0.jar')
+    api project(':library_base')
 }
 
 apply from: 'upload.gradle'

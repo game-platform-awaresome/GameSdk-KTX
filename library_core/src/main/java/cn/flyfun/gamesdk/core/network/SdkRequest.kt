@@ -3,9 +3,13 @@ package cn.flyfun.gamesdk.core.network
 import android.content.Context
 import cn.flyfun.gamesdk.base.entity.GameChargeInfo
 import cn.flyfun.gamesdk.base.entity.GameRoleInfo
+import cn.flyfun.gamesdk.base.utils.Logger
+import cn.flyfun.gamesdk.core.inter.IFileRequestCallback
 import cn.flyfun.gamesdk.core.inter.IRequestCallback
+import cn.flyfun.support.volley.VolleyError
 import org.json.JSONException
 import org.json.JSONObject
+import java.io.File
 
 
 /**
@@ -92,6 +96,31 @@ class SdkRequest {
     fun submitRoleData(context: Context, roleInfo: GameRoleInfo, callback: IRequestCallback) {
         val jsonObject = assembleRoleParams(roleInfo)
         VolleyRequest.post(context, Host.BASIC_URL_SUBMIT_ROLE, jsonObject, callback)
+    }
+
+    fun uploadLogFile(context: Context) {
+        val zipFile = File(context.getExternalFilesDir("zap")?.absolutePath + "/tmp/log.zip")
+        try {
+//            uploadParams.put("log_report_id", "123")
+//            uploadParams.put("file_name", "log.zip")
+//            uploadParams.put("current_file_md5", "123")
+//            uploadParams.put("user_id", "12345")
+            val params = HashMap<String, Any>()
+            params["log_report_id"] = "123"
+            params["file_name"] = "log.zip"
+            params["current_file_md5"] = "123"
+            params["user_id"] = "12345"
+            VolleyRequest.postFile(context, url = "http://192.168.20.125:9876/v1/upload/LogUpload", zipFile, params, object : IFileRequestCallback {
+                override fun onResponse(result: String) {
+                    Logger.d("result : $result")
+                }
+
+                override fun onErrorResponse(error: VolleyError) {
+                }
+            })
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
     }
 
     private fun assembleChargeParams(chargeInfo: GameChargeInfo): JSONObject {

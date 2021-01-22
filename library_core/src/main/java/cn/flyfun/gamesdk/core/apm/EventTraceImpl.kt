@@ -43,12 +43,10 @@ class EventTraceImpl private constructor() : IEventTrace {
             Logger.e("EventTrace初始化失败，trace_id为空")
             return
         }
-
         if (logBean == null) {
             Logger.e("EventTrace初始化失败，读取assets/log_event.json异常")
             return
         }
-
         val config = AdjustConfig(context, appToken, AdjustConfig.ENVIRONMENT_PRODUCTION)
         config.setLogLevel(LogLevel.VERBOSE)
         Adjust.onCreate(config)
@@ -68,6 +66,7 @@ class EventTraceImpl private constructor() : IEventTrace {
         resetSessionParams()
         val loginEvent = AdjustEvent(logBean!!.eventLoginSuccess)
         Adjust.addSessionCallbackParameter("user_id", SdkBackLoginInfo.instance.userId)
+        Adjust.addSessionCallbackParameter("device_id", NTools.getParam("device_id"))
         Adjust.trackEvent(loginEvent)
     }
 
@@ -82,6 +81,7 @@ class EventTraceImpl private constructor() : IEventTrace {
         resetSessionParams()
         val registerEvent = AdjustEvent(logBean!!.eventUserRegister)
         Adjust.addSessionCallbackParameter("user_id", SdkBackLoginInfo.instance.userId)
+        Adjust.addSessionCallbackParameter("device_id", NTools.getParam("device_id"))
         Adjust.trackEvent(registerEvent)
     }
 
@@ -92,6 +92,7 @@ class EventTraceImpl private constructor() : IEventTrace {
         resetSessionParams()
         val chargeEvent = AdjustEvent(logBean!!.eventChargeSuccess)
         Adjust.addSessionCallbackParameter("user_id", SdkBackLoginInfo.instance.userId)
+        Adjust.addSessionCallbackParameter("device_id", NTools.getParam("device_id"))
         if (eventMap.containsKey("role_id")) {
             Adjust.addSessionCallbackParameter("role_id", java.lang.String.valueOf(eventMap["role_id"]))
         } else {
@@ -133,6 +134,7 @@ class EventTraceImpl private constructor() : IEventTrace {
         resetSessionParams()
         val roleCreateEvent = AdjustEvent(logBean!!.eventRoleCreate)
         Adjust.addSessionCallbackParameter("user_id", SdkBackLoginInfo.instance.userId)
+        Adjust.addSessionCallbackParameter("device_id", NTools.getParam("device_id"))
         if (eventMap.containsKey("role_id")) {
             Adjust.addSessionCallbackParameter("role_id", java.lang.String.valueOf(eventMap["role_id"]))
         } else {
@@ -163,6 +165,7 @@ class EventTraceImpl private constructor() : IEventTrace {
         resetSessionParams()
         val roleLauncherEvent = AdjustEvent(logBean!!.eventRoleLauncher)
         Adjust.addSessionCallbackParameter("user_id", SdkBackLoginInfo.instance.userId)
+        Adjust.addSessionCallbackParameter("device_id", NTools.getParam("device_id"))
         if (eventMap.containsKey("role_id")) {
             Adjust.addSessionCallbackParameter("role_id", java.lang.String.valueOf(eventMap["role_id"]))
         } else {
@@ -208,7 +211,6 @@ class EventTraceImpl private constructor() : IEventTrace {
         Adjust.addSessionCallbackParameter("game_code", ParamsUtils.getGameCode(context))
         Adjust.addSessionCallbackParameter("package_name", context.packageName)
         Adjust.addSessionCallbackParameter("platform", "android")
-        Adjust.addSessionCallbackParameter("device_id", NTools.getParam("device_id"))
     }
 
 
@@ -218,6 +220,7 @@ class EventTraceImpl private constructor() : IEventTrace {
         Adjust.removeSessionCallbackParameter("role_name")
         Adjust.removeSessionCallbackParameter("server_code")
         Adjust.removeSessionCallbackParameter("server_name")
+        Adjust.removeSessionCallbackParameter("device_id")
     }
 
     private fun getLogJson(context: Context): String {

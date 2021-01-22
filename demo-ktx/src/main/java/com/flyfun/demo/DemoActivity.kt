@@ -16,8 +16,10 @@ import cn.flyfun.gamesdk.base.FlyFunGame
 import cn.flyfun.gamesdk.base.entity.GameChargeInfo
 import cn.flyfun.gamesdk.base.entity.GameRoleInfo
 import cn.flyfun.gamesdk.base.inter.ICallback
+import cn.flyfun.gamesdk.core.network.SdkRequest
 import cn.flyfun.support.encryption.Md5Utils
 import cn.flyfun.support.jarvis.Toast
+import cn.flyfun.zap.toolkit.FileUtils
 import org.json.JSONException
 import org.json.JSONObject
 import kotlin.system.exitProcess
@@ -138,12 +140,14 @@ class DemoActivity : Activity(), View.OnClickListener {
                     }
                 })
                 9 -> createCrash()
+                10 -> FileUtils.packLogFiles(this@DemoActivity)
+                11 -> SdkRequest.getInstance().uploadLogFile(this@DemoActivity)
             }
         }
     }
 
     private fun createCrash() {
-        throw RuntimeException("test crash")
+        throw RuntimeException("test runtime exception crash")
     }
 
     private fun getGameRoleInfo(): GameRoleInfo {

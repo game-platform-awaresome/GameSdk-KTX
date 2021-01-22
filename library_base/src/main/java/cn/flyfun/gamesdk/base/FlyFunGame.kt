@@ -48,7 +48,6 @@ class FlyFunGame private constructor() {
         if (TextUtils.isEmpty(processName) || processName != context.packageName) {
             return
         }
-        Logger.i("FlyFunGameSdk attachBaseContext ...")
         if (mSdkBridge == null) {
             mSdkBridge = SdkBridgeManager.getSdkBridgeManager(context)
         }
@@ -78,8 +77,6 @@ class FlyFunGame private constructor() {
         if (TextUtils.isEmpty(processName) || processName != application.packageName) {
             return
         }
-        Logger.i("FlyFunGameSdk initApplication ...")
-
         if (mSdkBridge == null) {
             mSdkBridge = SdkBridgeManager.getSdkBridgeManager(application)
         }
@@ -104,7 +101,6 @@ class FlyFunGame private constructor() {
             Logger.e("FlyFunGameSdk initFuseSdk 已经执行，拦截此次调用")
             return
         }
-        Logger.i("FlyFunGameSdk initialize ...")
         isSdkInit = true
         SdkBridgeManager.call(FunctionName.INITIALIZE, arrayOf(Activity::class.java, Boolean::class.java, ICallback::class.java), arrayOf(activity, isLandscape, callback))
     }
@@ -126,8 +122,6 @@ class FlyFunGame private constructor() {
             return
         }
         clickLoginTime = System.currentTimeMillis()
-        Logger.i("FlyFunGameSdk login ...")
-        Logger.i("当前SDK版本:" + getCurrentSdkVersion())
         SdkBridgeManager.call(FunctionName.LOGIN, arrayOf(Activity::class.java, Boolean::class.java, ICallback::class.java), arrayOf(activity, isAuto, callback))
     }
 
@@ -152,7 +146,6 @@ class FlyFunGame private constructor() {
             return
         }
         clickLogoutTime = System.currentTimeMillis()
-        Logger.i("FlyFunGameSdk logout ...")
         SdkBridgeManager.call(FunctionName.LOGOUT, arrayOf(Activity::class.java, ICallback::class.java), arrayOf(activity, callback))
     }
 
@@ -174,7 +167,6 @@ class FlyFunGame private constructor() {
             return
         }
         clickChargeTime = System.currentTimeMillis()
-        Logger.i("FlyFunGameSdk charge ...")
         SdkBridgeManager.call(FunctionName.CHARGE, arrayOf(Activity::class.java, GameChargeInfo::class.java, ICallback::class.java), arrayOf(activity, chargeInfo, callback))
     }
 
@@ -189,7 +181,6 @@ class FlyFunGame private constructor() {
             Logger.e("roleCreate error ... SdkBridgeManager is null")
             return
         }
-        Logger.i("FlyFunGameSdk roleCreate ...")
         SdkBridgeManager.call(FunctionName.ROLE_CREATE, arrayOf(Activity::class.java, GameRoleInfo::class.java), arrayOf(activity, roleInfo))
     }
 
@@ -204,7 +195,6 @@ class FlyFunGame private constructor() {
             Logger.e("roleLauncher error ... SdkBridgeManager is null")
             return
         }
-        Logger.i("FlyFunGameSdk roleLauncher ...")
         SdkBridgeManager.call(FunctionName.ROLE_LAUNCHER, arrayOf(Activity::class.java, GameRoleInfo::class.java), arrayOf(activity, roleInfo))
     }
 
@@ -219,7 +209,6 @@ class FlyFunGame private constructor() {
             Logger.e("roleUpgrade error ... SdkBridgeManager is null")
             return
         }
-        Logger.i("FlyFunGameSdk roleUpgrade ...")
         SdkBridgeManager.call(FunctionName.ROLE_UPGRADE, arrayOf(Activity::class.java, GameRoleInfo::class.java), arrayOf(activity, roleInfo))
     }
 
@@ -233,7 +222,6 @@ class FlyFunGame private constructor() {
             Logger.e("openExitView error ... SdkBridgeManager is null")
             return
         }
-        Logger.i("FlyFunGameSdk openExitView ...")
         SdkBridgeManager.call(FunctionName.OPEN_EXIT_VIEW, arrayOf(Activity::class.java, ICallback::class.java), arrayOf(activity, callback))
     }
 
@@ -248,7 +236,6 @@ class FlyFunGame private constructor() {
             Logger.e("openBindAccount error ... SdkBridgeManager is null")
             return
         }
-        Logger.i("FlyFunGameSdk openBindAccount ...")
         SdkBridgeManager.call(FunctionName.OPEN_BIND_ACCOUNT, arrayOf(Activity::class.java, ICallback::class.java), arrayOf(activity, callback))
     }
 
@@ -263,7 +250,6 @@ class FlyFunGame private constructor() {
             Logger.e("openGmCenter error ... SdkBridgeManager is null")
             return
         }
-        Logger.i("FlyFunGameSdk openGmCenter ...")
         SdkBridgeManager.call(FunctionName.OPEN_GM_CENTER, arrayOf(Activity::class.java, ICallback::class.java), arrayOf(activity, callback))
     }
 

@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.text.TextUtils
+import cn.flyfun.gamesdk.Version
 import cn.flyfun.gamesdk.base.entity.GameChargeInfo
 import cn.flyfun.gamesdk.base.entity.GameRoleInfo
 import cn.flyfun.gamesdk.base.inter.ICallback
@@ -29,6 +30,8 @@ import cn.flyfun.support.DensityUtils
 import cn.flyfun.support.device.DeviceInfoUtils
 import cn.flyfun.support.encryption.Md5Utils
 import cn.flyfun.support.gaid.GAIDUtils
+import cn.flyfun.zap.Zap
+import cn.flyfun.zap.ZapInitCallback
 import java.net.URLEncoder
 
 
@@ -58,9 +61,16 @@ class SdkBridgeImpl {
     private var gameCode = ""
 
     fun attachBaseContext(application: Application, context: Context) {
+        Zap.default(application, object : ZapInitCallback {
+            override fun onResult(code: Int, msg: String) {
+                if (code == 0) {
+                    Logger.zapInitSuccess = true
+                }
+            }
+        }, debug = Logger.debug)
         GAIDUtils.initGoogleAdid(application) { code: Int, _ ->
             if (code == 0) {
-                Logger.d("谷歌框架可以访问，请求adid")
+                Logger.i("谷歌框架可以访问，请求adid")
                 NTools.putParam("device_id", GAIDUtils.getGoogleAdid())
                 NTools.putParam("adid", GAIDUtils.getGoogleAdid())
             } else {
@@ -70,13 +80,17 @@ class SdkBridgeImpl {
                 NTools.putParam("adid", DeviceInfoUtils.getAndroidDeviceId(application))
             }
         }
+
+        Logger.i("FlyFunGameSdk attachBaseContext ...")
     }
 
     fun initApplication(application: Application) {
+        Logger.i("FlyFunGameSdk initApplication ...")
         EventTraceImpl.getInstance().onInitialize(application)
     }
 
     fun initialize(activity: Activity, isLand: Boolean, callback: ICallback) {
+        Logger.i("FlyFunGameSdk initialize ...")
         this.mActivity = activity
         isLandscape = isLand
         this.gameCode = ParamsUtils.getGameCode(activity)
@@ -153,6 +167,8 @@ class SdkBridgeImpl {
     }
 
     fun login(activity: Activity, isAutoLogin: Boolean, callback: ICallback) {
+        Logger.i("FlyFunGameSdk login ...")
+        Logger.i("当前SDK版本:" + Version.CORE_VERSION_NAME)
         this.mActivity = activity
         if (!initState) {
             Logger.e("登录失败，SDK未初始化或初始化失败")
@@ -211,6 +227,7 @@ class SdkBridgeImpl {
     }
 
     fun logout(activity: Activity, callback: ICallback) {
+        Logger.i("FlyFunGameSdk logout ...")
         this.mActivity = activity
         this.roleInfo = null
         SdkBackLoginInfo.instance.reset()
@@ -218,6 +235,7 @@ class SdkBridgeImpl {
     }
 
     fun charge(activity: Activity, chargeInfo: GameChargeInfo, callback: ICallback) {
+        Logger.i("FlyFunGameSdk charge ...")
         this.mActivity = activity
         if (!initState) {
             Logger.e("支付失败，SDK未初始化或初始化失败")
@@ -260,6 +278,7 @@ class SdkBridgeImpl {
     }
 
     fun roleCreate(activity: Activity, roleInfo: GameRoleInfo) {
+        Logger.i("FlyFunGameSdk roleCreate ...")
         this.mActivity = activity
         this.roleInfo = roleInfo
         submitRoleData(activity, roleInfo)
@@ -272,6 +291,7 @@ class SdkBridgeImpl {
     }
 
     fun roleLauncher(activity: Activity, roleInfo: GameRoleInfo) {
+        Logger.i("FlyFunGameSdk roleLauncher ...")
         this.mActivity = activity
         this.roleInfo = roleInfo
         submitRoleData(activity, roleInfo)
@@ -284,6 +304,7 @@ class SdkBridgeImpl {
     }
 
     fun roleUpgrade(activity: Activity, roleInfo: GameRoleInfo) {
+        Logger.i("FlyFunGameSdk roleUpgrade ...")
         this.mActivity = activity
         this.roleInfo = roleInfo
         submitRoleData(activity, roleInfo)
@@ -299,6 +320,7 @@ class SdkBridgeImpl {
     }
 
     fun openExitView(activity: Activity, callback: ICallback) {
+        Logger.i("FlyFunGameSdk openExitView ...")
         this.mActivity = activity
         exitTipsDialog?.apply {
             if (isShowing) {
@@ -327,6 +349,7 @@ class SdkBridgeImpl {
     }
 
     fun openBindAccount(activity: Activity, callback: ICallback) {
+        Logger.i("FlyFunGameSdk openBindAccount ...")
         this.mActivity = activity
         BindActivity.bind(activity, object : ImplCallback {
             override fun onSuccess(result: String) {
@@ -341,6 +364,7 @@ class SdkBridgeImpl {
     }
 
     fun openGmCenter(activity: Activity, callback: ICallback) {
+        Logger.i("FlyFunGameSdk openGmCenter ...")
         this.mActivity = activity
         if (initBean == null) {
             Logger.e("跳转客服中心失败，SDK未初始化或初始化失败")
@@ -391,6 +415,9 @@ class SdkBridgeImpl {
     fun onPause(activity: Activity) {
         this.mActivity = activity
         EventTraceImpl.getInstance().onPause()
+        if (Logger.zapInitSuccess) {
+            Zap.flush()
+        }
     }
 
     fun onStop(activity: Activity) {
@@ -399,6 +426,9 @@ class SdkBridgeImpl {
 
     fun onDestroy(activity: Activity?) {
         this.mActivity = activity
+        if (Logger.zapInitSuccess) {
+            Zap.release()
+        }
     }
 
     fun onActivityResult(activity: Activity, requestCode: Int, resultCode: Int, data: Intent?) {
