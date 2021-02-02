@@ -8,34 +8,34 @@
 #include "include/jtools.h"
 
 std::string RSA::encryptByPublicKey(JNIEnv *env, const std::string &raw) {
-    jclass _clz = env->FindClass(RSA_CLZ_NAME);
-    if (_clz == nullptr) {
+    jclass clz = env->FindClass(RSA_CLZ_NAME);
+    if (clz == nullptr) {
         Logger::loge("rsa impl clz is nullptr !!!");
         return "";
     }
 
     const char *method_name = "encryptByPublicKey";
     const char *sig = "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;";
-    jmethodID jmethod_id = env->GetStaticMethodID(_clz, method_name, sig);
+    jmethodID jmethod_id = env->GetStaticMethodID(clz, method_name, sig);
     jstring jkey = env->NewStringUTF(RSA_PUBLIC_1024_X509_PEM);
     jstring jraw = env->NewStringUTF(raw.c_str());
-    jstring jresult = (jstring) env->CallStaticObjectMethod(_clz, jmethod_id, jkey, jraw);
+    jstring jresult = (jstring) env->CallStaticObjectMethod(clz, jmethod_id, jkey, jraw);
     return JTools::jstring2str(env, jresult);
 }
 
 
-std::string RSA::decryptByPublicKey(JNIEnv *env, const std::string & enc) {
-    jclass _clz = env->FindClass(RSA_CLZ_NAME);
-    if (_clz == nullptr) {
+std::string RSA::decryptByPublicKey(JNIEnv *env, const std::string &enc) {
+    jclass clz = env->FindClass(RSA_CLZ_NAME);
+    if (clz == nullptr) {
         Logger::loge("rsa impl clz is nullptr !!!");
         return "";
     }
 
     const char *method_name = "decryptByPublicKey";
     const char *sig = "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;";
-    jmethodID jmethod_id = env->GetStaticMethodID(_clz, method_name, sig);
+    jmethodID jmethod_id = env->GetStaticMethodID(clz, method_name, sig);
     jstring jkey = env->NewStringUTF(RSA_PUBLIC_1024_X509_PEM);
     jstring jenc = env->NewStringUTF(enc.c_str());
-    jstring jresult = (jstring) env->CallStaticObjectMethod(_clz, jmethod_id, jkey, jenc);
+    jstring jresult = (jstring) env->CallStaticObjectMethod(clz, jmethod_id, jkey, jenc);
     return JTools::jstring2str(env, jresult);
 }

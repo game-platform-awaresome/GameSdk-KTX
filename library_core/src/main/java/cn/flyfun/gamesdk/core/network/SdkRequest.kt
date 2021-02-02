@@ -3,7 +3,7 @@ package cn.flyfun.gamesdk.core.network
 import android.content.Context
 import cn.flyfun.gamesdk.base.entity.GameChargeInfo
 import cn.flyfun.gamesdk.base.entity.GameRoleInfo
-import cn.flyfun.gamesdk.core.inter.IRequestCallback
+import cn.flyfun.gamesdk.core.internal.IRequestCallback
 import org.json.JSONException
 import org.json.JSONObject
 

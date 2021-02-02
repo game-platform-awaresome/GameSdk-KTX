@@ -11,13 +11,13 @@ import cn.flyfun.gamesdk.base.entity.GameRoleInfo
 import cn.flyfun.gamesdk.base.inter.ICallback
 import cn.flyfun.gamesdk.base.utils.Logger
 import cn.flyfun.gamesdk.base.utils.ParamsUtils
-import cn.flyfun.gamesdk.core.apm.EventTraceImpl
+import cn.flyfun.gamesdk.core.fama.EventTraceImpl
 import cn.flyfun.gamesdk.core.entity.ResultInfo
 import cn.flyfun.gamesdk.core.entity.SdkBackLoginInfo
 import cn.flyfun.gamesdk.core.entity.bean.InitBean
 import cn.flyfun.gamesdk.core.impl.login.LoginActivity
-import cn.flyfun.gamesdk.core.inter.IRequestCallback
-import cn.flyfun.gamesdk.core.inter.ImplCallback
+import cn.flyfun.gamesdk.core.internal.IRequestCallback
+import cn.flyfun.gamesdk.core.internal.ImplCallback
 import cn.flyfun.gamesdk.core.network.SdkRequest
 import cn.flyfun.gamesdk.core.ui.DialogUtils
 import cn.flyfun.gamesdk.core.ui.dialog.InitDialog
@@ -65,7 +65,6 @@ class SdkBridgeImpl {
                 NTools.putParam("adid", GAIDUtils.getGoogleAdid())
             } else {
                 Logger.e("谷歌框架不可以访问，使用android_id替代")
-                Logger.e("谷歌框架不可以访问，Adjust上报使用SDK的aaid : " + EventTraceImpl.getInstance().getAaid())
                 NTools.putParam("device_id", DeviceInfoUtils.getAndroidDeviceId(application))
                 NTools.putParam("adid", DeviceInfoUtils.getAndroidDeviceId(application))
             }
@@ -198,9 +197,9 @@ class SdkBridgeImpl {
             override fun onSuccess(result: String) {
                 callback.onResult(0, result)
                 if (SdkBackLoginInfo.instance.isRegUser == 1) {
-                    EventTraceImpl.getInstance().onRegister()
+                    EventTraceImpl.getInstance().onRegister(activity)
                 }
-                EventTraceImpl.getInstance().onLogin()
+                EventTraceImpl.getInstance().onLogin(activity)
             }
 
             override fun onFailed(result: String) {
@@ -249,7 +248,7 @@ class SdkBridgeImpl {
                 params["role_name"] = innerChargeInfo.roleName.toString()
                 params["server_code"] = innerChargeInfo.serverCode.toString()
                 params["server_name"] = innerChargeInfo.serverName.toString()
-                EventTraceImpl.getInstance().onCharge(params)
+                EventTraceImpl.getInstance().onCharge(activity, params)
                 callback.onResult(0, result)
             }
 
@@ -268,7 +267,7 @@ class SdkBridgeImpl {
         params["role_name"] = roleInfo.roleName.toString()
         params["server_code"] = roleInfo.serverCode.toString()
         params["server_name"] = roleInfo.serverName.toString()
-        EventTraceImpl.getInstance().onRoleCreate(params)
+        EventTraceImpl.getInstance().onRoleCreate(activity, params)
     }
 
     fun roleLauncher(activity: Activity, roleInfo: GameRoleInfo) {
@@ -280,7 +279,7 @@ class SdkBridgeImpl {
         params["role_name"] = roleInfo.roleName.toString()
         params["server_code"] = roleInfo.serverCode.toString()
         params["server_name"] = roleInfo.serverName.toString()
-        EventTraceImpl.getInstance().onRoleCreate(params)
+        EventTraceImpl.getInstance().onRoleLauncher(activity, params)
     }
 
     fun roleUpgrade(activity: Activity, roleInfo: GameRoleInfo) {
@@ -381,7 +380,7 @@ class SdkBridgeImpl {
 
     fun onResume(activity: Activity) {
         this.mActivity = activity
-        EventTraceImpl.getInstance().onResume()
+        EventTraceImpl.getInstance().onResume(activity)
     }
 
     fun onRestart(activity: Activity) {
@@ -390,7 +389,7 @@ class SdkBridgeImpl {
 
     fun onPause(activity: Activity) {
         this.mActivity = activity
-        EventTraceImpl.getInstance().onPause()
+        EventTraceImpl.getInstance().onPause(activity)
     }
 
     fun onStop(activity: Activity) {

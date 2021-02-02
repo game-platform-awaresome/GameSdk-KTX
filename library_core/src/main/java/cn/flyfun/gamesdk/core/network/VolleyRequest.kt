@@ -3,12 +3,9 @@ package cn.flyfun.gamesdk.core.network
 import android.content.Context
 import cn.flyfun.gamesdk.base.utils.Logger
 import cn.flyfun.gamesdk.core.entity.ResultInfo
-import cn.flyfun.gamesdk.core.inter.IRequestCallback
+import cn.flyfun.gamesdk.core.internal.IRequestCallback
 import cn.flyfun.gamesdk.core.utils.NTools
 import cn.flyfun.support.JsonUtils
-import cn.flyfun.support.StrUtils
-import cn.flyfun.support.encryption.aes.AesUtils
-import cn.flyfun.support.encryption.rsa.RsaUtils
 import cn.flyfun.support.volley.DefaultRetryPolicy
 import cn.flyfun.support.volley.Response
 import cn.flyfun.support.volley.VolleyError

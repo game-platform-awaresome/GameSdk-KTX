@@ -1,4 +1,4 @@
-package cn.flyfun.gamesdk.core.inter
+package cn.flyfun.gamesdk.core.internal
 
 import cn.flyfun.gamesdk.core.entity.ResultInfo
 

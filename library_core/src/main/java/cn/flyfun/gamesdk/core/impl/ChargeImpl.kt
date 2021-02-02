@@ -6,8 +6,8 @@ import android.text.TextUtils
 import cn.flyfun.gamesdk.base.entity.GameChargeInfo
 import cn.flyfun.gamesdk.base.utils.Logger
 import cn.flyfun.gamesdk.core.entity.ResultInfo
-import cn.flyfun.gamesdk.core.inter.IRequestCallback
-import cn.flyfun.gamesdk.core.inter.ImplCallback
+import cn.flyfun.gamesdk.core.internal.IRequestCallback
+import cn.flyfun.gamesdk.core.internal.ImplCallback
 import cn.flyfun.gamesdk.core.network.SdkRequest
 import cn.flyfun.gamesdk.core.ui.DialogUtils
 import cn.flyfun.gamesdk.core.utils.SPUtils
