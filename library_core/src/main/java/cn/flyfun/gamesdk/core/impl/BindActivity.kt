@@ -15,9 +15,8 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import cn.flyfun.gamesdk.core.entity.*
-import cn.flyfun.gamesdk.core.entity.*
-import cn.flyfun.gamesdk.core.inter.IRequestCallback
-import cn.flyfun.gamesdk.core.inter.ImplCallback
+import cn.flyfun.gamesdk.core.internal.IRequestCallback
+import cn.flyfun.gamesdk.core.internal.ImplCallback
 import cn.flyfun.gamesdk.core.network.SdkRequest
 import cn.flyfun.gamesdk.core.ui.DialogUtils
 import cn.flyfun.gamesdk.core.ui.EventEditText

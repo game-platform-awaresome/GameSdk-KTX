@@ -15,61 +15,60 @@ static void init(JNIEnv *env, jclass clazz, jobject context) {
 }
 
 static jstring
-invokeFuseJob(JNIEnv *env, jclass clazz, jobject context, jstring url, jstring data) {
-    std::string _data = ParamsMap::addCommon(env, context, data);
-    std::string _result = JTools::encryptRequest(env, _data);
-    std::string _url = JTools::jstring2str(env, url);
+invokeFuseJob(JNIEnv *env, jclass clazz, jobject context, jstring _url, jstring _data) {
+    std::string data = ParamsMap::addCommon(env, context, _data);
+    std::string result = JTools::encryptRequest(env, data);
+    std::string url = JTools::jstring2str(env, _url);
 
-    Logger::logHandler(env, "请求地址 : " + _url + "\n");
-    Logger::logHandler(env, "请求参数 : " + _data + "\n");
-    Logger::logd(env, "请求地址 : " + _url);
-    Logger::logd(env, "请求参数 : " + _data);
+    Logger::logHandler(env, "请求地址 : " + url + "\n");
+    Logger::logHandler(env, "请求参数 : " + data + "\n");
+    Logger::logd(env, "请求地址 : " + url);
+    Logger::logd(env, "请求参数 : " + data);
 
-    return env->NewStringUTF(_result.c_str());
+    return env->NewStringUTF(result.c_str());
 }
 
 static jstring parseFuseJob(JNIEnv *env, jclass clazz, jobject context, jstring data) {
-    std::string _response = JTools::jstring2str(env, data);
-    if (_response == "{}") {
+    std::string response = JTools::jstring2str(env, data);
+    if (response == "{}") {
         Logger::logHandler(env, "返回内容 : {} \n");
         Logger::logd(env, "返回内容 : {}");
         return env->NewStringUTF("");
     }
 
-    Json::CharReaderBuilder _builder;
-    Json::CharReader *reader_ptr(_builder.newCharReader());
-    JSONCPP_STRING _errs;
-    Json::Value _root;
-    std::string _result;
-    if (reader_ptr->parse(_response.c_str(), _response.c_str() + _response.length(), &_root,
-                          &_errs)) {
-        std::string _p = _root["p"].asString();
-        std::string _ts = _root["ts"].asString();
-        _result = JTools::decryptResponse(env, _p, _ts);
+    Json::CharReaderBuilder builder;
+    Json::CharReader *reader_ptr(builder.newCharReader());
+    JSONCPP_STRING errs;
+    Json::Value root;
+    std::string result;
+    if (reader_ptr->parse(response.c_str(), response.c_str() + response.length(), &root, &errs)) {
+        std::string p = root["p"].asString();
+        std::string ts = root["ts"].asString();
+        result = JTools::decryptResponse(env, p, ts);
     }
 
-    if (_result.empty()) {
+    if (result.empty()) {
         std::string msg = "parse fuse response data is empty";
         Logger::loge(msg);
         return env->NewStringUTF(msg.c_str());
     }
 
-    Logger::logHandler(env, "返回内容 : " + _result + "\n");
-    Logger::logd(env, "返回内容 : " + _result);
-    return env->NewStringUTF(_result.c_str());
+    Logger::logHandler(env, "返回内容 : " + result + "\n");
+    Logger::logd(env, "返回内容 : " + result);
+    return env->NewStringUTF(result.c_str());
 }
 
-static void putParam(JNIEnv *env, jclass clazz, jstring key, jstring value) {
-    std::string _key = JTools::jstring2str(env, key);
-    std::string _value = JTools::jstring2str(env, value);
+static void putParam(JNIEnv *env, jclass clazz, jstring _key, jstring _value) {
+    std::string key = JTools::jstring2str(env, _key);
+    std::string value = JTools::jstring2str(env, _value);
 
-    ParamsMap::put(_key, _value);
+    ParamsMap::put(key, value);
 }
 
-static jstring getParam(JNIEnv *env, jclass clazz, jstring key) {
-    std::string _key = JTools::jstring2str(env, key);
-    std::string _value = ParamsMap::get(_key);
-    return env->NewStringUTF(_value.c_str());
+static jstring getParam(JNIEnv *env, jclass clazz, jstring _key) {
+    std::string key = JTools::jstring2str(env, _key);
+    std::string value = ParamsMap::get(key);
+    return env->NewStringUTF(value.c_str());
 }
 
 static JNINativeMethod gMethods[] = {
@@ -101,11 +100,11 @@ static JNINativeMethod gMethods[] = {
 };
 
 static int registerMethods(JNIEnv *env) {
-    jclass _clz = env->FindClass("cn/flyfun/gamesdk/core/utils/NTools");
-    if (_clz == nullptr) {
+    jclass clz = env->FindClass("cn/flyfun/gamesdk/core/utils/NTools");
+    if (clz == nullptr) {
         return JNI_FALSE;
     }
-    if (env->RegisterNatives(_clz, gMethods, NELEM(gMethods)) < 0) {
+    if (env->RegisterNatives(clz, gMethods, NELEM(gMethods)) < 0) {
         return JNI_FALSE;
     }
     return JNI_TRUE;

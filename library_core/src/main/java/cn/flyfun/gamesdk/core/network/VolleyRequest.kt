@@ -4,8 +4,8 @@ import android.content.Context
 import cn.flyfun.gamesdk.base.utils.Logger
 import cn.flyfun.gamesdk.core.entity.FileEntity
 import cn.flyfun.gamesdk.core.entity.ResultInfo
-import cn.flyfun.gamesdk.core.inter.IFileRequestCallback
-import cn.flyfun.gamesdk.core.inter.IRequestCallback
+import cn.flyfun.gamesdk.core.internal.IFileRequestCallback
+import cn.flyfun.gamesdk.core.internal.IRequestCallback
 import cn.flyfun.gamesdk.core.utils.NTools
 import cn.flyfun.support.JsonUtils
 import cn.flyfun.support.volley.DefaultRetryPolicy

@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">飞游海外SDK-KTX</string>
+    <string name="app_name" translatable="false">飞游海外SDK-KTX</string>
+    <string name="gcm_defaultSenderId" translatable="false">38153824010</string>
+    <string name="google_api_key" translatable="false">AIzaSyAvNhYCtqGbzqd2aCLTxUAwCVSySDX7tng</string>
+    <string name="google_app_id" translatable="false">1:38153824010:android:607f0f217d4cfa889dfcf3</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAvNhYCtqGbzqd2aCLTxUAwCVSySDX7tng</string>
+    <string name="google_storage_bucket" translatable="false">api-project-82067969.appspot.com</string>
+    <string name="project_id" translatable="false">api-project-82067969</string>
+    <string name="default_web_client_id" translatable="false">38153824010-b2e01psqkkf8kfcr26d5l98pgana4pi2.apps.googleusercontent.com</string>
+    <string name="com.crashlytics.RequireBuildId" translatable="false">true</string>
+    <string name="com.google.firebase.crashlytics.mapping_file_id" translatable="false">00000000000000000000000000000000</string>
 </resources>

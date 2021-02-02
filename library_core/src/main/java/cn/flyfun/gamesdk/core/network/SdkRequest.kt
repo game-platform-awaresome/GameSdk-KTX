@@ -4,8 +4,8 @@ import android.content.Context
 import cn.flyfun.gamesdk.base.entity.GameChargeInfo
 import cn.flyfun.gamesdk.base.entity.GameRoleInfo
 import cn.flyfun.gamesdk.base.utils.Logger
-import cn.flyfun.gamesdk.core.inter.IFileRequestCallback
-import cn.flyfun.gamesdk.core.inter.IRequestCallback
+import cn.flyfun.gamesdk.core.internal.IFileRequestCallback
+import cn.flyfun.gamesdk.core.internal.IRequestCallback
 import cn.flyfun.support.volley.VolleyError
 import org.json.JSONException
 import org.json.JSONObject

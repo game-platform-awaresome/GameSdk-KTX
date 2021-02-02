@@ -1,12 +1,11 @@
-package cn.flyfun.gamesdk.core.apm
+package cn.flyfun.gamesdk.core.fama.channel.adjust
 
 import android.content.Context
 import android.text.TextUtils
 import cn.flyfun.gamesdk.base.utils.Logger
 import cn.flyfun.gamesdk.base.utils.ParamsUtils
 import cn.flyfun.gamesdk.core.entity.SdkBackLoginInfo
-import cn.flyfun.gamesdk.core.entity.bean.LogBean
-import cn.flyfun.gamesdk.core.inter.IEventTrace
+import cn.flyfun.gamesdk.core.internal.IEventTrace
 import cn.flyfun.gamesdk.core.utils.NTools
 import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustConfig
@@ -16,199 +15,212 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 
-
 /**
- * @author #Suyghur.
- * Created on 2020/12/1
+ * @author #Suyghur,
+ * Created on 2021/2/2
  */
-class EventTraceImpl private constructor() : IEventTrace {
+class AdjustImpl : IEventTrace {
 
     private var isInitSuccess = false
-    private var logBean: LogBean? = null
-
-    companion object {
-        fun getInstance(): EventTraceImpl {
-            return EventTraceImplHolder.INSTANCE
-        }
-    }
-
-    private object EventTraceImplHolder {
-        val INSTANCE: EventTraceImpl = EventTraceImpl()
-    }
+    private var bean: AdjustEventBean? = null
 
     override fun onInitialize(context: Context) {
         val appToken = ParamsUtils.getTraceId(context)
-        logBean = LogBean.toBean(getLogJson(context))
+        bean = AdjustEventBean.toBean(getLogJson(context))
         if (TextUtils.isEmpty(appToken)) {
-            Logger.e("EventTrace初始化失败，trace_id为空")
+            Logger.e("adjust trace log 初始化失败，trace_id为空")
             return
         }
-        if (logBean == null) {
-            Logger.e("EventTrace初始化失败，读取assets/log_event.json异常")
+        if (bean == null) {
+            Logger.e("adjust trace log 初始化失败，读取assets/log_event.json异常")
             return
         }
-        val config = AdjustConfig(context, appToken, AdjustConfig.ENVIRONMENT_PRODUCTION)
+
+        val config = AdjustConfig(context, appToken, AdjustConfig.ENVIRONMENT_SANDBOX)
         config.setLogLevel(LogLevel.VERBOSE)
         Adjust.onCreate(config)
         addCommonSessionParams(context)
         isInitSuccess = true
-        Adjust.trackEvent(AdjustEvent(logBean!!.eventActivities))
+        Adjust.trackEvent(AdjustEvent(bean!!.eventActivities))
     }
 
-    override fun onLogin() {
+    override fun onLogin(context: Context) {
         if (!isInitSuccess) {
+            Logger.e("adjust trace log failed , component initialize failed")
             return
         }
+
         if (TextUtils.isEmpty(SdkBackLoginInfo.instance.userId)) {
-            Logger.e("apm log EVENT_LOGIN_SUCCESS failed , user is null")
+            Logger.e("adjust trace log EVENT_LOGIN_SUCCESS failed , user is null")
             return
         }
+
         resetSessionParams()
-        val loginEvent = AdjustEvent(logBean!!.eventLoginSuccess)
+        val loginEvent = AdjustEvent(bean!!.eventLoginSuccess)
         Adjust.addSessionCallbackParameter("user_id", SdkBackLoginInfo.instance.userId)
         Adjust.addSessionCallbackParameter("device_id", NTools.getParam("device_id"))
         Adjust.trackEvent(loginEvent)
     }
 
-    override fun onRegister() {
+    override fun onRegister(context: Context) {
         if (!isInitSuccess) {
+            Logger.e("adjust trace log failed , component initialize failed")
             return
         }
+
         if (TextUtils.isEmpty(SdkBackLoginInfo.instance.userId)) {
-            Logger.e("apm log EVENT_USER_REGISTER failed , user is null")
+            Logger.e("adjust trace log EVENT_USER_REGISTER failed , user is null")
             return
         }
+
         resetSessionParams()
-        val registerEvent = AdjustEvent(logBean!!.eventUserRegister)
+        val registerEvent = AdjustEvent(bean!!.eventUserRegister)
         Adjust.addSessionCallbackParameter("user_id", SdkBackLoginInfo.instance.userId)
         Adjust.addSessionCallbackParameter("device_id", NTools.getParam("device_id"))
         Adjust.trackEvent(registerEvent)
     }
 
-    override fun onCharge(eventMap: HashMap<String, Any>) {
+    override fun onCharge(context: Context, eventMap: HashMap<String, Any>) {
         if (!isInitSuccess) {
+            Logger.e("adjust trace log failed , component initialize failed")
             return
         }
+
+        if (eventMap.isEmpty()) {
+            Logger.e("adjust trace log EVENT_CHARGE_SUCCESS failed , event map is null")
+            return
+        }
+
         resetSessionParams()
-        val chargeEvent = AdjustEvent(logBean!!.eventChargeSuccess)
+        val chargeEvent = AdjustEvent(bean!!.eventChargeSuccess)
         Adjust.addSessionCallbackParameter("user_id", SdkBackLoginInfo.instance.userId)
         Adjust.addSessionCallbackParameter("device_id", NTools.getParam("device_id"))
         if (eventMap.containsKey("role_id")) {
-            Adjust.addSessionCallbackParameter("role_id", java.lang.String.valueOf(eventMap["role_id"]))
+            Adjust.addSessionCallbackParameter("role_id", eventMap["role_id"] as String)
         } else {
-            Adjust.addSessionCallbackParameter("role_id", "")
+            Adjust.addSessionCallbackParameter("role_id", "none")
         }
         if (eventMap.containsKey("role_name")) {
-            Adjust.addSessionCallbackParameter("role_name", java.lang.String.valueOf(eventMap["role_name"]))
+            Adjust.addSessionCallbackParameter("role_name", eventMap["role_name"] as String)
         } else {
-            Adjust.addSessionCallbackParameter("role_name", "")
+            Adjust.addSessionCallbackParameter("role_name", "none")
         }
         if (eventMap.containsKey("server_code")) {
-            Adjust.addSessionCallbackParameter("server_code", java.lang.String.valueOf(eventMap["server_code"]))
+            Adjust.addSessionCallbackParameter("server_code", eventMap["server_code"] as String)
         } else {
-            Adjust.addSessionCallbackParameter("server_code", "")
+            Adjust.addSessionCallbackParameter("server_code", "none")
         }
         if (eventMap.containsKey("server_name")) {
-            Adjust.addSessionCallbackParameter("server_name", java.lang.String.valueOf(eventMap["server_name"]))
+            Adjust.addSessionCallbackParameter("server_name", eventMap["server_name"] as String)
         } else {
-            Adjust.addSessionCallbackParameter("server_name", "")
+            Adjust.addSessionCallbackParameter("server_name", "none")
         }
         if (eventMap.containsKey("price")) {
-            val amount: Double = eventMap["price"].toString().toDouble()
+            val amount: Double = (eventMap["price"] as Float).toDouble()
             chargeEvent.setRevenue(amount, "USD")
         } else {
             chargeEvent.setRevenue(0.00, "USD")
         }
         if (eventMap.containsKey("order_id")) {
-            chargeEvent.setOrderId(eventMap["order_id"].toString())
+            chargeEvent.setOrderId(eventMap["order_id"] as String)
         } else {
-            chargeEvent.setOrderId("")
+            chargeEvent.setOrderId("none")
         }
         Adjust.trackEvent(chargeEvent)
     }
 
-    override fun onRoleCreate(eventMap: HashMap<String, Any>) {
+    override fun onRoleCreate(context: Context, eventMap: HashMap<String, Any>) {
         if (!isInitSuccess) {
+            Logger.e("adjust trace log failed , component initialize failed")
             return
         }
+
+        if (eventMap.isEmpty()) {
+            Logger.e("adjust trace log EVENT_ROLE_CREATE failed , event map is null")
+            return
+        }
+
         resetSessionParams()
-        val roleCreateEvent = AdjustEvent(logBean!!.eventRoleCreate)
+        val roleCreateEvent = AdjustEvent(bean!!.eventRoleCreate)
         Adjust.addSessionCallbackParameter("user_id", SdkBackLoginInfo.instance.userId)
         Adjust.addSessionCallbackParameter("device_id", NTools.getParam("device_id"))
         if (eventMap.containsKey("role_id")) {
-            Adjust.addSessionCallbackParameter("role_id", java.lang.String.valueOf(eventMap["role_id"]))
+            Adjust.addSessionCallbackParameter("role_id", eventMap["role_id"] as String)
         } else {
-            Adjust.addSessionCallbackParameter("role_id", "")
+            Adjust.addSessionCallbackParameter("role_id", "none")
         }
         if (eventMap.containsKey("role_name")) {
-            Adjust.addSessionCallbackParameter("role_name", java.lang.String.valueOf(eventMap["role_name"]))
+            Adjust.addSessionCallbackParameter("role_name", eventMap["role_name"] as String)
         } else {
-            Adjust.addSessionCallbackParameter("role_name", "")
+            Adjust.addSessionCallbackParameter("role_name", "none")
         }
         if (eventMap.containsKey("server_code")) {
-            Adjust.addSessionCallbackParameter("server_code", java.lang.String.valueOf(eventMap["server_code"]))
+            Adjust.addSessionCallbackParameter("server_code", eventMap["server_code"] as String)
         } else {
-            Adjust.addSessionCallbackParameter("server_code", "")
+            Adjust.addSessionCallbackParameter("server_code", "none")
         }
         if (eventMap.containsKey("server_name")) {
-            Adjust.addSessionCallbackParameter("server_name", java.lang.String.valueOf(eventMap["server_name"]))
+            Adjust.addSessionCallbackParameter("server_name", eventMap["server_name"] as String)
         } else {
-            Adjust.addSessionCallbackParameter("server_name", "")
+            Adjust.addSessionCallbackParameter("server_name", "none")
         }
         Adjust.trackEvent(roleCreateEvent)
     }
 
-    override fun onRoleLauncher(eventMap: HashMap<String, Any>) {
+    override fun onRoleLauncher(context: Context, eventMap: HashMap<String, Any>) {
         if (!isInitSuccess) {
+            Logger.e("adjust trace log failed , component initialize failed")
             return
         }
+
+        if (eventMap.isEmpty()) {
+            Logger.e("adjust trace log EVENT_ROLE_LAUNCHER failed , event map is null")
+            return
+        }
+
         resetSessionParams()
-        val roleLauncherEvent = AdjustEvent(logBean!!.eventRoleLauncher)
+        val roleLauncherEvent = AdjustEvent(bean!!.eventRoleLauncher)
         Adjust.addSessionCallbackParameter("user_id", SdkBackLoginInfo.instance.userId)
         Adjust.addSessionCallbackParameter("device_id", NTools.getParam("device_id"))
         if (eventMap.containsKey("role_id")) {
-            Adjust.addSessionCallbackParameter("role_id", java.lang.String.valueOf(eventMap["role_id"]))
+            Adjust.addSessionCallbackParameter("role_id", eventMap["role_id"] as String)
         } else {
-            Adjust.addSessionCallbackParameter("role_id", "")
+            Adjust.addSessionCallbackParameter("role_id", "none")
         }
         if (eventMap.containsKey("role_name")) {
-            Adjust.addSessionCallbackParameter("role_name", java.lang.String.valueOf(eventMap["role_name"]))
+            Adjust.addSessionCallbackParameter("role_name", eventMap["role_name"] as String)
         } else {
-            Adjust.addSessionCallbackParameter("role_name", "")
+            Adjust.addSessionCallbackParameter("role_name", "none")
         }
         if (eventMap.containsKey("server_code")) {
-            Adjust.addSessionCallbackParameter("server_code", java.lang.String.valueOf(eventMap["server_code"]))
+            Adjust.addSessionCallbackParameter("server_code", eventMap["server_code"] as String)
         } else {
-            Adjust.addSessionCallbackParameter("server_code", "")
+            Adjust.addSessionCallbackParameter("server_code", "none")
         }
         if (eventMap.containsKey("server_name")) {
-            Adjust.addSessionCallbackParameter("server_name", java.lang.String.valueOf(eventMap["server_name"]))
+            Adjust.addSessionCallbackParameter("server_name", eventMap["server_name"] as String)
         } else {
-            Adjust.addSessionCallbackParameter("server_name", "")
+            Adjust.addSessionCallbackParameter("server_name", "none")
         }
         Adjust.trackEvent(roleLauncherEvent)
     }
 
-    override fun onResume() {
+    override fun onResume(context: Context) {
         if (!isInitSuccess) {
+            Logger.e("adjust trace log failed , component initialize failed")
             return
         }
+
         Adjust.onResume()
     }
 
-    override fun onPause() {
+    override fun onPause(context: Context) {
         if (!isInitSuccess) {
+            Logger.e("adjust trace log failed , component initialize failed")
             return
         }
-        Adjust.onPause()
-    }
 
-    fun getAaid(): String {
-        return if (!isInitSuccess || TextUtils.isEmpty(Adjust.getAdid())) {
-            ""
-        } else {
-            Adjust.getAdid()
-        }
+        Adjust.onPause()
     }
 
     private fun addCommonSessionParams(context: Context) {

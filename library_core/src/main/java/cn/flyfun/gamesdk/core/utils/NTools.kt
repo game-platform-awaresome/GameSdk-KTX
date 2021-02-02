@@ -1,8 +1,6 @@
 package cn.flyfun.gamesdk.core.utils
 
 import android.content.Context
-import cn.flyfun.gamesdk.Version
-import cn.flyfun.gamesdk.core.entity.N2JType
 
 /**
  * @author #Suyghur.

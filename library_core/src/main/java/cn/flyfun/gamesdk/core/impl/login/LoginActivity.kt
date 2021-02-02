@@ -27,8 +27,8 @@ import cn.flyfun.gamesdk.core.entity.SdkBackLoginInfo
 import cn.flyfun.gamesdk.core.entity.Session
 import cn.flyfun.gamesdk.core.impl.SdkBridgeImpl
 import cn.flyfun.gamesdk.core.impl.login.fragment.ChooseFragment
-import cn.flyfun.gamesdk.core.inter.IRequestCallback
-import cn.flyfun.gamesdk.core.inter.ImplCallback
+import cn.flyfun.gamesdk.core.internal.IRequestCallback
+import cn.flyfun.gamesdk.core.internal.ImplCallback
 import cn.flyfun.gamesdk.core.network.SdkRequest
 import cn.flyfun.gamesdk.core.ui.DialogUtils
 import cn.flyfun.gamesdk.core.ui.EventEditText

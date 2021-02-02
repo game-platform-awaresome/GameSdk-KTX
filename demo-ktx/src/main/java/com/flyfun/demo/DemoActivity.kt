@@ -16,11 +16,9 @@ import cn.flyfun.gamesdk.base.FlyFunGame
 import cn.flyfun.gamesdk.base.entity.GameChargeInfo
 import cn.flyfun.gamesdk.base.entity.GameRoleInfo
 import cn.flyfun.gamesdk.base.inter.ICallback
-import cn.flyfun.gamesdk.core.inter.IFileRequestCallback
 import cn.flyfun.gamesdk.core.network.SdkRequest
 import cn.flyfun.support.encryption.Md5Utils
 import cn.flyfun.support.jarvis.Toast
-import cn.flyfun.support.volley.VolleyError
 import cn.flyfun.zap.toolkit.FileUtils
 import org.json.JSONException
 import org.json.JSONObject
