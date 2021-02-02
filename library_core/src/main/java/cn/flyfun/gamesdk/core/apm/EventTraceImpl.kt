@@ -204,7 +204,11 @@ class EventTraceImpl private constructor() : IEventTrace {
     }
 
     fun getAaid(): String {
-        return Adjust.getAdid()
+        return if (!isInitSuccess || TextUtils.isEmpty(Adjust.getAdid())) {
+            ""
+        } else {
+            Adjust.getAdid()
+        }
     }
 
     private fun addCommonSessionParams(context: Context) {

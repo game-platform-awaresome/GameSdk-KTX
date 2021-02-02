@@ -31,7 +31,6 @@ import cn.flyfun.support.device.DeviceInfoUtils
 import cn.flyfun.support.encryption.Md5Utils
 import cn.flyfun.support.gaid.GAIDUtils
 import cn.flyfun.zap.Zap
-import cn.flyfun.zap.ZapInitCallback
 import java.net.URLEncoder
 
 
@@ -61,13 +60,7 @@ class SdkBridgeImpl {
     private var gameCode = ""
 
     fun attachBaseContext(application: Application, context: Context) {
-        Zap.default(application, object : ZapInitCallback {
-            override fun onResult(code: Int, msg: String) {
-                if (code == 0) {
-                    Logger.zapInitSuccess = true
-                }
-            }
-        }, debug = Logger.debug)
+        Zap.default(application, debug = Logger.debug)
         GAIDUtils.initGoogleAdid(application) { code: Int, _ ->
             if (code == 0) {
                 Logger.i("谷歌框架可以访问，请求adid")

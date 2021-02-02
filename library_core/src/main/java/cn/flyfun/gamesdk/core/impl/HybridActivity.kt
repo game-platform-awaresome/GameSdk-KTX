@@ -398,10 +398,10 @@ class HybridActivity : Activity() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         val viewGroup = window.decorView as ViewGroup
         viewGroup.removeAllViews()
         webView.destroy()
+        super.onDestroy()
     }
 
     companion object {

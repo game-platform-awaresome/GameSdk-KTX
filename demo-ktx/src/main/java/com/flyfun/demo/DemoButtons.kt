@@ -22,8 +22,9 @@ object DemoButtons {
             Item(7, "07 绑定平台账号"),
             Item(8, "08 打开客服中心"),
             Item(9, "09 崩溃测试"),
-            Item(10, "打包日志文件"),
-            Item(11, "上传日志文件"))
+            Item(10, "10 打包日志文件"),
+            Item(11, "11 上传日志文件"),
+            Item(12, "12 下载图片"))
 
 
     private var bindButton: Button? = null
