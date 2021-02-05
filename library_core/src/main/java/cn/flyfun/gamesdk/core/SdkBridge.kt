@@ -10,7 +10,7 @@ import android.content.res.Configuration
 import cn.flyfun.gamesdk.Version
 import cn.flyfun.gamesdk.base.entity.GameChargeInfo
 import cn.flyfun.gamesdk.base.entity.GameRoleInfo
-import cn.flyfun.gamesdk.base.inter.ICallback
+import cn.flyfun.gamesdk.base.internal.ICallback
 import cn.flyfun.gamesdk.base.utils.Logger
 import cn.flyfun.gamesdk.core.impl.SdkBridgeImpl
 import cn.flyfun.gamesdk.core.network.Host

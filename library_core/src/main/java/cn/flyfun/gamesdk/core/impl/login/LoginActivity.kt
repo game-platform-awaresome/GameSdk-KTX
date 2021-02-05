@@ -256,12 +256,12 @@ class LoginActivity : FragmentActivity() {
         }
 
         val ivLogo = findViewById<ImageView>(ResUtils.getResId(this, "ffg_iv_login_logo", "id"))
-//        val logoId = ResUtils.getResId(this, "ffg_login_logo_img", "drawable")
-//        if (logoId != 0) {
-//            ivLogo.setBackgroundResource(logoId)
-//        }
-        val logoName = Md5Utils.encodeByMD5("https://fpic.flyfungame.com/icon/6629d707-4892-4ece-ae7a-bfb43ec7880affg_login_logo_img.png.png") + ".png"
-        ivLogo.setImageBitmap(getLocalBitmap("${this@LoginActivity.getExternalFilesDir(".cache")!!.absolutePath}/$logoName"))
+        val logoId = ResUtils.getResId(this, "ffg_login_logo_img", "drawable")
+        if (logoId != 0) {
+            ivLogo.setBackgroundResource(logoId)
+        }
+//        val logoName = Md5Utils.encodeByMD5("https://fpic.flyfungame.com/icon/6629d707-4892-4ece-ae7a-bfb43ec7880affg_login_logo_img.png.png") + ".png"
+//        ivLogo.setImageBitmap(getLocalBitmap("${this@LoginActivity.getExternalFilesDir(".cache")!!.absolutePath}/$logoName"))
 
         etAccount = findViewById(ResUtils.getResId(this, "ffg_et_forget_account", "id"))
         etAccount?.apply {

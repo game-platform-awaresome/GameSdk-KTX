@@ -7,16 +7,23 @@ import cn.flyfun.gamesdk.core.entity.ResultInfo
 import cn.flyfun.gamesdk.core.internal.IFileRequestCallback
 import cn.flyfun.gamesdk.core.internal.IRequestCallback
 import cn.flyfun.gamesdk.core.utils.NTools
+import cn.flyfun.support.FileUtils
 import cn.flyfun.support.JsonUtils
-import cn.flyfun.support.volley.DefaultRetryPolicy
-import cn.flyfun.support.volley.Response
-import cn.flyfun.support.volley.VolleyError
+import cn.flyfun.support.encryption.Md5Utils
+import cn.flyfun.support.volley.*
+import cn.flyfun.support.volley.toolbox.HttpHeaderParser
 import cn.flyfun.support.volley.toolbox.JsonObjectRequest
 import cn.flyfun.support.volley.toolbox.JsonRequest
 import cn.flyfun.support.volley.toolbox.StringRequest
 import org.json.JSONException
 import org.json.JSONObject
+import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.IOException
+import java.io.UnsupportedEncodingException
+import java.nio.charset.Charset
+import java.util.*
+import kotlin.collections.HashMap
 
 
 /**
@@ -102,28 +109,117 @@ object VolleyRequest {
         VolleySingleton.getInstance(context.applicationContext).addToRequestQueue(request)
     }
 
-    fun postFile(context: Context, url: String, file: File, params: HashMap<String, Any>, callback: IFileRequestCallback) {
+    fun uploadFile(context: Context, url: String, file: File, params: HashMap<String, Any>, callback: IFileRequestCallback) {
         if (!file.exists()) {
             Logger.e("upload log file : ${file.absolutePath} is not exists ")
             return
         }
-        Logger.d("do upload log file")
+        val multipartFromData = "multipart/form-data"
+        val boundary = "---------${UUID.randomUUID()}"
+        val newLine = "\r\n"
         val fileEntity = FileEntity("file", file.name, file)
-        val multipartRequest = MultipartRequest(
-                url,
-                params,
-                fileEntity,
-                {
-                    Logger.d("post file result $it")
-                    callback.onResponse(it)
-                },
-                {
-                    Logger.e("post file error $it")
-                    callback.onErrorResponse(it)
+        val request: Request<String> = object : Request<String>(Method.POST, url, Response.ErrorListener {
+            Logger.e("post file error ${it.message}")
+            callback.onErrorResponse(it)
+        }) {
+            override fun parseNetworkResponse(response: NetworkResponse): Response<String> {
+                return try {
+                    Logger.d("MultipartRequest : ${response.data}")
+                    Response.success(response.data.toString(), HttpHeaderParser.parseCacheHeaders(response))
+                } catch (e: UnsupportedEncodingException) {
+                    e.printStackTrace()
+                    Response.error(ParseError(e))
                 }
-        )
-        VolleySingleton.getInstance(context.applicationContext).addToRequestQueue(multipartRequest)
+            }
 
+            override fun deliverResponse(response: String) {
+                callback.onResponse(response)
+            }
+
+            override fun getBody(): ByteArray {
+                val bos = ByteArrayOutputStream()
+                //format params
+                if (!params.isNullOrEmpty()) {
+                    val sb = StringBuilder()
+                    for (key in params.keys) {
+                        val value = params[key]
+                        sb.append("--").append(boundary).append(newLine)
+                        sb.append("Content-Disposition: form-data; name=\"").append(key).append("\"").append(newLine)
+                        sb.append(newLine)
+                        sb.append(value).append(newLine)
+                    }
+                    try {
+                        bos.write(sb.toString().toByteArray(Charset.defaultCharset()))
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                }
+
+                //format file
+                val sb = StringBuilder()
+                sb.append("--").append(boundary).append(newLine)
+                sb.append("Content-Disposition: form-data; name=\"").append(fileEntity.name).append("\"").append(";filename=\"").append(fileEntity.fileName).append("\"").append(newLine)
+                sb.append("Content-Type: ").append(fileEntity.mime).append(";charset=").append(Charset.defaultCharset()).append(newLine)
+                sb.append(newLine)
+                try {
+                    bos.write(sb.toString().toByteArray(Charset.defaultCharset()))
+                    bos.write(fileEntity.getFileBytes())
+                    bos.write(newLine.toByteArray(Charset.defaultCharset()))
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+
+                //add end line
+                val line = "--$boundary--$newLine"
+                try {
+                    bos.write(line.toByteArray(Charset.defaultCharset()))
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+                return bos.toByteArray()
+            }
+
+            override fun getBodyContentType(): String {
+                return "$multipartFromData;boundary=$boundary"
+            }
+        }
+
+        VolleySingleton.getInstance(context.applicationContext).addToRequestQueue(request)
+    }
+
+    fun downloadImageFile(context: Context, url: String, callback: IFileRequestCallback) {
+        val cacheFolder = File(context.getExternalFilesDir(".cache")!!.absolutePath)
+        if (!cacheFolder.exists()) {
+            cacheFolder.mkdirs()
+        }
+        val fileName = Md5Utils.encodeByMD5(url) + ".png"
+        val filePath = "${context.getExternalFilesDir(".cache")!!.absolutePath}/$fileName"
+        val request: Request<ByteArray> = object : Request<ByteArray>(Method.GET, url, Response.ErrorListener { TODO("Not yet implemented") }) {
+            override fun parseNetworkResponse(response: NetworkResponse): Response<ByteArray> {
+                return try {
+                    if (response.data == null) {
+                        Response.error(ParseError(response))
+                    } else {
+                        Response.success(response.data, HttpHeaderParser.parseCacheHeaders(response))
+                    }
+                } catch (e: OutOfMemoryError) {
+                    e.printStackTrace()
+                    Response.error(ParseError(e))
+                }
+            }
+
+            override fun deliverResponse(response: ByteArray) {
+                Logger.d("volley download image file success, start to save file ...")
+                try {
+                    FileUtils.saveFile(filePath, response)
+                    callback.onResponse("download file success, path: $filePath")
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    callback.onErrorResponse(ParseError(e))
+                }
+            }
+        }
+        VolleySingleton.getInstance(context.applicationContext).addToRequestQueue(request)
     }
 
     private fun getErrorResultInfo(volleyError: VolleyError): ResultInfo {

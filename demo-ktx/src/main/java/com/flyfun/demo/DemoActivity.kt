@@ -15,7 +15,7 @@ import android.widget.TextView
 import cn.flyfun.gamesdk.base.FlyFunGame
 import cn.flyfun.gamesdk.base.entity.GameChargeInfo
 import cn.flyfun.gamesdk.base.entity.GameRoleInfo
-import cn.flyfun.gamesdk.base.inter.ICallback
+import cn.flyfun.gamesdk.base.internal.ICallback
 import cn.flyfun.gamesdk.core.network.SdkRequest
 import cn.flyfun.support.encryption.Md5Utils
 import cn.flyfun.support.jarvis.Toast
@@ -141,13 +141,8 @@ class DemoActivity : Activity(), View.OnClickListener {
                 })
                 9 -> createCrash()
                 10 -> FileUtils.packLogFiles(this@DemoActivity)
-                11 -> SdkRequest.getInstance().uploadLogFile(this@DemoActivity)
-//                12 -> SdkRequest.getInstance().downImageFile(this@DemoActivity, object : IFileRequestCallback {
-//                    override fun onResponse(result: String) {}
-//
-//                    override fun onErrorResponse(error: VolleyError) {
-//                    }
-//                })
+                11 -> SdkRequest.getInstance().uploadFile(this@DemoActivity)
+                12 -> SdkRequest.getInstance().downloadImageFile(this@DemoActivity, "https://fpic.flyfungame.com/icon/6629d707-4892-4ece-ae7a-bfb43ec7880affg_login_logo_img.png.png")
             }
         }
     }

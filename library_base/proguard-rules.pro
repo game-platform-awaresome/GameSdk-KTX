@@ -131,7 +131,7 @@
 -keep class cn.flyfun.zap.**{*;}
 -keep class cn.flyfun.gamesdk.base.entity.GameChargeInfo{public <fields>; public <methods>;}
 -keep class cn.flyfun.gamesdk.base.entity.GameRoleInfo{public <fields>; public <methods>;}
--keep class cn.flyfun.gamesdk.base.inter.ICallback{public <fields>; public <methods>;}
+-keep class cn.flyfun.gamesdk.base.internal.ICallback{public <fields>; public <methods>;}
 -keep class cn.flyfun.gamesdk.base.utils.Logger{public <fields>; public <methods>;}
 -keep class cn.flyfun.gamesdk.base.utils.ParamsUtils{public <fields>; public <methods>;}
 -keep class cn.flyfun.gamesdk.base.FlyFunGame{public <fields>; public <methods>;}

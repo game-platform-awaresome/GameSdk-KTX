@@ -98,7 +98,7 @@ class SdkRequest {
         VolleyRequest.post(context, Host.BASIC_URL_SUBMIT_ROLE, jsonObject, callback)
     }
 
-    fun uploadLogFile(context: Context) {
+    fun uploadFile(context: Context) {
         val zipFile = File(context.getExternalFilesDir("zap")?.absolutePath + "/tmp/log.zip")
         try {
 //            uploadParams.put("log_report_id", "123")
@@ -110,7 +110,7 @@ class SdkRequest {
             params["file_name"] = "log.zip"
             params["current_file_md5"] = "123"
             params["user_id"] = "12345"
-            VolleyRequest.postFile(context, url = "http://192.168.20.125:9876/v1/upload/LogUpload", zipFile, params, object : IFileRequestCallback {
+            VolleyRequest.uploadFile(context, url = "http://192.168.20.125:9876/v1/upload/LogUpload", zipFile, params, object : IFileRequestCallback {
                 override fun onResponse(result: String) {
                     Logger.d("result : $result")
                 }
@@ -121,6 +121,18 @@ class SdkRequest {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
+    }
+
+    fun downloadImageFile(context: Context, url: String) {
+        VolleyRequest.downloadImageFile(context, url, object : IFileRequestCallback {
+            override fun onResponse(result: String) {
+                Logger.d("downloadImageFile onResponse $result")
+            }
+
+            override fun onErrorResponse(error: VolleyError) {
+                Logger.d("downloadImageFile onErrorResponse")
+            }
+        })
     }
 
     private fun assembleChargeParams(chargeInfo: GameChargeInfo): JSONObject {

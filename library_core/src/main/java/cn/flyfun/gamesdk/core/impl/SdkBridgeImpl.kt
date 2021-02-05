@@ -9,7 +9,7 @@ import android.text.TextUtils
 import cn.flyfun.gamesdk.Version
 import cn.flyfun.gamesdk.base.entity.GameChargeInfo
 import cn.flyfun.gamesdk.base.entity.GameRoleInfo
-import cn.flyfun.gamesdk.base.inter.ICallback
+import cn.flyfun.gamesdk.base.internal.ICallback
 import cn.flyfun.gamesdk.base.utils.Logger
 import cn.flyfun.gamesdk.base.utils.ParamsUtils
 import cn.flyfun.gamesdk.core.fama.EventTraceImpl
@@ -60,7 +60,7 @@ class SdkBridgeImpl {
     private var gameCode = ""
 
     fun attachBaseContext(application: Application, context: Context) {
-        Zap.default(application, debug = Logger.debug)
+        Logger.zapInitSuccess = Zap.default(application, debug = Logger.debug)
         GAIDUtils.initGoogleAdid(application) { code: Int, _ ->
             if (code == 0) {
                 Logger.i("谷歌框架可以访问，请求adid")
@@ -406,7 +406,7 @@ class SdkBridgeImpl {
 
     fun onPause(activity: Activity) {
         this.mActivity = activity
-        EventTraceImpl.getInstance().onPause()
+        EventTraceImpl.getInstance().onPause(activity)
         if (Logger.zapInitSuccess) {
             Zap.flush()
         }

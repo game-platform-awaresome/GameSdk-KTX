@@ -16,7 +16,6 @@ object Logger {
     var zapInitSuccess = false
 
     fun i(any: Any) {
-//        LogRvds.i(TAG, any)
         if (zapInitSuccess) {
             Zap.i(TAG, any)
         } else {
