@@ -5,7 +5,7 @@ import android.text.TextUtils
 import cn.flyfun.gamesdk.base.utils.Logger
 import cn.flyfun.gamesdk.base.utils.ParamsUtils
 import cn.flyfun.gamesdk.core.entity.SdkBackLoginInfo
-import cn.flyfun.gamesdk.core.internal.IEventTrace
+import cn.flyfun.gamesdk.core.internal.IEventObserver
 import cn.flyfun.gamesdk.core.utils.NTools
 import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustConfig
@@ -19,7 +19,7 @@ import java.io.InputStreamReader
  * @author #Suyghur,
  * Created on 2021/2/2
  */
-class AdjustImpl : IEventTrace {
+class AdjustImpl : IEventObserver {
 
     private var isInitSuccess = false
     private var bean: AdjustEventBean? = null

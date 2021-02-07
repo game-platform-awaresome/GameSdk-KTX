@@ -6,7 +6,7 @@ import android.content.Context
  * @author #Suyghur.
  * Created on 2020/12/1
  */
-interface IEventTrace {
+interface IEventObserver {
 
     fun onInitialize(context: Context)
 

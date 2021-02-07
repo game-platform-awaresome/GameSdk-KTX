@@ -61,6 +61,7 @@ class DemoActivity : Activity(), View.OnClickListener {
         })
         initView()
         FlyFunGame.getInstance().logHandler(handler)
+
     }
 
     private fun initView() {
