@@ -5,7 +5,7 @@ import android.os.Bundle
 import cn.flyfun.gamesdk.base.utils.Logger
 import cn.flyfun.gamesdk.base.utils.ParamsUtils
 import cn.flyfun.gamesdk.core.entity.SdkBackLoginInfo
-import cn.flyfun.gamesdk.core.internal.IEventTrace
+import cn.flyfun.gamesdk.core.internal.IEventObserver
 import cn.flyfun.gamesdk.core.utils.NTools
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
@@ -15,7 +15,7 @@ import com.google.firebase.ktx.Firebase
  * @author #Suyghur,
  * Created on 2021/2/2
  */
-class FirebaseImpl : IEventTrace {
+class FirebaseImpl : IEventObserver {
     override fun onInitialize(context: Context) {
         val defaultBundle = Bundle()
         defaultBundle.putString("game_code", ParamsUtils.getGameCode(context))

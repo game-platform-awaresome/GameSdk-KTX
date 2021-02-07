@@ -12,10 +12,12 @@ import cn.flyfun.gamesdk.base.entity.GameRoleInfo
 import cn.flyfun.gamesdk.base.internal.ICallback
 import cn.flyfun.gamesdk.base.utils.Logger
 import cn.flyfun.gamesdk.base.utils.ParamsUtils
-import cn.flyfun.gamesdk.core.fama.EventTraceImpl
+import cn.flyfun.gamesdk.core.fama.EventSubject
 import cn.flyfun.gamesdk.core.entity.ResultInfo
 import cn.flyfun.gamesdk.core.entity.SdkBackLoginInfo
 import cn.flyfun.gamesdk.core.entity.bean.InitBean
+import cn.flyfun.gamesdk.core.fama.channel.adjust.AdjustImpl
+import cn.flyfun.gamesdk.core.fama.channel.firebase.FirebaseImpl
 import cn.flyfun.gamesdk.core.impl.login.LoginActivity
 import cn.flyfun.gamesdk.core.internal.IRequestCallback
 import cn.flyfun.gamesdk.core.internal.ImplCallback
@@ -58,6 +60,7 @@ class SdkBridgeImpl {
 
     private var isSubmitRoleData = false
     private var gameCode = ""
+    private lateinit var eventSubject: EventSubject
 
     fun attachBaseContext(application: Application, context: Context) {
         Logger.zapInitSuccess = Zap.default(application, debug = Logger.debug)
@@ -72,13 +75,19 @@ class SdkBridgeImpl {
                 NTools.putParam("adid", DeviceInfoUtils.getAndroidDeviceId(application))
             }
         }
+        eventSubject = EventSubject().apply {
+            attach(AdjustImpl())
+            attach(FirebaseImpl())
+        }
 
         Logger.i("FlyFunGameSdk attachBaseContext ...")
     }
 
     fun initApplication(application: Application) {
+        with(eventSubject) {
+            onInitialize(application)
+        }
         Logger.i("FlyFunGameSdk initApplication ...")
-        EventTraceImpl.getInstance().onInitialize(application)
     }
 
     fun initialize(activity: Activity, isLand: Boolean, callback: ICallback) {
@@ -205,16 +214,17 @@ class SdkBridgeImpl {
         LoginActivity.login(activity, isAutoLogin, object : ImplCallback {
             override fun onSuccess(result: String) {
                 callback.onResult(0, result)
-                if (SdkBackLoginInfo.instance.isRegUser == 1) {
-                    EventTraceImpl.getInstance().onRegister(activity)
+                with(eventSubject) {
+                    if (SdkBackLoginInfo.instance.isRegUser == 1) {
+                        onRegister(activity)
+                    }
+                    onLogin(activity)
                 }
-                EventTraceImpl.getInstance().onLogin(activity)
             }
 
             override fun onFailed(result: String) {
                 callback.onResult(-1, result)
             }
-
         })
     }
 
@@ -259,7 +269,9 @@ class SdkBridgeImpl {
                 params["role_name"] = innerChargeInfo.roleName.toString()
                 params["server_code"] = innerChargeInfo.serverCode.toString()
                 params["server_name"] = innerChargeInfo.serverName.toString()
-                EventTraceImpl.getInstance().onCharge(activity, params)
+                with(eventSubject) {
+                    onCharge(activity, params)
+                }
                 callback.onResult(0, result)
             }
 
@@ -279,7 +291,9 @@ class SdkBridgeImpl {
         params["role_name"] = roleInfo.roleName.toString()
         params["server_code"] = roleInfo.serverCode.toString()
         params["server_name"] = roleInfo.serverName.toString()
-        EventTraceImpl.getInstance().onRoleCreate(activity, params)
+        with(eventSubject) {
+            onRoleCreate(activity, params)
+        }
     }
 
     fun roleLauncher(activity: Activity, roleInfo: GameRoleInfo) {
@@ -292,7 +306,9 @@ class SdkBridgeImpl {
         params["role_name"] = roleInfo.roleName.toString()
         params["server_code"] = roleInfo.serverCode.toString()
         params["server_name"] = roleInfo.serverName.toString()
-        EventTraceImpl.getInstance().onRoleLauncher(activity, params)
+        with(eventSubject) {
+            onRoleLauncher(activity, params)
+        }
     }
 
     fun roleUpgrade(activity: Activity, roleInfo: GameRoleInfo) {
@@ -397,7 +413,9 @@ class SdkBridgeImpl {
 
     fun onResume(activity: Activity) {
         this.mActivity = activity
-        EventTraceImpl.getInstance().onResume(activity)
+        with(eventSubject) {
+            onResume(activity)
+        }
     }
 
     fun onRestart(activity: Activity) {
@@ -406,7 +424,9 @@ class SdkBridgeImpl {
 
     fun onPause(activity: Activity) {
         this.mActivity = activity
-        EventTraceImpl.getInstance().onPause(activity)
+        with(eventSubject) {
+            onPause(activity)
+        }
         if (Logger.zapInitSuccess) {
             Zap.flush()
         }
@@ -418,6 +438,9 @@ class SdkBridgeImpl {
 
     fun onDestroy(activity: Activity?) {
         this.mActivity = activity
+        with(eventSubject) {
+            clear()
+        }
         if (Logger.zapInitSuccess) {
             Zap.release()
         }
