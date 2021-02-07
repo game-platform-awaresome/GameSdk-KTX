@@ -13,7 +13,7 @@ import androidx.annotation.Keep
 import cn.flyfun.gamesdk.base.entity.FunctionName
 import cn.flyfun.gamesdk.base.entity.GameChargeInfo
 import cn.flyfun.gamesdk.base.entity.GameRoleInfo
-import cn.flyfun.gamesdk.base.inter.ICallback
+import cn.flyfun.gamesdk.base.internal.ICallback
 import cn.flyfun.gamesdk.base.utils.Logger
 import cn.flyfun.support.AppUtils
 

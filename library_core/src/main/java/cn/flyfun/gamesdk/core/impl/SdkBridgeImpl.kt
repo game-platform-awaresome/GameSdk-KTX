@@ -8,7 +8,7 @@ import android.content.res.Configuration
 import android.text.TextUtils
 import cn.flyfun.gamesdk.base.entity.GameChargeInfo
 import cn.flyfun.gamesdk.base.entity.GameRoleInfo
-import cn.flyfun.gamesdk.base.inter.ICallback
+import cn.flyfun.gamesdk.base.internal.ICallback
 import cn.flyfun.gamesdk.base.utils.Logger
 import cn.flyfun.gamesdk.base.utils.ParamsUtils
 import cn.flyfun.gamesdk.core.fama.EventTraceImpl

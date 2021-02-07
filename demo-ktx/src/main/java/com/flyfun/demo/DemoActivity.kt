@@ -15,7 +15,7 @@ import android.widget.TextView
 import cn.flyfun.gamesdk.base.FlyFunGame
 import cn.flyfun.gamesdk.base.entity.GameChargeInfo
 import cn.flyfun.gamesdk.base.entity.GameRoleInfo
-import cn.flyfun.gamesdk.base.inter.ICallback
+import cn.flyfun.gamesdk.base.internal.ICallback
 import cn.flyfun.support.encryption.Md5Utils
 import cn.flyfun.support.jarvis.Toast
 import org.json.JSONException

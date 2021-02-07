@@ -1,4 +1,4 @@
-package cn.flyfun.gamesdk.base.inter
+package cn.flyfun.gamesdk.base.internal
 
 /**
  * @author #Suyghur.

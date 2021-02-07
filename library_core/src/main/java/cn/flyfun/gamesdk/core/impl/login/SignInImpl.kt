@@ -53,6 +53,8 @@ class SignInImpl constructor(val activity: LoginActivity, val callback: ISignInC
             callback.onFailed("Facebook SDK 初始化失败")
             return
         }
+        //先注销账号，防止同一台设备有多个应用登录后直接回调onCancel
+        LoginManager.getInstance().logOut()
         LoginManager.getInstance().registerCallback(fbCallback, object : FacebookCallback<LoginResult> {
             override fun onSuccess(result: LoginResult?) {
                 result?.apply {
