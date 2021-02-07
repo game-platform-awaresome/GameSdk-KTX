@@ -418,6 +418,9 @@ class SdkBridgeImpl {
 
     fun onDestroy(activity: Activity?) {
         this.mActivity = activity
+        with(eventSubject) {
+            clear()
+        }
     }
 
     fun onActivityResult(activity: Activity, requestCode: Int, resultCode: Int, data: Intent?) {

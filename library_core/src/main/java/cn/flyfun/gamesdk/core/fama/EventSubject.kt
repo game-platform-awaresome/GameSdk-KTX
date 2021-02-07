@@ -14,19 +14,21 @@ import java.util.HashMap
 class EventSubject {
 
     private val observers: MutableList<IEventObserver> = mutableListOf()
-//    private val adjust: AdjustImpl = AdjustImpl()
-//    private val firebase: FirebaseImpl = FirebaseImpl()
 
     fun attach(ob: IEventObserver) {
         observers.add(ob)
     }
 
     fun removeEventObserver(ob: IEventObserver) {
-        observers.remove(ob)
+        if (observers.contains(ob)) {
+            observers.remove(ob)
+        }
     }
 
     fun clear() {
-        observers.clear()
+        if (!observers.isNullOrEmpty()) {
+            observers.clear()
+        }
     }
 
     fun onInitialize(context: Context) {
