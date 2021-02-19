@@ -1,6 +1,4 @@
 include ':library_core'
 include ':library_base'
-include ':demo-ktx'//include ':library_base'
-//include ':library_core'
-//include ':demo'
+include ':demo-ktx'
 rootProject.name = "FlyFunGameSdk-KTX"

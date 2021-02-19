@@ -25,14 +25,14 @@ class AdjustImpl : IEventObserver {
     private var bean: AdjustEventBean? = null
 
     override fun onInitialize(context: Context) {
-        val appToken = ParamsUtils.getTraceId(context)
+        val appToken = ParamsUtils.getAdjustAppId(context)
         bean = AdjustEventBean.toBean(getLogJson(context))
         if (TextUtils.isEmpty(appToken)) {
-            Logger.e("adjust trace log 初始化失败，trace_id为空")
+            Logger.e("adjust log 初始化失败，adjust_app_id为空")
             return
         }
         if (bean == null) {
-            Logger.e("adjust trace log 初始化失败，读取assets/log_event.json异常")
+            Logger.e("adjust log 初始化失败，读取assets/log_event.json异常")
             return
         }
 
@@ -46,12 +46,12 @@ class AdjustImpl : IEventObserver {
 
     override fun onLogin(context: Context) {
         if (!isInitSuccess) {
-            Logger.e("adjust trace log failed , component initialize failed")
+            Logger.e("adjust log failed , component initialize failed")
             return
         }
 
         if (TextUtils.isEmpty(SdkBackLoginInfo.instance.userId)) {
-            Logger.e("adjust trace log EVENT_LOGIN_SUCCESS failed , user is null")
+            Logger.e("adjust log EVENT_LOGIN_SUCCESS failed , user is null")
             return
         }
 
@@ -64,12 +64,12 @@ class AdjustImpl : IEventObserver {
 
     override fun onRegister(context: Context) {
         if (!isInitSuccess) {
-            Logger.e("adjust trace log failed , component initialize failed")
+            Logger.e("adjust log failed , component initialize failed")
             return
         }
 
         if (TextUtils.isEmpty(SdkBackLoginInfo.instance.userId)) {
-            Logger.e("adjust trace log EVENT_USER_REGISTER failed , user is null")
+            Logger.e("adjust log EVENT_USER_REGISTER failed , user is null")
             return
         }
 
@@ -82,12 +82,12 @@ class AdjustImpl : IEventObserver {
 
     override fun onCharge(context: Context, eventMap: HashMap<String, Any>) {
         if (!isInitSuccess) {
-            Logger.e("adjust trace log failed , component initialize failed")
+            Logger.e("adjust log failed , component initialize failed")
             return
         }
 
         if (eventMap.isEmpty()) {
-            Logger.e("adjust trace log EVENT_CHARGE_SUCCESS failed , event map is null")
+            Logger.e("adjust log EVENT_CHARGE_SUCCESS failed , event map is null")
             return
         }
 
@@ -131,12 +131,12 @@ class AdjustImpl : IEventObserver {
 
     override fun onRoleCreate(context: Context, eventMap: HashMap<String, Any>) {
         if (!isInitSuccess) {
-            Logger.e("adjust trace log failed , component initialize failed")
+            Logger.e("adjust log failed , component initialize failed")
             return
         }
 
         if (eventMap.isEmpty()) {
-            Logger.e("adjust trace log EVENT_ROLE_CREATE failed , event map is null")
+            Logger.e("adjust log EVENT_ROLE_CREATE failed , event map is null")
             return
         }
 
@@ -169,12 +169,12 @@ class AdjustImpl : IEventObserver {
 
     override fun onRoleLauncher(context: Context, eventMap: HashMap<String, Any>) {
         if (!isInitSuccess) {
-            Logger.e("adjust trace log failed , component initialize failed")
+            Logger.e("adjust log failed , component initialize failed")
             return
         }
 
         if (eventMap.isEmpty()) {
-            Logger.e("adjust trace log EVENT_ROLE_LAUNCHER failed , event map is null")
+            Logger.e("adjust log EVENT_ROLE_LAUNCHER failed , event map is null")
             return
         }
 
@@ -207,7 +207,7 @@ class AdjustImpl : IEventObserver {
 
     override fun onResume(context: Context) {
         if (!isInitSuccess) {
-            Logger.e("adjust trace log failed , component initialize failed")
+            Logger.e("adjust log failed , component initialize failed")
             return
         }
 
@@ -216,7 +216,7 @@ class AdjustImpl : IEventObserver {
 
     override fun onPause(context: Context) {
         if (!isInitSuccess) {
-            Logger.e("adjust trace log failed , component initialize failed")
+            Logger.e("adjust log failed , component initialize failed")
             return
         }
 

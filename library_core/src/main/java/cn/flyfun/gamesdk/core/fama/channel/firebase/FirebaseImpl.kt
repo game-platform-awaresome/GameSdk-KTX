@@ -41,7 +41,7 @@ class FirebaseImpl : IEventObserver {
 
     override fun onCharge(context: Context, eventMap: HashMap<String, Any>) {
         if (eventMap.isEmpty()) {
-            Logger.e("firebase trace log PURCHASE failed , event map is null")
+            Logger.e("firebase log PURCHASE failed , event map is null")
             return
         }
 
@@ -84,7 +84,7 @@ class FirebaseImpl : IEventObserver {
 
     override fun onRoleCreate(context: Context, eventMap: HashMap<String, Any>) {
         if (eventMap.isEmpty()) {
-            Logger.e("firebase trace log EVENT_ROLE_CREATE failed , event map is null")
+            Logger.e("firebase log EVENT_ROLE_CREATE failed , event map is null")
             return
         }
 
@@ -117,7 +117,7 @@ class FirebaseImpl : IEventObserver {
 
     override fun onRoleLauncher(context: Context, eventMap: HashMap<String, Any>) {
         if (eventMap.isEmpty()) {
-            Logger.e("firebase trace log EVENT_ROLE_LAUNCHER failed , event map is null")
+            Logger.e("firebase log EVENT_ROLE_LAUNCHER failed , event map is null")
             return
         }
 

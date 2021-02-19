@@ -13,7 +13,7 @@ object ParamsUtils {
 
     private const val CONFIG_FILE: String = "flyfun_cfg.properties"
     private const val FLYFUN_GAME_CODE: String = "FLYFUN_GAME_CODE"
-    private const val FLYFUN_TRACE_ID: String = "FLYFUN_TRACE_ID"
+    private const val FLYFUN_TRACE_ID: String = "FLYFUN_ADJUST_APP_ID"
     private const val FLYFUN_GOOGLE_APP_ID: String = "FLYFUN_GOOGLE_APP_ID"
     private const val FLYFUN_GOOGLE_CLIENT_ID: String = "FLYFUN_GOOGLE_CLIENT_ID"
 
@@ -30,7 +30,7 @@ object ParamsUtils {
         return ""
     }
 
-    fun getTraceId(context: Context): String {
+    fun getAdjustAppId(context: Context): String {
         try {
             val traceId = PropertiesUtils.getValue4Properties(context, CONFIG_FILE, "flyfun", FLYFUN_TRACE_ID)
             if (!TextUtils.isEmpty(traceId)) {
