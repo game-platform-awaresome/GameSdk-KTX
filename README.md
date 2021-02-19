@@ -5,10 +5,11 @@
 |	2020-11-13	|	1.0.0	|	文档建立	| 麦锦培 |
 |	2020-12-07	|	1.0.1	|	1）优化SDK客服功能；<br/>2）增加对外接口getCurrentSdkVersion()获取SDK版本；<br/>3）谷歌IAB支付SDK3.0.2升级；<br/>4）修复一些已知问题	| 麦锦培 |
 |	2020-12-21	|	1.0.2	|	1）优化SDK客服功能，修复个别机型UI显示问题；<br/>2）增加对外接口openExitView()显示SDK退出框；<br/>3）接口hasBindPlatformAccount()更改为hasBindAccount()，调用时机和方式无变更；<br/>4）接口bindPlatformAccount更改为openBindAccount()，调用时机和方式无变更；<br/>5）sdk新增kotlin版本，接入方式和java一致，具体看SDK资源接入说明中的远程依赖部分<br/>6）修复一些已知问题	| 麦锦培 |
-|	2021-1-08	|	1.1.0	|	1）Adjust上报SDK4.25.0更新；<br/>2）Facebook SDK7.1.0更新；<br/>3）SDK部分feature迁移至native层；<br/>4）修复一些已知问题  | 麦锦培 |
-|	2021-1-15	|	1.1.1	|	1）Facebook SDK9.0.0更新；<br/>2）调整Webview中SslErrorHandler回调的默认处理方案;    | 麦锦培 |
-|	2021-1-18	|	1.1.2	|	1）修复5.0以下多个Dex文件加载问题    | 麦锦培 |
-|	2021-1-22	|	1.1.3	|	1）修复客服中心提交问题上传图片失败的问题   | 麦锦培 |
+|	2021-1-08	|	1.1.0	|	1）Adjust上报SDK4.25.0更新；<br/>2）Facebook SDK7.1.0更新；<br/>3）SDK部分feature迁移至native层；<br/>4）修复一些已知问题	| 麦锦培 |
+|	2021-1-15	|	1.1.1	|	1）Facebook SDK9.0.0更新；<br/>2）调整Webview中SslErrorHandler回调的默认处理方案;	| 麦锦培 |
+|	2021-1-18	|	1.1.2	|	1）修复5.0以下多个Dex文件加载问题	| 麦锦培 |
+|	2021-1-22	|	1.1.3	|	1）修复客服中心提交问题上传图片失败的问题	| 麦锦培 |
+|	2021-2-19	|	1.1.4	|	1）接入Firebase Crashlytics崩溃服务	| 麦锦培 |
 
 # 1.接入前检查
 
@@ -28,10 +29,9 @@ android.enableJetifier=true
 # 2.SDK资源接入说明
 
 - 1.接入中存在问题请参考SDK提供的Demo工程或联系技术解决
-
 - 2.拷贝SDK目录下**`assets/flyfun`**至项目中
-
-- 3.在游戏AndroidManifest.xml清单文件的application节点下填写Facebook配置，Facebook AppId在SDK目录下**`assets/flyfun/flyfun_cfg.properties`**文件中的**`FLYFUN_FACEBOOK_ID`**
+- 3.拷贝SDK目录下**`res/values/strings.xml`**中的内容至项目中相应的文档中，如果没有strings.xml则新建一份即可
+- 4.在游戏AndroidManifest.xml清单文件的application节点下填写Facebook配置，Facebook AppId在SDK目录下**`assets/flyfun/flyfun_cfg.properties`**文件中的**`FLYFUN_FACEBOOK_ID`**
 
 ```xml
 	<application>
@@ -64,36 +64,44 @@ android.enableJetifier=true
 
 > <font color=red size=4>**1.远程依赖（推荐）**：</font>
 
+java
 ```groovy
-	implementation 'cn.flyfun.gamesdk:core:1.1.3'
-	//kotlin版本目前只提供远程依赖，需本地aar请联系我方技术获取
-	//implementation 'cn.flyfun.gamesdk:core-ktx:1.1.3'
+	implementation 'cn.flyfun.gamesdk:core:1.1.4'
+```
+- - -
+kotlin
+```groovy
+	implementation 'cn.flyfun.gamesdk:core-ktx:1.1.4'
 ```
 
-> <font size=4>**2.本地aar依赖：**</font>
-拷贝lib目录下**`flyfun_core_1.1.3.aar`**到项目中，并在引入
+> <font color=red size=4>**2.本地aar依赖：**</font>
+拷贝lib目录下**`flyfun_core_1.1.4.aar`**到项目中，并在引入
+
+kotlin版本目前只提供远程依赖，需本地aar请联系我方技术获取
 
 ```groovy
-	api(name: 'flyfun_core_1.1.3.aar', ext: 'aar')
+	api(name: 'flyfun_core_1.1.4.aar', ext: 'aar')
 ```
 
-	添加谷歌、Facebook等第三方库资源
+添加谷歌、Facebook等第三方库资源
 
 ```groovy
 	implementation 'androidx.core:core:1.3.2'
-	implementation 'androidx.fragment:fragment:1.2.5'
-	implementation 'com.google.android.material:material:1.2.1'
+	implementation 'androidx.fragment:fragment:1.3.0'
+	implementation 'com.google.android.material:material:1.3.0'
 	implementation 'com.android.installreferrer:installreferrer:2.2'
 	implementation 'com.facebook.android:facebook-login:9.0.0'
 	implementation 'com.google.android.gms:play-services-auth:19.0.0'
 	implementation 'com.android.billingclient:billing:3.0.2'
-	implementation 'com.adjust.sdk:adjust-android:4.25.0'
 	implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+	implementation 'com.adjust.sdk:adjust-android:4.25.0'
+	implementation 'com.google.firebase:firebase-analytics:18.0.2'
+	implementation 'com.google.firebase:firebase-crashlytics:17.3.1'
 ```
 
 # 3.接口说明
 
-> <font color=red size=5>**SDK的所有接口均为必接且请务必在游戏主线程调用**</font>
+> <font color=red size=5>**SDK的所有接口如无特殊说明，默认均为必接且请务必在游戏主线程调用**</font>
 
 ## 1）同步Application中的生命周期
 
@@ -249,8 +257,6 @@ android.enableJetifier=true
 ```
 
 ## 5）用户账号登录
-
-> <font color=red size=5>**接入方需要自己处理登录框的Logo，一般为游戏的Logo，建议大小300x120，命名为ffg_login_logo_img.png，放在res/drawable-xhdpi目录下**</font>
 
 ```java
 	/**

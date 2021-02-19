@@ -256,15 +256,6 @@ class LoginActivity : FragmentActivity() {
         }
 
         val ivLogo = findViewById<ImageView>(ResUtils.getResId(this, "ffg_iv_login_logo", "id"))
-//        val logoId = ResUtils.getResId(this, "ffg_login_logo_img", "drawable")
-//        if (logoId != 0) {
-//            ivLogo.setBackgroundResource(logoId)
-//        }
-
-//        val logoId = ResUtils.getResId(this, "ffg_login_logo_img", "drawable")
-//        if (logoId != 0) {
-//            ivLogo.setBackgroundResource(logoId)
-//        }
         val logoName = Md5Utils.encodeByMD5(SdkBridgeImpl.initBean.initGm.iconUrl) + ".png"
         ivLogo.setImageBitmap(getLocalBitmap("${this@LoginActivity.getExternalFilesDir(".cache")!!.absolutePath}/$logoName"))
 
