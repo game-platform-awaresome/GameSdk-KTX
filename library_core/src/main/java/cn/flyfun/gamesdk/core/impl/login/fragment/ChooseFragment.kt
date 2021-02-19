@@ -155,7 +155,7 @@ class ChooseFragment : Fragment(), View.OnClickListener {
         llAccountList = view.findViewById(ResUtils.getResId(requireActivity(), "ffg_ll_account_list", "id"))
         rlAccountList?.visibility = View.GONE
 
-        if (SdkBridgeImpl.initBean != null && SdkBridgeImpl.initBean!!.initPrivacy!!.privacySwitch == 0) {
+        if (SdkBridgeImpl.initBean.initPrivacy.privacySwitch == 0) {
             ivCheck?.visibility = View.GONE
             clAgreement?.visibility = View.GONE
         }
@@ -340,11 +340,9 @@ class ChooseFragment : Fragment(), View.OnClickListener {
                         }
                     }
 
-                    SdkBridgeImpl.initBean?.apply {
-                        if (!TextUtils.isEmpty(this.initPrivacy!!.url)) {
-                            privacyDialog = PrivacyDialog(requireActivity(), this.initPrivacy!!.url)
-                            privacyDialog?.show()
-                        }
+                    if (!TextUtils.isEmpty(SdkBridgeImpl.initBean.initPrivacy.url)) {
+                        privacyDialog = PrivacyDialog(requireActivity(), SdkBridgeImpl.initBean.initPrivacy.url)
+                        privacyDialog?.show()
                     }
                 }
             }

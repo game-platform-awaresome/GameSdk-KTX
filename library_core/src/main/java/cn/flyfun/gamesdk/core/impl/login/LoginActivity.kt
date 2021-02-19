@@ -2,6 +2,8 @@ package cn.flyfun.gamesdk.core.impl.login
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.*
 import android.text.TextUtils
@@ -36,12 +38,15 @@ import cn.flyfun.gamesdk.core.utils.SessionUtils
 import cn.flyfun.gamesdk.core.utils.TimeDownUtils
 import cn.flyfun.support.EditTextUtils
 import cn.flyfun.support.ResUtils
+import cn.flyfun.support.encryption.Md5Utils
 import cn.flyfun.support.jarvis.Toast
 import cn.flyfun.support.ui.NoScrollViewPager
 import cn.flyfun.support.ui.circleprogress.CircleProgressLoadingDialog
 import com.google.android.material.tabs.TabLayout
 import org.json.JSONException
 import org.json.JSONObject
+import java.io.FileInputStream
+import java.io.FileNotFoundException
 import java.lang.Exception
 
 
@@ -251,10 +256,17 @@ class LoginActivity : FragmentActivity() {
         }
 
         val ivLogo = findViewById<ImageView>(ResUtils.getResId(this, "ffg_iv_login_logo", "id"))
-        val logoId = ResUtils.getResId(this, "ffg_login_logo_img", "drawable")
-        if (logoId != 0) {
-            ivLogo.setBackgroundResource(logoId)
-        }
+//        val logoId = ResUtils.getResId(this, "ffg_login_logo_img", "drawable")
+//        if (logoId != 0) {
+//            ivLogo.setBackgroundResource(logoId)
+//        }
+
+//        val logoId = ResUtils.getResId(this, "ffg_login_logo_img", "drawable")
+//        if (logoId != 0) {
+//            ivLogo.setBackgroundResource(logoId)
+//        }
+        val logoName = Md5Utils.encodeByMD5(SdkBridgeImpl.initBean.initGm.iconUrl) + ".png"
+        ivLogo.setImageBitmap(getLocalBitmap("${this@LoginActivity.getExternalFilesDir(".cache")!!.absolutePath}/$logoName"))
 
         etAccount = findViewById(ResUtils.getResId(this, "ffg_et_forget_account", "id"))
         etAccount?.apply {
@@ -325,6 +337,17 @@ class LoginActivity : FragmentActivity() {
             }
         })
     }
+
+    private fun getLocalBitmap(path: String): Bitmap? {
+        try {
+            val fis = FileInputStream(path)
+            return BitmapFactory.decodeStream(fis)
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
 
     private fun showAutoLoginView() {
         session = SessionUtils.getInstance().getLocalLastSession(this)

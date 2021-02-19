@@ -3,7 +3,10 @@ package cn.flyfun.gamesdk.core.network
 import android.content.Context
 import cn.flyfun.gamesdk.base.entity.GameChargeInfo
 import cn.flyfun.gamesdk.base.entity.GameRoleInfo
+import cn.flyfun.gamesdk.base.utils.Logger
+import cn.flyfun.gamesdk.core.internal.IFileRequestCallback
 import cn.flyfun.gamesdk.core.internal.IRequestCallback
+import cn.flyfun.support.volley.VolleyError
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -92,6 +95,18 @@ class SdkRequest {
     fun submitRoleData(context: Context, roleInfo: GameRoleInfo, callback: IRequestCallback) {
         val jsonObject = assembleRoleParams(roleInfo)
         VolleyRequest.post(context, Host.BASIC_URL_SUBMIT_ROLE, jsonObject, callback)
+    }
+
+    fun downloadImageFile(context: Context, url: String) {
+        VolleyRequest.downloadImageFile(context, url, object : IFileRequestCallback {
+            override fun onResponse(result: String) {
+                Logger.d("downloadImageFile onResponse $result")
+            }
+
+            override fun onErrorResponse(error: VolleyError) {
+                Logger.e("downloadImageFile onErrorResponse")
+            }
+        })
     }
 
     private fun assembleChargeParams(chargeInfo: GameChargeInfo): JSONObject {

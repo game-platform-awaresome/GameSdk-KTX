@@ -3,17 +3,21 @@ package cn.flyfun.gamesdk.core.network
 import android.content.Context
 import cn.flyfun.gamesdk.base.utils.Logger
 import cn.flyfun.gamesdk.core.entity.ResultInfo
+import cn.flyfun.gamesdk.core.internal.IFileRequestCallback
 import cn.flyfun.gamesdk.core.internal.IRequestCallback
 import cn.flyfun.gamesdk.core.utils.NTools
+import cn.flyfun.support.FileUtils
 import cn.flyfun.support.JsonUtils
-import cn.flyfun.support.volley.DefaultRetryPolicy
-import cn.flyfun.support.volley.Response
-import cn.flyfun.support.volley.VolleyError
+import cn.flyfun.support.encryption.Md5Utils
+import cn.flyfun.support.volley.*
+import cn.flyfun.support.volley.toolbox.HttpHeaderParser
 import cn.flyfun.support.volley.toolbox.JsonObjectRequest
 import cn.flyfun.support.volley.toolbox.JsonRequest
 import cn.flyfun.support.volley.toolbox.StringRequest
 import org.json.JSONException
 import org.json.JSONObject
+import java.io.File
+import java.io.IOException
 import java.net.URLDecoder
 import java.net.URLEncoder
 
@@ -98,6 +102,47 @@ object VolleyRequest {
         request.setShouldCache(false)
         //设置超时时间
         request.retryPolicy = DefaultRetryPolicy(MAX_TIMEOUT, 1, 1.0f)
+        VolleySingleton.getInstance(context.applicationContext).addToRequestQueue(request)
+    }
+
+    fun downloadImageFile(context: Context, url: String, callback: IFileRequestCallback) {
+        val cacheFolder = File(context.getExternalFilesDir(".cache")!!.absolutePath)
+        if (!cacheFolder.exists()) {
+            cacheFolder.mkdirs()
+        }
+        val fileName = Md5Utils.encodeByMD5(url) + ".png"
+        val filePath = "${context.getExternalFilesDir(".cache")!!.absolutePath}/$fileName"
+        if (File(filePath).exists()) {
+            callback.onResponse("image has been cached locally")
+            return
+        }
+        val request: Request<ByteArray> = object : Request<ByteArray>(Method.GET, url, Response.ErrorListener {
+            callback.onErrorResponse(it)
+        }) {
+            override fun parseNetworkResponse(response: NetworkResponse): Response<ByteArray> {
+                return try {
+                    if (response.data == null) {
+                        Response.error(ParseError(response))
+                    } else {
+                        Response.success(response.data, HttpHeaderParser.parseCacheHeaders(response))
+                    }
+                } catch (e: OutOfMemoryError) {
+                    e.printStackTrace()
+                    Response.error(ParseError(e))
+                }
+            }
+
+            override fun deliverResponse(response: ByteArray) {
+                Logger.d("volley download image file success, start to save file ...")
+                try {
+                    FileUtils.saveFile(filePath, response)
+                    callback.onResponse("download file success, path: $filePath")
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    callback.onErrorResponse(ParseError(e))
+                }
+            }
+        }
         VolleySingleton.getInstance(context.applicationContext).addToRequestQueue(request)
     }
 
