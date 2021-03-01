@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.os.Message
 import android.text.TextUtils
 import android.view.KeyEvent
@@ -34,7 +35,7 @@ class DemoActivity : Activity(), View.OnClickListener {
 
     private var mTextView: TextView? = null
     private var cacheRoleInfo: CacheRoleInfo.Companion.RoleInfo? = null
-    private val handler = object : Handler() {
+    private val handler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
             when (msg.what) {
                 111 -> {
@@ -96,41 +97,47 @@ class DemoActivity : Activity(), View.OnClickListener {
                         if (code == 0) {
                             DemoButtons.hideBindButton()
                             DemoButtons.hideGMButton()
-                            FlyFunGame.getInstance().login(this@DemoActivity, false, object : ICallback {
-                                override fun onResult(code: Int, result: String) {
-                                    verifyUserLogin(code, result)
-                                }
-                            })
+                            FlyFunGame.getInstance()
+                                .login(this@DemoActivity, false, object : ICallback {
+                                    override fun onResult(code: Int, result: String) {
+                                        verifyUserLogin(code, result)
+                                    }
+                                })
                         }
                     }
                 })
                 3 -> {
                     //创建新角色
                     cacheRoleInfo = null
-                    cacheRoleInfo = CacheRoleInfo.setDemoRoleInfo(this@DemoActivity, FlyFunGame.getInstance().getCurrentUserId())
+                    cacheRoleInfo = CacheRoleInfo.setDemoRoleInfo(
+                        this@DemoActivity,
+                        FlyFunGame.getInstance().getCurrentUserId()
+                    )
                     FlyFunGame.getInstance().roleCreate(this@DemoActivity, getGameRoleInfo())
                 }
                 4 -> FlyFunGame.getInstance().roleLauncher(this@DemoActivity, getGameRoleInfo())
                 5 -> FlyFunGame.getInstance().roleUpgrade(this@DemoActivity, getGameRoleInfo())
-                6 -> FlyFunGame.getInstance().charge(this@DemoActivity, getGameChargeInfo(), object : ICallback {
-                    override fun onResult(code: Int, result: String) {
-                        if (code == 0) {
-                            Toast.toastInfo(this@DemoActivity, "(demo提示)支付流程完成")
-                        } else {
-                            Toast.toastInfo(this@DemoActivity, "(demo提示)支付失败，$result")
+                6 -> FlyFunGame.getInstance()
+                    .charge(this@DemoActivity, getGameChargeInfo(), object : ICallback {
+                        override fun onResult(code: Int, result: String) {
+                            if (code == 0) {
+                                Toast.toastInfo(this@DemoActivity, "(demo提示)支付流程完成")
+                            } else {
+                                Toast.toastInfo(this@DemoActivity, "(demo提示)支付失败，$result")
+                            }
                         }
-                    }
 
-                })
-                7 -> FlyFunGame.getInstance().openBindAccount(this@DemoActivity, object : ICallback {
-                    override fun onResult(code: Int, result: String) {
-                        if (code == 0) {
-                            Toast.toastInfo(this@DemoActivity, "(demo提示)绑定账号成功")
-                        } else {
-                            Toast.toastInfo(this@DemoActivity, "(demo提示)绑定账号失败")
+                    })
+                7 -> FlyFunGame.getInstance()
+                    .openBindAccount(this@DemoActivity, object : ICallback {
+                        override fun onResult(code: Int, result: String) {
+                            if (code == 0) {
+                                Toast.toastInfo(this@DemoActivity, "(demo提示)绑定账号成功")
+                            } else {
+                                Toast.toastInfo(this@DemoActivity, "(demo提示)绑定账号失败")
+                            }
                         }
-                    }
-                })
+                    })
                 8 -> FlyFunGame.getInstance().openGmCenter(this@DemoActivity, object : ICallback {
                     override fun onResult(code: Int, result: String) {
                         if (code != 0) {
@@ -260,9 +267,14 @@ class DemoActivity : Activity(), View.OnClickListener {
         FlyFunGame.getInstance().onConfigurationChanged(this, newConfig)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        FlyFunGame.getInstance().onRequestPermissionsResult(this, requestCode, permissions, grantResults)
+        FlyFunGame.getInstance()
+            .onRequestPermissionsResult(this, requestCode, permissions, grantResults)
     }
 
 

@@ -59,25 +59,25 @@ class LoginActivity : FragmentActivity() {
     var signInImpl: SignInImpl? = null
         private set
 
-    private var tabLayout: TabLayout? = null
-    private var viewPager: NoScrollViewPager? = null
-    private var rootContainer: ConstraintLayout? = null
-    private var autoLoginContainer: ConstraintLayout? = null
-    private var loginContainer: ConstraintLayout? = null
-    private var forgetContainer: ConstraintLayout? = null
-    private var tvTips: TextView? = null
-    private var ivReturn: ImageView? = null
-    private var vcSend: VerifyCodeEditText? = null
-    private var etAccount: EventEditText? = null
-    private var etPassword: EventEditText? = null
-    private var etPassword2: EventEditText? = null
+    private lateinit var tabLayout: TabLayout
+    private lateinit var viewPager: NoScrollViewPager
+    private lateinit var rootContainer: ConstraintLayout
+    private lateinit var autoLoginContainer: ConstraintLayout
+    private lateinit var loginContainer: ConstraintLayout
+    private lateinit var forgetContainer: ConstraintLayout
+    private lateinit var tvTips: TextView
+    private lateinit var ivReturn: ImageView
+    private lateinit var vcSend: VerifyCodeEditText
+    private lateinit var etAccount: EventEditText
+    private lateinit var etPassword: EventEditText
+    private lateinit var etPassword2: EventEditText
     private var leftSelect = 0
     private var leftSelected = 0
     private var rightSelect = 0
     private var rightSelected = 0
     private var loginLoadingDialog: CircleProgressLoadingDialog? = null
 
-    private val mHandler: Handler = object : Handler() {
+    private val mHandler: Handler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
             when (msg.what) {
                 101 -> changeTimeView(msg.obj as Int)
@@ -116,7 +116,8 @@ class LoginActivity : FragmentActivity() {
                         SdkBackLoginInfo.instance.userId = jsonObject.getString("user_id")
                         SdkBackLoginInfo.instance.timestamp = jsonObject.getString("timestamp")
                         SdkBackLoginInfo.instance.isRegUser = jsonObject.getInt("is_reg_user")
-                        SdkBackLoginInfo.instance.isBindPlatform = jsonObject.getInt("is_bind_platform")
+                        SdkBackLoginInfo.instance.isBindPlatform =
+                            jsonObject.getInt("is_bind_platform")
                         SdkBackLoginInfo.instance.cpSign = jsonObject.getString("cp_sign")
                         SdkBackLoginInfo.instance.loginType = loginParams.getInt("login_type")
 
@@ -159,7 +160,8 @@ class LoginActivity : FragmentActivity() {
                         SdkBackLoginInfo.instance.userId = jsonObject.getString("user_id")
                         SdkBackLoginInfo.instance.timestamp = jsonObject.getString("timestamp")
                         SdkBackLoginInfo.instance.isRegUser = jsonObject.getInt("is_reg_user")
-                        SdkBackLoginInfo.instance.isBindPlatform = jsonObject.getInt("is_bind_platform")
+                        SdkBackLoginInfo.instance.isBindPlatform =
+                            jsonObject.getInt("is_bind_platform")
                         SdkBackLoginInfo.instance.cpSign = jsonObject.getString("cp_sign")
                         SdkBackLoginInfo.instance.loginType = 0
 
@@ -181,7 +183,10 @@ class LoginActivity : FragmentActivity() {
                         this@LoginActivity.finish()
                     } catch (e: JSONException) {
                         e.printStackTrace()
-                        Toast.toastInfo(this@LoginActivity, ResUtils.getResString(this@LoginActivity, "ffg_login_register_error"))
+                        Toast.toastInfo(
+                            this@LoginActivity,
+                            ResUtils.getResString(this@LoginActivity, "ffg_login_register_error")
+                        )
                         hideLoadingDialog()
                         implCallback?.onFailed("账号注册异常")
                     }
@@ -189,7 +194,10 @@ class LoginActivity : FragmentActivity() {
                     if (!TextUtils.isEmpty(resultInfo.msg)) {
                         Toast.toastInfo(this@LoginActivity, resultInfo.msg)
                     } else {
-                        Toast.toastInfo(this@LoginActivity, ResUtils.getResString(this@LoginActivity, "ffg_login_register_error"))
+                        Toast.toastInfo(
+                            this@LoginActivity,
+                            ResUtils.getResString(this@LoginActivity, "ffg_login_register_error")
+                        )
                     }
                     implCallback?.onFailed("账号注册异常")
                     hideLoadingDialog()
@@ -236,22 +244,22 @@ class LoginActivity : FragmentActivity() {
         tvTips = findViewById(ResUtils.getResId(this, "ffg_tv_tips", "id"))
         val btnChange = findViewById<Button>(ResUtils.getResId(this, "ffg_btn_change", "id"))
         btnChange.setOnClickListener {
-            if (autoLoginContainer?.visibility == View.VISIBLE) {
-                autoLoginContainer!!.visibility = View.GONE
-                loginContainer!!.visibility = View.VISIBLE
+            if (autoLoginContainer.visibility == View.VISIBLE) {
+                autoLoginContainer.visibility = View.GONE
+                loginContainer.visibility = View.VISIBLE
                 isCancelLogin = true
             }
         }
 
-        autoLoginContainer?.visibility = View.GONE
+        autoLoginContainer.visibility = View.GONE
 
         forgetContainer = findViewById(ResUtils.getResId(this, "ffg_cl_forget", "id"))
 
         loginContainer = findViewById(ResUtils.getResId(this, "ffg_cl_login", "id"))
-        loginContainer?.visibility = View.VISIBLE
+        loginContainer.visibility = View.VISIBLE
 
         ivReturn = findViewById(ResUtils.getResId(this, "ffg_iv_return", "id"))
-        ivReturn?.setOnClickListener {
+        ivReturn.setOnClickListener {
             hideForgetView()
         }
 
@@ -260,32 +268,59 @@ class LoginActivity : FragmentActivity() {
         ivLogo.setImageBitmap(getLocalBitmap("${this@LoginActivity.getExternalFilesDir(".cache")!!.absolutePath}/$logoName"))
 
         etAccount = findViewById(ResUtils.getResId(this, "ffg_et_forget_account", "id"))
-        etAccount?.apply {
-            leftImageView.setBackgroundResource(ResUtils.getResId(this@LoginActivity, "ffg_account_img", "drawable"))
+        etAccount.apply {
+            leftImageView.setBackgroundResource(
+                ResUtils.getResId(
+                    this@LoginActivity,
+                    "ffg_account_img",
+                    "drawable"
+                )
+            )
             editText.hint = ResUtils.getResString(this@LoginActivity, "ffg_login_account_hint")
         }
 
         etPassword = findViewById(ResUtils.getResId(this, "ffg_et_forget_pwd1", "id"))
-        etPassword?.apply {
-            leftImageView.setBackgroundResource(ResUtils.getResId(this@LoginActivity, "ffg_password_img", "drawable"))
+        etPassword.apply {
+            leftImageView.setBackgroundResource(
+                ResUtils.getResId(
+                    this@LoginActivity,
+                    "ffg_password_img",
+                    "drawable"
+                )
+            )
             editText.hint = ResUtils.getResString(this@LoginActivity, "ffg_login_password1_hint")
         }
 
         etPassword2 = findViewById(ResUtils.getResId(this, "ffg_et_forget_pwd2", "id"))
-        etPassword2?.apply {
-            leftImageView.setBackgroundResource(ResUtils.getResId(this@LoginActivity, "ffg_password_img", "drawable"))
+        etPassword2.apply {
+            leftImageView.setBackgroundResource(
+                ResUtils.getResId(
+                    this@LoginActivity,
+                    "ffg_password_img",
+                    "drawable"
+                )
+            )
             editText.hint = ResUtils.getResString(this@LoginActivity, "ffg_login_password2_hint")
         }
 
         vcSend = findViewById(ResUtils.getResId(this, "ffg_et_forget_code", "id"))
-        vcSend?.apply {
-            leftImageView.setBackgroundResource(ResUtils.getResId(this@LoginActivity, "ffg_email_img", "drawable"))
+        vcSend.apply {
+            leftImageView.setBackgroundResource(
+                ResUtils.getResId(
+                    this@LoginActivity,
+                    "ffg_email_img",
+                    "drawable"
+                )
+            )
             editText.hint = ResUtils.getResString(this@LoginActivity, "ffg_login_input_code_hint")
             textView.setOnClickListener {
-                if (!TextUtils.isEmpty(etAccount?.editText?.text)) {
+                if (!TextUtils.isEmpty(etAccount.editText.text)) {
                     captchaCode
                 } else {
-                    Toast.toastInfo(this@LoginActivity, ResUtils.getResString(this@LoginActivity, "ffg_tips_empty_account"))
+                    Toast.toastInfo(
+                        this@LoginActivity,
+                        ResUtils.getResString(this@LoginActivity, "ffg_tips_empty_account")
+                    )
                 }
             }
         }
@@ -301,17 +336,17 @@ class LoginActivity : FragmentActivity() {
         //使用适配器将ViewPager与Fragment绑定在一起
         val tabs = this.resources.getStringArray(ResUtils.getResId(this, "ffg_login_tab", "array"))
         val pagerAdapter = LoginFragmentPagerAdapter(tabs, fragmentManager)
-        viewPager?.adapter = pagerAdapter
+        viewPager.adapter = pagerAdapter
         //将TabLayout与ViewPager绑定在一起
-        tabLayout?.setupWithViewPager(viewPager)
+        tabLayout.setupWithViewPager(viewPager)
         leftSelect = ResUtils.getResId(this, "ffg_tab_left_select", "drawable")
         leftSelected = ResUtils.getResId(this, "ffg_tab_left_selected", "drawable")
         rightSelect = ResUtils.getResId(this, "ffg_tab_right_select", "drawable")
         rightSelected = ResUtils.getResId(this, "ffg_tab_right_selected", "drawable")
         setTabBackground(leftSelected, rightSelect)
-        tabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                when (tabLayout?.selectedTabPosition) {
+                when (tabLayout.selectedTabPosition) {
                     0 -> setTabBackground(leftSelected, rightSelect)
                     1 -> setTabBackground(leftSelect, rightSelected)
                 }
@@ -344,15 +379,15 @@ class LoginActivity : FragmentActivity() {
         session = SessionUtils.getInstance().getLocalLastSession(this)
 
         if (session == null || !isAutoLogin) {
-            loginContainer?.visibility = View.VISIBLE
-            autoLoginContainer?.visibility = View.GONE
+            loginContainer.visibility = View.VISIBLE
+            autoLoginContainer.visibility = View.GONE
             return
         }
 
         session?.apply {
             if (isAutoLogin) {
-                loginContainer?.visibility = View.GONE
-                autoLoginContainer?.visibility = View.VISIBLE
+                loginContainer.visibility = View.GONE
+                autoLoginContainer.visibility = View.VISIBLE
                 var tips = ""
                 when (loginType) {
                     LoginType.TYPE_ACCOUNT_LOGIN -> {
@@ -360,13 +395,19 @@ class LoginActivity : FragmentActivity() {
                         if (userName.length > 15) {
                             userName = userName.substring(0, 15) + "..."
                         }
-                        tips = userName + ResUtils.getResString(this@LoginActivity, "ffg_login_tv_login_account")
+                        tips = userName + ResUtils.getResString(
+                            this@LoginActivity,
+                            "ffg_login_tv_login_account"
+                        )
                     }
-                    LoginType.TYPE_FACEBOOK_LOGIN -> tips = ResUtils.getResString(this@LoginActivity, "ffg_login_tv_login_facebook")
-                    LoginType.TYPE_GUEST_LOGIN -> tips = ResUtils.getResString(this@LoginActivity, "ffg_login_tv_login_guest")
-                    LoginType.TYPE_GOOGLE_LOGIN -> tips = ResUtils.getResString(this@LoginActivity, "ffg_login_tv_login_google")
+                    LoginType.TYPE_FACEBOOK_LOGIN -> tips =
+                        ResUtils.getResString(this@LoginActivity, "ffg_login_tv_login_facebook")
+                    LoginType.TYPE_GUEST_LOGIN -> tips =
+                        ResUtils.getResString(this@LoginActivity, "ffg_login_tv_login_guest")
+                    LoginType.TYPE_GOOGLE_LOGIN -> tips =
+                        ResUtils.getResString(this@LoginActivity, "ffg_login_tv_login_google")
                 }
-                tvTips?.text = tips
+                tvTips.text = tips
 
                 //延迟n秒发起登录请求
                 Logger.d("延迟1.5秒发起登录请求")
@@ -376,24 +417,21 @@ class LoginActivity : FragmentActivity() {
     }
 
     private fun changeTimeView(time: Int) {
-        if (vcSend == null || vcSend?.textView == null) {
-            return
-        }
-        vcSend?.apply {
+        vcSend.apply {
             if (time <= 0) {
-                textView.text = ResUtils.getResString(this@LoginActivity, "ffg_login_btn_get_captcha")
+                textView.text =
+                    ResUtils.getResString(this@LoginActivity, "ffg_login_btn_get_captcha")
                 textView.isEnabled = true
             } else {
                 textView.text = time.toString() + "s"
                 textView.isEnabled = false
             }
         }
-
     }
 
     private fun setTabBackground(left: Int, right: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            val tabStrip = tabLayout?.getChildAt(0) as ViewGroup
+            val tabStrip = tabLayout.getChildAt(0) as ViewGroup
             val tabView1 = tabStrip.getChildAt(0)
             val tabView2 = tabStrip.getChildAt(1)
             if (tabView1 != null) {
@@ -401,40 +439,59 @@ class LoginActivity : FragmentActivity() {
                 val paddingTop = tabView1.paddingTop
                 val paddingEnd = tabView1.paddingEnd
                 val paddingBottom = tabView1.paddingBottom
-                ViewCompat.setBackground(tabView1, ContextCompat.getDrawable(tabView1.context, left))
-                ViewCompat.setPaddingRelative(tabView1, paddingStart, paddingTop, paddingEnd, paddingBottom)
+                ViewCompat.setBackground(
+                    tabView1,
+                    ContextCompat.getDrawable(tabView1.context, left)
+                )
+                ViewCompat.setPaddingRelative(
+                    tabView1,
+                    paddingStart,
+                    paddingTop,
+                    paddingEnd,
+                    paddingBottom
+                )
             }
             if (tabView2 != null) {
                 val paddingStart = tabView2.paddingStart
                 val paddingTop = tabView2.paddingTop
                 val paddingEnd = tabView2.paddingEnd
                 val paddingBottom = tabView2.paddingBottom
-                ViewCompat.setBackground(tabView2, ContextCompat.getDrawable(tabView2.context, right))
-                ViewCompat.setPaddingRelative(tabView2, paddingStart, paddingTop, paddingEnd, paddingBottom)
+                ViewCompat.setBackground(
+                    tabView2,
+                    ContextCompat.getDrawable(tabView2.context, right)
+                )
+                ViewCompat.setPaddingRelative(
+                    tabView2,
+                    paddingStart,
+                    paddingTop,
+                    paddingEnd,
+                    paddingBottom
+                )
             }
         }
     }
 
     private val captchaCode: Unit
         get() {
-            SdkRequest.getInstance().getCaptcha(this, etAccount?.editText?.text.toString(), object : IRequestCallback {
-                override fun onResponse(resultInfo: ResultInfo) {
-                    if (resultInfo.code == 0) {
-                        if (TextUtils.isEmpty(resultInfo.msg)) {
-                            Toast.toastInfo(this@LoginActivity, "驗證碼已發送，請注意查收")
+            SdkRequest.getInstance()
+                .getCaptcha(this, etAccount.editText.text.toString(), object : IRequestCallback {
+                    override fun onResponse(resultInfo: ResultInfo) {
+                        if (resultInfo.code == 0) {
+                            if (TextUtils.isEmpty(resultInfo.msg)) {
+                                Toast.toastInfo(this@LoginActivity, "驗證碼已發送，請注意查收")
+                            } else {
+                                Toast.toastInfo(this@LoginActivity, resultInfo.msg)
+                            }
+                            changeTimeNum()
                         } else {
-                            Toast.toastInfo(this@LoginActivity, resultInfo.msg)
-                        }
-                        changeTimeNum()
-                    } else {
-                        if (TextUtils.isEmpty(resultInfo.msg)) {
-                            Toast.toastInfo(this@LoginActivity, "驗證碼發送异常，請稍後再試")
-                        } else {
-                            Toast.toastInfo(this@LoginActivity, resultInfo.msg)
+                            if (TextUtils.isEmpty(resultInfo.msg)) {
+                                Toast.toastInfo(this@LoginActivity, "驗證碼發送异常，請稍後再試")
+                            } else {
+                                Toast.toastInfo(this@LoginActivity, resultInfo.msg)
+                            }
                         }
                     }
-                }
-            })
+                })
         }
 
     private fun changeTimeNum() {
@@ -460,10 +517,10 @@ class LoginActivity : FragmentActivity() {
     }
 
     private fun doForgetPassword() {
-        val userName = etAccount?.editText?.text.toString()
-        val pwd = etPassword?.editText?.text.toString()
-        val pwd2 = etPassword2?.editText?.text.toString()
-        val code = vcSend?.editText?.text.toString()
+        val userName = etAccount.editText.text.toString()
+        val pwd = etPassword.editText.text.toString()
+        val pwd2 = etPassword2.editText.text.toString()
+        val code = vcSend.editText.text.toString()
         if (TextUtils.isEmpty(userName)) {
             Toast.toastInfo(this, ResUtils.getResString(this, "ffg_tips_empty_account"))
             return
@@ -484,49 +541,50 @@ class LoginActivity : FragmentActivity() {
             Toast.toastInfo(this, ResUtils.getResString(this, "ffg_tips_email_format_error"))
             return
         }
-        SdkRequest.getInstance().forgetPassword(this, userName, pwd, code, object : IRequestCallback {
-            override fun onResponse(resultInfo: ResultInfo) {
-                if (resultInfo.code == 0) {
-                    hideForgetView()
-                    if (TextUtils.isEmpty(resultInfo.msg)) {
-                        return
+        SdkRequest.getInstance()
+            .forgetPassword(this, userName, pwd, code, object : IRequestCallback {
+                override fun onResponse(resultInfo: ResultInfo) {
+                    if (resultInfo.code == 0) {
+                        hideForgetView()
+                        if (TextUtils.isEmpty(resultInfo.msg)) {
+                            return
+                        } else {
+                            Toast.toastInfo(this@LoginActivity, resultInfo.msg)
+                        }
+                        signInImpl?.accountLogin(userName, pwd)
                     } else {
-                        Toast.toastInfo(this@LoginActivity, resultInfo.msg)
-                    }
-                    signInImpl?.accountLogin(userName, pwd)
-                } else {
-                    if (TextUtils.isEmpty(resultInfo.msg)) {
-                        return
-                    } else {
-                        Toast.toastInfo(this@LoginActivity, resultInfo.msg)
+                        if (TextUtils.isEmpty(resultInfo.msg)) {
+                            return
+                        } else {
+                            Toast.toastInfo(this@LoginActivity, resultInfo.msg)
+                        }
                     }
                 }
-            }
 
-        })
+            })
     }
 
 
     fun showForgetView() {
-        tabLayout?.visibility = View.GONE
-        viewPager?.visibility = View.GONE
-        forgetContainer?.visibility = View.VISIBLE
-        ivReturn?.visibility = View.VISIBLE
+        tabLayout.visibility = View.GONE
+        viewPager.visibility = View.GONE
+        forgetContainer.visibility = View.VISIBLE
+        ivReturn.visibility = View.VISIBLE
     }
 
     fun hideForgetView() {
-        forgetContainer?.visibility = View.GONE
-        ivReturn?.visibility = View.GONE
-        tabLayout?.visibility = View.VISIBLE
-        viewPager?.visibility = View.VISIBLE
-        etAccount?.editText?.setText("")
-        etPassword?.editText?.setText("")
-        etPassword2?.editText?.setText("")
-        vcSend?.editText?.setText("")
+        forgetContainer.visibility = View.GONE
+        ivReturn.visibility = View.GONE
+        tabLayout.visibility = View.VISIBLE
+        viewPager.visibility = View.VISIBLE
+        etAccount.editText.setText("")
+        etPassword.editText.setText("")
+        etPassword2.editText.setText("")
+        vcSend.editText.setText("")
         if (TimeDownUtils.isRunning()) {
             TimeDownUtils.cancel()
-            vcSend?.textView?.text = ResUtils.getResString(this, "ffg_login_btn_get_captcha")
-            vcSend?.textView?.isEnabled = true
+            vcSend.textView.text = ResUtils.getResString(this, "ffg_login_btn_get_captcha")
+            vcSend.textView.isEnabled = true
         }
     }
 
@@ -535,7 +593,8 @@ class LoginActivity : FragmentActivity() {
             if (it.action == MotionEvent.ACTION_DOWN) {
                 val v = currentFocus
                 if (isShouldHideInput(v, it)) {
-                    val imm = this@LoginActivity.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    val imm =
+                        this@LoginActivity.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(v!!.windowToken, 0)
                 }
                 return super.dispatchTouchEvent(it)
@@ -598,29 +657,16 @@ class LoginActivity : FragmentActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
-
-
     override fun onRestart() {
         super.onRestart()
-        if (!SdkBridgeImpl.isLandscape && rootContainer != null) {
-            rootContainer!!.setBackgroundColor(Color.BLACK)
+        if (!SdkBridgeImpl.isLandscape) {
+            rootContainer.setBackgroundColor(Color.BLACK)
         }
     }
 
     override fun onResume() {
         super.onResume()
         hideBar()
-    }
-
-    override fun onPause() {
-        super.onPause()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -639,7 +685,12 @@ class LoginActivity : FragmentActivity() {
             isAutoLogin = isAuto
             isCancelLogin = false
             implCallback = callback
-            activity.startActivity(Intent(activity, LoginActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            activity.startActivity(
+                Intent(
+                    activity,
+                    LoginActivity::class.java
+                ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            )
         }
     }
 }
