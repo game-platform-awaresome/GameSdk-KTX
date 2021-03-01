@@ -34,10 +34,10 @@ import org.json.JSONObject
  * Created on 2020/12/3
  */
 class BindActivity : Activity(), View.OnClickListener, EventEditText.EventEditTextListener {
-    private var ivClose: ImageView? = null
-    private var etAccount: EventEditText? = null
-    private var etPassword: EventEditText? = null
-    private var btnBind: Button? = null
+    private lateinit var ivClose: ImageView
+    private lateinit var etAccount: EventEditText
+    private lateinit var etPassword: EventEditText
+    private lateinit var btnBind: Button
     private var imageShow = 0
     private var imageHide: Int = 0
     private var isShowText = false
@@ -73,16 +73,40 @@ class BindActivity : Activity(), View.OnClickListener, EventEditText.EventEditTe
         }
 
         etAccount = findViewById(ResUtils.getResId(this, "ffg_et_account", "id"))
-        etAccount?.apply {
-            leftImageView.setBackgroundResource(ResUtils.getResId(this@BindActivity, "ffg_account_img", "drawable"))
-            editText.setHint(ResUtils.getResId(this@BindActivity, "ffg_login_tv_email_hint", "string"))
+        etAccount.apply {
+            leftImageView.setBackgroundResource(
+                ResUtils.getResId(
+                    this@BindActivity,
+                    "ffg_account_img",
+                    "drawable"
+                )
+            )
+            editText.setHint(
+                ResUtils.getResId(
+                    this@BindActivity,
+                    "ffg_login_tv_email_hint",
+                    "string"
+                )
+            )
         }
 
         etPassword = findViewById(ResUtils.getResId(this, "ffg_et_pwd", "id"))
-        etPassword?.apply {
-            leftImageView.setBackgroundResource(ResUtils.getResId(this@BindActivity, "ffg_password_img", "drawable"))
+        etPassword.apply {
+            leftImageView.setBackgroundResource(
+                ResUtils.getResId(
+                    this@BindActivity,
+                    "ffg_password_img",
+                    "drawable"
+                )
+            )
             rightImageView.setBackgroundResource(imageShow)
-            editText.setHint(ResUtils.getResId(this@BindActivity, "ffg_login_password_hint", "string"))
+            editText.setHint(
+                ResUtils.getResId(
+                    this@BindActivity,
+                    "ffg_login_password_hint",
+                    "string"
+                )
+            )
             editText.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD or InputType.TYPE_CLASS_TEXT
         }
 
@@ -94,14 +118,14 @@ class BindActivity : Activity(), View.OnClickListener, EventEditText.EventEditTe
     }
 
     private fun initViewAction() {
-        ivClose?.tag = ClickType.ACTION_CLOSE
-        btnBind?.tag = ClickType.ACTION_BIND_ACCOUNT
+        ivClose.tag = ClickType.ACTION_CLOSE
+        btnBind.tag = ClickType.ACTION_BIND_ACCOUNT
     }
 
     private fun initViewListener() {
-        ivClose?.setOnClickListener(this)
-        btnBind?.setOnClickListener(this)
-        etPassword?.eventEditTextListener = this
+        ivClose.setOnClickListener(this)
+        btnBind.setOnClickListener(this)
+        etPassword.eventEditTextListener = this
     }
 
     private fun doBind() {
@@ -109,8 +133,8 @@ class BindActivity : Activity(), View.OnClickListener, EventEditText.EventEditTe
             showLoadingDialog()
             val jsonObject = JSONObject()
             jsonObject.put("bind_type", SdkBackLoginInfo.instance.loginType)
-            jsonObject.put("user_name", etAccount!!.editText.text.toString())
-            jsonObject.put("pwd", etPassword!!.editText.text.toString())
+            jsonObject.put("user_name", etAccount.editText.text.toString())
+            jsonObject.put("pwd", etPassword.editText.text.toString())
             jsonObject.put("user_id", SdkBackLoginInfo.instance.userId)
             doBindAccount(jsonObject)
         } catch (e: Exception) {
@@ -129,7 +153,13 @@ class BindActivity : Activity(), View.OnClickListener, EventEditText.EventEditTe
                         session.pwd = jsonObject.getString("pwd")
                         session.loginType = 0
                         SessionUtils.getInstance().saveSession(this@BindActivity, session)
-                        val tips = this@BindActivity.resources.getString(ResUtils.getResId(this@BindActivity, "ffg_bind_tv_success", "string"))
+                        val tips = this@BindActivity.resources.getString(
+                            ResUtils.getResId(
+                                this@BindActivity,
+                                "ffg_bind_tv_success",
+                                "string"
+                            )
+                        )
                         Toast.toastInfo(this@BindActivity, tips)
                         callback?.onSuccess("绑定成功")
                         hideLoadingDialog()
@@ -141,7 +171,13 @@ class BindActivity : Activity(), View.OnClickListener, EventEditText.EventEditTe
                     }
                 } else {
                     if (TextUtils.isEmpty(resultInfo.msg)) {
-                        val tips = this@BindActivity.resources.getString(ResUtils.getResId(this@BindActivity, "ffg_bind_tv_fail", "string"))
+                        val tips = this@BindActivity.resources.getString(
+                            ResUtils.getResId(
+                                this@BindActivity,
+                                "ffg_bind_tv_fail",
+                                "string"
+                            )
+                        )
                         Toast.toastInfo(this@BindActivity, tips)
                     } else {
                         Toast.toastInfo(this@BindActivity, resultInfo.msg)
@@ -160,7 +196,10 @@ class BindActivity : Activity(), View.OnClickListener, EventEditText.EventEditTe
             val view = this@BindActivity.currentFocus
             view?.apply {
                 if (isShouldHideInput(this, it)) {
-                    (this@BindActivity.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(this.windowToken, 0)
+                    (this@BindActivity.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
+                        this.windowToken,
+                        0
+                    )
                 }
                 return super.dispatchTouchEvent(it)
             }
@@ -206,7 +245,8 @@ class BindActivity : Activity(), View.OnClickListener, EventEditText.EventEditTe
                 } else {
                     isShowText = false
                     etPassword!!.rightImageView.setBackgroundResource(imageShow)
-                    etPassword!!.editText.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD or InputType.TYPE_CLASS_TEXT
+                    etPassword!!.editText.inputType =
+                        InputType.TYPE_TEXT_VARIATION_PASSWORD or InputType.TYPE_CLASS_TEXT
                 }
                 etPassword?.editText?.setSelection(etPassword!!.editText.length())
             }

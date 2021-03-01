@@ -194,7 +194,13 @@ object VolleyRequest {
         }
         val fileName = Md5Utils.encodeByMD5(url) + ".png"
         val filePath = "${context.getExternalFilesDir(".cache")!!.absolutePath}/$fileName"
-        val request: Request<ByteArray> = object : Request<ByteArray>(Method.GET, url, Response.ErrorListener { TODO("Not yet implemented") }) {
+        if (File(filePath).exists()) {
+            callback.onResponse("image has been cached locally")
+            return
+        }
+        val request: Request<ByteArray> = object : Request<ByteArray>(Method.GET, url, Response.ErrorListener {
+            callback.onErrorResponse(it)
+        }) {
             override fun parseNetworkResponse(response: NetworkResponse): Response<ByteArray> {
                 return try {
                     if (response.data == null) {

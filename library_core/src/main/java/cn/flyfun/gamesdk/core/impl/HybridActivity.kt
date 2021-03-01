@@ -222,7 +222,7 @@ class HybridActivity : Activity() {
                 }
                 if (!TextUtils.isEmpty(view.title)) {
                     var viewtitle = view.title
-                    if (viewtitle.length > 10) {
+                    if (viewtitle!!.length > 10) {
                         viewtitle = viewtitle.substring(0, 10)
                         viewtitle = "$viewtitle..."
                     }

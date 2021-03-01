@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.os.Message
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
@@ -23,7 +24,7 @@ class WelcomeActivity : Activity() {
         private const val CODE_GO_GAME_ACTIVITY = 0x000003E9
     }
 
-    private val handler = object : Handler() {
+    private val handler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
             when (msg.what) {
                 CODE_GO_INIT -> goInit()

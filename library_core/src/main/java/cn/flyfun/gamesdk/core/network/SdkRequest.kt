@@ -130,7 +130,7 @@ class SdkRequest {
             }
 
             override fun onErrorResponse(error: VolleyError) {
-                Logger.d("downloadImageFile onErrorResponse")
+                Logger.e("downloadImageFile onErrorResponse")
             }
         })
     }

@@ -119,6 +119,8 @@ class SdkBridgeImpl {
                     initBean = InitBean.toBean(resultInfo.data)
                     //检查公告配置
                     showInitNotice(activity, callback)
+                    //下载登录框图片
+                    SdkRequest.getInstance().downloadImageFile(activity, initBean.initGm.iconUrl)
                 } else {
                     callback.onResult(-1, "SDK初始化失败")
                     initState = false
@@ -128,11 +130,11 @@ class SdkBridgeImpl {
     }
 
     private fun showInitNotice(activity: Activity, callback: ICallback) {
-        if (initBean?.initNotice != null && initBean!!.initNotice!!.noticeSwitch == 1) {
+        if (initBean.initNotice.noticeSwitch == 1) {
             try {
                 if (mActivity?.isFinishing == false) {
-                    val url = initBean!!.initNotice!!.url
-                    val showCount = initBean!!.initNotice!!.showCount
+                    val url = initBean.initNotice.url
+                    val showCount = initBean.initNotice.showCount
 
                     //是否弹出公告
                     var isShowAppDialog = true
@@ -374,7 +376,7 @@ class SdkBridgeImpl {
     fun openGmCenter(activity: Activity, callback: ICallback) {
         Logger.i("FlyFunGameSdk openGmCenter ...")
         this.mActivity = activity
-        if (initBean == null) {
+        if (!initState) {
             Logger.e("跳转客服中心失败，SDK未初始化或初始化失败")
             callback.onResult(-1, "SDK初始化异常或未初始化")
             return
@@ -392,7 +394,7 @@ class SdkBridgeImpl {
         roleInfo?.apply {
             val sign = Md5Utils.encodeByMD5(SdkBackLoginInfo.instance.userId + roleId + serverCode + gameCode + "flyfun")
             val url = StringBuffer()
-            url.append(initBean!!.initGm!!.url).append("?")
+            url.append(initBean.initGm.url).append("?")
                     .append("sign=").append(URLEncoder.encode(sign, "UTF-8"))
                     .append("&game_code=").append(URLEncoder.encode(gameCode, "UTF-8"))
                     .append("&user_id=").append(URLEncoder.encode(SdkBackLoginInfo.instance.userId, "UTF-8"))
@@ -402,7 +404,7 @@ class SdkBridgeImpl {
                     .append("&server_name=").append(URLEncoder.encode(serverName, "UTF-8"))
                     .append("&game_code=").append(URLEncoder.encode(gameCode, "UTF-8"))
                     .append("&user_id=").append(URLEncoder.encode(SdkBackLoginInfo.instance.userId, "UTF-8"))
-                    .append("&pic=").append(URLEncoder.encode(initBean!!.initGm!!.logoUrl, "UTF-8"))
+                    .append("&pic=").append(URLEncoder.encode(initBean.initGm.logoUrl, "UTF-8"))
             HybridActivity.start(activity, url.toString())
         }
     }
@@ -471,14 +473,12 @@ class SdkBridgeImpl {
     }
 
     fun isGmCenterEnable(): Boolean {
-        return if (initBean == null || initBean!!.initGm == null) {
-            false
-        } else initBean!!.initGm!!.gmSwitch == 1
+        return initBean.initGm.gmSwitch == 1
     }
 
     companion object {
         var isLandscape = false
 
-        var initBean: InitBean? = null
+        lateinit var initBean: InitBean
     }
 }

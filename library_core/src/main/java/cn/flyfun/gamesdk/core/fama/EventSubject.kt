@@ -78,14 +78,4 @@ class EventSubject {
             ob.onPause(context)
         }
     }
-
-//    companion object {
-//        fun getInstance(): EventSubject {
-//            return EventTraceImplHolder.INSTANCE
-//        }
-//    }
-//
-//    private object EventTraceImplHolder {
-//        val INSTANCE: EventSubject = EventSubject()
-//    }
 }
