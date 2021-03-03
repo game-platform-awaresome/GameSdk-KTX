@@ -33,6 +33,9 @@ import cn.flyfun.support.device.DeviceInfoUtils
 import cn.flyfun.support.encryption.Md5Utils
 import cn.flyfun.support.gaid.GAIDUtils
 import cn.flyfun.zap.Zap
+import com.adjust.sdk.Adjust
+import com.adjust.sdk.OnDeviceIdsRead
+import java.lang.StringBuilder
 import java.net.URLEncoder
 
 
@@ -64,6 +67,7 @@ class SdkBridgeImpl {
 
     fun attachBaseContext(application: Application, context: Context) {
         Logger.zapInitSuccess = Zap.default(application, debug = Logger.debug)
+
         GAIDUtils.initGoogleAdid(application) { code: Int, _ ->
             if (code == 0) {
                 Logger.i("谷歌框架可以访问，请求adid")
@@ -392,19 +396,22 @@ class SdkBridgeImpl {
             return
         }
         roleInfo?.apply {
-            val sign = Md5Utils.encodeByMD5(SdkBackLoginInfo.instance.userId + roleId + serverCode + gameCode + "flyfun")
-            val url = StringBuffer()
+            val sign =
+                Md5Utils.encodeByMD5(SdkBackLoginInfo.instance.userId + roleId + serverCode + gameCode + "flyfun")
+            val url = StringBuilder()
             url.append(initBean.initGm.url).append("?")
-                    .append("sign=").append(URLEncoder.encode(sign, "UTF-8"))
-                    .append("&game_code=").append(URLEncoder.encode(gameCode, "UTF-8"))
-                    .append("&user_id=").append(URLEncoder.encode(SdkBackLoginInfo.instance.userId, "UTF-8"))
-                    .append("&role_id=").append(URLEncoder.encode(roleId, "UTF-8"))
-                    .append("&role_name=").append(URLEncoder.encode(roleName, "UTF-8"))
-                    .append("&server_code=").append(URLEncoder.encode(serverCode, "UTF-8"))
-                    .append("&server_name=").append(URLEncoder.encode(serverName, "UTF-8"))
-                    .append("&game_code=").append(URLEncoder.encode(gameCode, "UTF-8"))
-                    .append("&user_id=").append(URLEncoder.encode(SdkBackLoginInfo.instance.userId, "UTF-8"))
-                    .append("&pic=").append(URLEncoder.encode(initBean.initGm.logoUrl, "UTF-8"))
+                .append("sign=").append(URLEncoder.encode(sign, "UTF-8"))
+                .append("&game_code=").append(URLEncoder.encode(gameCode, "UTF-8"))
+                .append("&user_id=")
+                .append(URLEncoder.encode(SdkBackLoginInfo.instance.userId, "UTF-8"))
+                .append("&role_id=").append(URLEncoder.encode(roleId, "UTF-8"))
+                .append("&role_name=").append(URLEncoder.encode(roleName, "UTF-8"))
+                .append("&server_code=").append(URLEncoder.encode(serverCode, "UTF-8"))
+                .append("&server_name=").append(URLEncoder.encode(serverName, "UTF-8"))
+                .append("&game_code=").append(URLEncoder.encode(gameCode, "UTF-8"))
+                .append("&user_id=")
+                .append(URLEncoder.encode(SdkBackLoginInfo.instance.userId, "UTF-8"))
+                .append("&pic=").append(URLEncoder.encode(initBean.initGm.logoUrl, "UTF-8"))
             HybridActivity.start(activity, url.toString())
         }
     }
@@ -460,7 +467,12 @@ class SdkBridgeImpl {
         this.mActivity = activity
     }
 
-    fun onRequestPermissionsResult(activity: Activity, requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    fun onRequestPermissionsResult(
+        activity: Activity,
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         this.mActivity = activity
     }
 

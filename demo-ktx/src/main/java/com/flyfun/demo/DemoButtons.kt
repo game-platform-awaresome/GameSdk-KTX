@@ -10,21 +10,22 @@ import android.widget.LinearLayout
  */
 object DemoButtons {
 
-
     private val events: Array<Item> = arrayOf(
-            Item(0, "00 接口环境切换"),
-            Item(1, "01 登录"),
-            Item(2, "02 切换账号"),
-            Item(3, "03 角色创建上报"),
-            Item(4, "04 角色登录上报"),
-            Item(5, "05 角色升级上报"),
-            Item(6, "06 定额充值"),
-            Item(7, "07 绑定平台账号"),
-            Item(8, "08 打开客服中心"),
-            Item(9, "09 崩溃测试"),
-            Item(10, "10 打包日志文件"),
-            Item(11, "11 上传日志文件"),
-            Item(12, "12 下载图片"))
+        Item(0, "00 接口环境切换"),
+        Item(1, "01 登录"),
+        Item(2, "02 切换账号"),
+        Item(3, "03 角色创建上报"),
+        Item(4, "04 角色登录上报"),
+        Item(5, "05 角色升级上报"),
+        Item(6, "06 定额充值"),
+        Item(7, "07 绑定平台账号"),
+        Item(8, "08 打开客服中心"),
+        Item(9, "09 崩溃测试"),
+        Item(10, "10 打包日志文件"),
+        Item(11, "11 上传日志文件"),
+        Item(12, "12 下载图片"),
+        Item(13, "13 dialog测试")
+    )
 
 
     private var bindButton: Button? = null

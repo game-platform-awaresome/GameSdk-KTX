@@ -1,6 +1,7 @@
 package com.flyfun.demo
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
@@ -17,7 +18,9 @@ import cn.flyfun.gamesdk.base.FlyFunGame
 import cn.flyfun.gamesdk.base.entity.GameChargeInfo
 import cn.flyfun.gamesdk.base.entity.GameRoleInfo
 import cn.flyfun.gamesdk.base.internal.ICallback
+import cn.flyfun.gamesdk.base.utils.Logger
 import cn.flyfun.gamesdk.core.network.SdkRequest
+import cn.flyfun.gamesdk.core.ui.dialog.DotLoadingDialog
 import cn.flyfun.support.encryption.Md5Utils
 import cn.flyfun.support.jarvis.Toast
 import cn.flyfun.zap.toolkit.FileUtils
@@ -35,6 +38,7 @@ class DemoActivity : Activity(), View.OnClickListener {
         private const val APP_SECRET = "xxxx"
     }
 
+    private var dialog: Dialog? = null
     private var mTextView: TextView? = null
     private var cacheRoleInfo: CacheRoleInfo.Companion.RoleInfo? = null
     private val handler = object : Handler(Looper.getMainLooper()) {
@@ -64,6 +68,8 @@ class DemoActivity : Activity(), View.OnClickListener {
         })
         initView()
         FlyFunGame.getInstance().logHandler(handler)
+
+        Logger.d("${getExternalFilesDir("")!!.absolutePath}")
 
     }
 
@@ -150,7 +156,15 @@ class DemoActivity : Activity(), View.OnClickListener {
                 9 -> createCrash()
                 10 -> FileUtils.packLogFiles(this@DemoActivity)
                 11 -> SdkRequest.getInstance().uploadFile(this@DemoActivity)
-                12 -> SdkRequest.getInstance().downloadImageFile(this@DemoActivity, "https://fpic.flyfungame.com/icon/6629d707-4892-4ece-ae7a-bfb43ec7880affg_login_logo_img.png.png")
+                12 -> SdkRequest.getInstance().downloadImageFile(
+                    this@DemoActivity,
+                    "https://fpic.flyfungame.com/icon/6629d707-4892-4ece-ae7a-bfb43ec7880affg_login_logo_img.png.png"
+                )
+                13 -> {
+                    dialog = null
+                    dialog = DotLoadingDialog(this@DemoActivity)
+                    dialog?.show()
+                }
             }
         }
     }

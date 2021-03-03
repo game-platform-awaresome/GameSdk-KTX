@@ -20,11 +20,11 @@ import cn.flyfun.gamesdk.core.internal.ImplCallback
 import cn.flyfun.gamesdk.core.network.SdkRequest
 import cn.flyfun.gamesdk.core.ui.DialogUtils
 import cn.flyfun.gamesdk.core.ui.EventEditText
+import cn.flyfun.gamesdk.core.ui.dialog.ScaleLoadingDialog
 import cn.flyfun.gamesdk.core.utils.AndroidBug5497Workaround
 import cn.flyfun.gamesdk.core.utils.SessionUtils
 import cn.flyfun.support.ResUtils
 import cn.flyfun.support.jarvis.Toast
-import cn.flyfun.support.ui.circleprogress.CircleProgressLoadingDialog
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -41,7 +41,7 @@ class BindActivity : Activity(), View.OnClickListener, EventEditText.EventEditTe
     private var imageShow = 0
     private var imageHide: Int = 0
     private var isShowText = false
-    private var loadingDialog: CircleProgressLoadingDialog? = null
+    private var loadingDialog: ScaleLoadingDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -258,7 +258,7 @@ class BindActivity : Activity(), View.OnClickListener, EventEditText.EventEditTe
             loadingDialog!!.dismiss()
             loadingDialog = null
         }
-        loadingDialog = DialogUtils.showCircleProgressLoadingDialog(this@BindActivity, "")
+        loadingDialog = DialogUtils.showScaleLoadingDialog(this@BindActivity, "")
         loadingDialog?.show()
     }
 

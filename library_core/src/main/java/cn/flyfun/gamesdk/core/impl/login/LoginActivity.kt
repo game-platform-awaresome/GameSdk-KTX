@@ -33,6 +33,7 @@ import cn.flyfun.gamesdk.core.network.SdkRequest
 import cn.flyfun.gamesdk.core.ui.DialogUtils
 import cn.flyfun.gamesdk.core.ui.EventEditText
 import cn.flyfun.gamesdk.core.ui.VerifyCodeEditText
+import cn.flyfun.gamesdk.core.ui.dialog.ScaleLoadingDialog
 import cn.flyfun.gamesdk.core.utils.AndroidBug5497Workaround
 import cn.flyfun.gamesdk.core.utils.SessionUtils
 import cn.flyfun.gamesdk.core.utils.TimeDownUtils
@@ -75,7 +76,7 @@ class LoginActivity : FragmentActivity() {
     private var leftSelected = 0
     private var rightSelect = 0
     private var rightSelected = 0
-    private var loginLoadingDialog: CircleProgressLoadingDialog? = null
+    private var loginLoadingDialog: ScaleLoadingDialog? = null
 
     private val mHandler: Handler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
@@ -645,7 +646,7 @@ class LoginActivity : FragmentActivity() {
             loginLoadingDialog!!.dismiss()
             loginLoadingDialog = null
         }
-        loginLoadingDialog = DialogUtils.showCircleProgressLoadingDialog(this@LoginActivity, "")
+        loginLoadingDialog = DialogUtils.showScaleLoadingDialog(this@LoginActivity, "")
         loginLoadingDialog?.show()
     }
 

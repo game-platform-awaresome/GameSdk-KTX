@@ -17,7 +17,8 @@ import cn.flyfun.support.ResUtils
  * @author #Suyghur.
  * Created on 2020/12/9
  */
-class EventEditText : ConstraintLayout, View.OnClickListener, TextWatcher, View.OnFocusChangeListener {
+class EventEditText : ConstraintLayout, View.OnClickListener, TextWatcher,
+    View.OnFocusChangeListener {
 
     lateinit var focusView: View
     lateinit var leftImageView: ImageView private set
@@ -32,12 +33,17 @@ class EventEditText : ConstraintLayout, View.OnClickListener, TextWatcher, View.
 
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
         initView(context)
     }
 
     private fun initView(context: Context) {
-        LayoutInflater.from(context).inflate(ResUtils.getResId(context, "ffg_event_edittext", "layout"), this)
+        LayoutInflater.from(context)
+            .inflate(ResUtils.getResId(context, "ffg_event_edittext", "layout"), this)
         focusView = findViewById(ResUtils.getResId(context, "ffg_eet_focus_view", "id"))
         rightImageView = findViewById(ResUtils.getResId(context, "ffg_eet_iv_right", "id"))
         leftImageView = findViewById(ResUtils.getResId(context, "ffg_eet_iv_left", "id"))

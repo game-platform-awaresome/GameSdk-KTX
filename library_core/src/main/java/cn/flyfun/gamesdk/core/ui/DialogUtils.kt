@@ -4,6 +4,7 @@ import android.content.Context
 import android.text.TextUtils
 import android.view.View
 import cn.flyfun.gamesdk.core.ui.dialog.InitDialog
+import cn.flyfun.gamesdk.core.ui.dialog.ScaleLoadingDialog
 import cn.flyfun.gamesdk.core.ui.dialog.TipsDialog
 import cn.flyfun.support.ui.circleprogress.CircleProgressLoadingDialog
 
@@ -15,7 +16,11 @@ import cn.flyfun.support.ui.circleprogress.CircleProgressLoadingDialog
 object DialogUtils {
 
 
-    fun newInitNoticeDialog(context: Context, url: String, onClickListener: View.OnClickListener): InitDialog? {
+    fun newInitNoticeDialog(
+        context: Context,
+        url: String,
+        onClickListener: View.OnClickListener
+    ): InitDialog? {
         if (TextUtils.isEmpty(url)) {
             return null
         }
@@ -25,7 +30,14 @@ object DialogUtils {
     }
 
 
-    fun newTipsDialog(context: Context, content: String, leftText: String, rightText: String, leftListener: View.OnClickListener, rightListener: View.OnClickListener): TipsDialog? {
+    fun newTipsDialog(
+        context: Context,
+        content: String,
+        leftText: String,
+        rightText: String,
+        leftListener: View.OnClickListener,
+        rightListener: View.OnClickListener
+    ): TipsDialog? {
         if (TextUtils.isEmpty(content)) {
             return null
         }
@@ -38,7 +50,11 @@ object DialogUtils {
         return tipsDialog
     }
 
-    fun newExitDialog(context: Context, leftListener: View.OnClickListener, rightListener: View.OnClickListener): TipsDialog {
+    fun newExitDialog(
+        context: Context,
+        leftListener: View.OnClickListener,
+        rightListener: View.OnClickListener
+    ): TipsDialog {
         val tipsDialog = TipsDialog(context, true)
         tipsDialog.content.text = "您确定立即退出游戏吗？"
         tipsDialog.leftButton.text = "下次再见"
@@ -48,17 +64,24 @@ object DialogUtils {
         return tipsDialog
     }
 
-    fun showCircleProgressLoadingDialog(context: Context, msg: String): CircleProgressLoadingDialog {
+    fun showCircleProgressLoadingDialog(
+        context: Context,
+        msg: String
+    ): CircleProgressLoadingDialog {
         return if (TextUtils.isEmpty(msg)) {
             CircleProgressLoadingDialog.Builder(context)
-                    .hasMessage(false)
-                    .build()
+                .hasMessage(false)
+                .build()
         } else {
             CircleProgressLoadingDialog.Builder(context)
-                    .setMessage(msg, 15, intArrayOf(255, 255, 255, 255))
-                    .hasMessage(true)
-                    .build()
+                .setMessage(msg, 15, intArrayOf(255, 255, 255, 255))
+                .hasMessage(true)
+                .build()
         }
+    }
+
+    fun showScaleLoadingDialog(context: Context, msg: String): ScaleLoadingDialog {
+        return ScaleLoadingDialog(context)
     }
 
 }

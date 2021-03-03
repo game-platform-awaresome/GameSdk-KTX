@@ -10,6 +10,7 @@ import cn.flyfun.gamesdk.core.internal.IRequestCallback
 import cn.flyfun.gamesdk.core.internal.ImplCallback
 import cn.flyfun.gamesdk.core.network.SdkRequest
 import cn.flyfun.gamesdk.core.ui.DialogUtils
+import cn.flyfun.gamesdk.core.ui.dialog.ScaleLoadingDialog
 import cn.flyfun.gamesdk.core.utils.SPUtils
 import cn.flyfun.support.JsonUtils
 import cn.flyfun.support.ResUtils
@@ -41,7 +42,7 @@ class ChargeImpl private constructor() {
         }
     }
 
-    private var payLoadingDialog: CircleProgressLoadingDialog? = null
+    private var payLoadingDialog: ScaleLoadingDialog? = null
     private var callback: ImplCallback? = null
 
     private var chargeInfo: GameChargeInfo? = null
@@ -56,7 +57,7 @@ class ChargeImpl private constructor() {
             return
         }
         dismissDialog()
-        payLoadingDialog = DialogUtils.showCircleProgressLoadingDialog(activity, ResUtils.getResString(activity, "ffg_charge_loading_tips"))
+        payLoadingDialog = DialogUtils.showScaleLoadingDialog(activity, ResUtils.getResString(activity, "ffg_charge_loading_tips"))
         payLoadingDialog?.show()
         getOrderId(activity)
     }
