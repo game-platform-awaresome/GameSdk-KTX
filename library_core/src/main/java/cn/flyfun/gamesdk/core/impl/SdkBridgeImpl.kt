@@ -67,7 +67,10 @@ class SdkBridgeImpl {
 
     fun attachBaseContext(application: Application, context: Context) {
         Logger.zapInitSuccess = Zap.default(application, debug = Logger.debug)
+        Logger.i("FlyFunGameSdk attachBaseContext ...")
+    }
 
+    fun initApplication(application: Application) {
         GAIDUtils.initGoogleAdid(application) { code: Int, _ ->
             if (code == 0) {
                 Logger.i("谷歌框架可以访问，请求adid")
@@ -82,13 +85,6 @@ class SdkBridgeImpl {
         eventSubject = EventSubject().apply {
             attach(AdjustImpl())
             attach(FirebaseImpl())
-        }
-
-        Logger.i("FlyFunGameSdk attachBaseContext ...")
-    }
-
-    fun initApplication(application: Application) {
-        with(eventSubject) {
             onInitialize(application)
         }
         Logger.i("FlyFunGameSdk initApplication ...")
