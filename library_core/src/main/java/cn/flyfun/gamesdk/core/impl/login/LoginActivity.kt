@@ -48,7 +48,6 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.io.FileInputStream
 import java.io.FileNotFoundException
-import java.lang.Exception
 
 
 /**
@@ -76,7 +75,7 @@ class LoginActivity : FragmentActivity() {
     private var leftSelected = 0
     private var rightSelect = 0
     private var rightSelected = 0
-    private var loginLoadingDialog: ScaleLoadingDialog? = null
+    private var loginLoadingDialog: CircleProgressLoadingDialog? = null
 
     private val mHandler: Handler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
@@ -646,7 +645,7 @@ class LoginActivity : FragmentActivity() {
             loginLoadingDialog!!.dismiss()
             loginLoadingDialog = null
         }
-        loginLoadingDialog = DialogUtils.showScaleLoadingDialog(this@LoginActivity, "")
+        loginLoadingDialog = DialogUtils.showCircleProgressLoadingDialog(this@LoginActivity, "")
         loginLoadingDialog?.show()
     }
 
@@ -667,6 +666,17 @@ class LoginActivity : FragmentActivity() {
     override fun onResume() {
         super.onResume()
         hideBar()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mHandler.removeCallbacksAndMessages(null)
+        if (session != null) {
+            session = null
+        }
+        if (implCallback != null) {
+            implCallback = null
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

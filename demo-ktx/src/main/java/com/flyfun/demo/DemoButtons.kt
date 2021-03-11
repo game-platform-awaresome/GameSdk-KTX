@@ -3,14 +3,15 @@ package com.flyfun.demo
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
+import java.lang.ref.ReferenceQueue
 
 /**
  * @author #Suyghur.
  * Created on 2020/12/7
  */
-object DemoButtons {
+class DemoButtons {
 
-    private val events: Array<Item> = arrayOf(
+    private var events: ArrayList<Item> = arrayListOf(
         Item(0, "00 接口环境切换"),
         Item(1, "01 登录"),
         Item(2, "02 切换账号"),
@@ -27,9 +28,10 @@ object DemoButtons {
         Item(13, "13 dialog测试")
     )
 
-
     private var bindButton: Button? = null
     private var gmButton: Button? = null
+
+    inner class Item constructor(val id: Int, val name: String)
 
     fun hideBindButton() {
         bindButton?.apply {
@@ -98,8 +100,5 @@ object DemoButtons {
                 }
             }
         }
-
     }
-
-    private class Item constructor(val id: Int, val name: String)
 }

@@ -149,6 +149,7 @@ class SdkBridgeImpl {
                         initState = true
                         isShowInitDialog = false
                         initNoticeDialog?.dismiss()
+                        initNoticeDialog = null
                         callback.onResult(0, "SDK初始化成功")
                     }
 
@@ -254,6 +255,11 @@ class SdkBridgeImpl {
         if (!isSubmitRoleData) {
             Logger.e("支付失败，角色未登录或登录失败")
             callback.onResult(-1, "支付失败，角色未登录或登录失败")
+            return
+        }
+        if (chargeInfo.price < 0.0f || chargeInfo.price.isNaN()) {
+            Logger.e("支付失败，传入price值异常")
+            callback.onResult(-1, "支付失败，传入price值异常")
             return
         }
         val innerChargeInfo = BeanUtils.deepClone(chargeInfo)

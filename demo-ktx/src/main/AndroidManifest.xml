@@ -68,7 +68,7 @@
                 <data android:scheme="fb283753472796552" />
             </intent-filter>
         </activity>
-        <!-- Facebook start-->
+        <!-- Facebook end-->
     </application>
 
 </manifest>

@@ -13,6 +13,7 @@ import android.widget.Button
 import android.widget.FrameLayout
 import cn.flyfun.support.ResUtils
 import cn.flyfun.support.device.DeviceInfoUtils
+import android.view.ViewGroup
 
 
 /**
@@ -83,6 +84,24 @@ class InitDialog constructor(context: Context, val url: String) : Dialog(context
             //这种写法可以正确解码
             webView.loadData("网络异常,请检查重试", "text/html; charset=UTF-8", null)
         }
+    }
+
+    private fun releaseWebView() {
+        val parent = webView.parent
+        if (parent != null) {
+            (parent as ViewGroup).removeView(webView)
+        }
+        webView.stopLoading()
+        webView.settings.javaScriptEnabled = false
+        webView.clearHistory()
+        webView.clearView()
+        webView.removeAllViews()
+        webView.destroy()
+    }
+
+    override fun dismiss() {
+        super.dismiss()
+        releaseWebView()
     }
 
 }

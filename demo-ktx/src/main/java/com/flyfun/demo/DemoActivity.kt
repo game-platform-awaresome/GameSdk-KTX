@@ -18,9 +18,7 @@ import cn.flyfun.gamesdk.base.FlyFunGame
 import cn.flyfun.gamesdk.base.entity.GameChargeInfo
 import cn.flyfun.gamesdk.base.entity.GameRoleInfo
 import cn.flyfun.gamesdk.base.internal.ICallback
-import cn.flyfun.gamesdk.base.utils.Logger
 import cn.flyfun.gamesdk.core.network.SdkRequest
-import cn.flyfun.gamesdk.core.ui.dialog.DotLoadingDialog
 import cn.flyfun.support.encryption.Md5Utils
 import cn.flyfun.support.jarvis.Toast
 import cn.flyfun.zap.toolkit.FileUtils
@@ -41,6 +39,7 @@ class DemoActivity : Activity(), View.OnClickListener {
     private var dialog: Dialog? = null
     private var mTextView: TextView? = null
     private var cacheRoleInfo: CacheRoleInfo.Companion.RoleInfo? = null
+    private lateinit var demoButtons: DemoButtons
     private val handler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
             when (msg.what) {
@@ -55,6 +54,7 @@ class DemoActivity : Activity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        demoButtons = DemoButtons()
         FlyFunGame.getInstance().initialize(this, false, object : ICallback {
             override fun onResult(code: Int, result: String) {
                 if (code == 0) {
@@ -68,16 +68,13 @@ class DemoActivity : Activity(), View.OnClickListener {
         })
         initView()
         FlyFunGame.getInstance().logHandler(handler)
-
-        Logger.d("${getExternalFilesDir("")!!.absolutePath}")
-
     }
 
     private fun initView() {
         val layout = LinearLayout(this)
         layout.orientation = LinearLayout.VERTICAL
 
-        DemoButtons.addViews(this, layout)
+        demoButtons.addViews(this, layout)
 
         mTextView = TextView(this)
         mTextView?.apply {
@@ -103,8 +100,8 @@ class DemoActivity : Activity(), View.OnClickListener {
                 2 -> FlyFunGame.getInstance().logout(this@DemoActivity, object : ICallback {
                     override fun onResult(code: Int, result: String) {
                         if (code == 0) {
-                            DemoButtons.hideBindButton()
-                            DemoButtons.hideGMButton()
+                            demoButtons.hideBindButton()
+                            demoButtons.hideGMButton()
                             FlyFunGame.getInstance()
                                 .login(this@DemoActivity, false, object : ICallback {
                                     override fun onResult(code: Int, result: String) {
@@ -268,6 +265,7 @@ class DemoActivity : Activity(), View.OnClickListener {
     override fun onDestroy() {
         super.onDestroy()
         FlyFunGame.getInstance().onDestroy(this)
+        handler.removeCallbacksAndMessages(null)
         exitProcess(0)
     }
 
@@ -313,16 +311,16 @@ class DemoActivity : Activity(), View.OnClickListener {
                     //登录校验成功后判断当前用户是否已经绑定平台账号，否则在游戏中显示入口
                     if (FlyFunGame.getInstance().hasBindAccount()) {
                         //隐藏绑定平台账号的入口
-                        DemoButtons.hideBindButton()
+                        demoButtons.hideBindButton()
                     } else {
                         //显示绑定平台账号的入口
-                        DemoButtons.showBindButton()
+                        demoButtons.showBindButton()
                     }
                     //登录校验成功后判断SDK客服中心是否开启，否则在游戏中关闭对应的入口
                     if (FlyFunGame.getInstance().isGmCenterEnable()) {
-                        DemoButtons.showGMButton()
+                        demoButtons.showGMButton()
                     } else {
-                        DemoButtons.hideGMButton()
+                        demoButtons.hideGMButton()
                     }
                 } else {
                     Toast.toastInfo(this, "(demo提示)登录失败，用户信息校验失败")

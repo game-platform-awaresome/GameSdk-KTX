@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.*
 import android.widget.TextView
+import cn.flyfun.gamesdk.base.utils.Logger
 import cn.flyfun.support.ResUtils
 
 /**
@@ -26,8 +27,7 @@ class ScaleLoadingDialog(context: Context) : Dialog(context) {
     }
 
     private fun initView(context: Context) {
-        val view = LayoutInflater.from(context)
-            .inflate(ResUtils.getResId(context, "ffg_dialog_scale_loading", "layout"), null)
+        val view = LayoutInflater.from(context).inflate(ResUtils.getResId(context, "ffg_dialog_scale_loading", "layout"), null)
         setContentView(view)
 
         content = view.findViewById(ResUtils.getResId(context, "ffg_dialog_content", "id"))
@@ -36,5 +36,10 @@ class ScaleLoadingDialog(context: Context) : Dialog(context) {
         val attr = window?.attributes as WindowManager.LayoutParams
         //设置dialog在布局中的位置
         attr.gravity = Gravity.CENTER
+    }
+
+    override fun dismiss() {
+        super.dismiss()
+        Logger.d("dismiss")
     }
 }
