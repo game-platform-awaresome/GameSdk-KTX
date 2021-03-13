@@ -9,14 +9,14 @@ import cn.flyfun.support.HostModelUtils
  */
 object Host {
 
-    private const val DEFAULT_ONLINE_GAME_HOST = "https://fgame.flyfungame.com"
-    private const val DEFAULT_ONLINE_LOGIN_HOST = "https://flogin.flyfungame.com"
-    private const val DEFAULT_ONLINE_PAY_HOST = "https://fpay.flyfungame.com"
-    private const val DEFAULT_ONLINE_ADV_HOST = "https://adv.flyfungame.com"
-    private const val DEFAULT_TEST_GAME_HOST = "http://testgame.flyfungame.com"
-    private const val DEFAULT_TEST_LOGIN_HOST = "http://testlogin.flyfungame.com"
-    private const val DEFAULT_TEST_PAY_HOST = "http://testpay.flyfungame.com"
-    private const val DEFAULT_TEST_ADV_HOST = "http://testadv.flyfungame.com"
+    private const val DEFAULT_ONLINE_GAME_HOST = "https://game.feiyougames.com"
+    private const val DEFAULT_ONLINE_LOGIN_HOST = "https://login.feiyougames.com"
+    private const val DEFAULT_ONLINE_PAY_HOST = "https://pay.feiyougames.com"
+    private const val DEFAULT_ONLINE_ADV_HOST = "https://adv.feiyougames.com"
+    private const val DEFAULT_TEST_GAME_HOST = "http://testgame.feiyougames.com"
+    private const val DEFAULT_TEST_LOGIN_HOST = "http://testlogin.feiyougames.com"
+    private const val DEFAULT_TEST_PAY_HOST = "http://testpay.feiyougames.com"
+    private const val DEFAULT_TEST_ADV_HOST = "http://testadv.feiyougames.com"
 
     var BASIC_URL_INIT_SDK = "/game-api/v1/game/api/find-info"
     var BASIC_URL_USER_VERIFY = "/login-api/v1/user/login"
