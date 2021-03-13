@@ -25,7 +25,6 @@ class DemoButtons {
         Item(10, "10 打包日志文件"),
         Item(11, "11 上传日志文件"),
         Item(12, "12 下载图片"),
-        Item(13, "13 dialog测试")
     )
 
     private var bindButton: Button? = null

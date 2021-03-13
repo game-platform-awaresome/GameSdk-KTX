@@ -157,11 +157,6 @@ class DemoActivity : Activity(), View.OnClickListener {
                     this@DemoActivity,
                     "https://fpic.flyfungame.com/icon/6629d707-4892-4ece-ae7a-bfb43ec7880affg_login_logo_img.png.png"
                 )
-                13 -> {
-                    dialog = null
-                    dialog = DotLoadingDialog(this@DemoActivity)
-                    dialog?.show()
-                }
             }
         }
     }

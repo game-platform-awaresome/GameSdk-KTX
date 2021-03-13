@@ -12,10 +12,10 @@ import cn.flyfun.gamesdk.base.entity.GameRoleInfo
 import cn.flyfun.gamesdk.base.internal.ICallback
 import cn.flyfun.gamesdk.base.utils.Logger
 import cn.flyfun.gamesdk.base.utils.ParamsUtils
-import cn.flyfun.gamesdk.core.fama.EventSubject
 import cn.flyfun.gamesdk.core.entity.ResultInfo
 import cn.flyfun.gamesdk.core.entity.SdkBackLoginInfo
 import cn.flyfun.gamesdk.core.entity.bean.InitBean
+import cn.flyfun.gamesdk.core.fama.EventSubject
 import cn.flyfun.gamesdk.core.fama.channel.adjust.AdjustImpl
 import cn.flyfun.gamesdk.core.fama.channel.firebase.FirebaseImpl
 import cn.flyfun.gamesdk.core.impl.login.LoginActivity
@@ -33,9 +33,6 @@ import cn.flyfun.support.device.DeviceInfoUtils
 import cn.flyfun.support.encryption.Md5Utils
 import cn.flyfun.support.gaid.GAIDUtils
 import cn.flyfun.zap.Zap
-import com.adjust.sdk.Adjust
-import com.adjust.sdk.OnDeviceIdsRead
-import java.lang.StringBuilder
 import java.net.URLEncoder
 
 
@@ -67,10 +64,6 @@ class SdkBridgeImpl {
 
     fun attachBaseContext(application: Application, context: Context) {
         Logger.zapInitSuccess = Zap.default(application, debug = Logger.debug)
-        Logger.i("FlyFunGameSdk attachBaseContext ...")
-    }
-
-    fun initApplication(application: Application) {
         GAIDUtils.initGoogleAdid(application) { code: Int, _ ->
             if (code == 0) {
                 Logger.i("谷歌框架可以访问，请求adid")
@@ -82,6 +75,10 @@ class SdkBridgeImpl {
                 NTools.putParam("adid", DeviceInfoUtils.getAndroidDeviceId(application))
             }
         }
+        Logger.i("FlyFunGameSdk attachBaseContext ...")
+    }
+
+    fun initApplication(application: Application) {
         eventSubject = EventSubject().apply {
             attach(AdjustImpl())
             attach(FirebaseImpl())
