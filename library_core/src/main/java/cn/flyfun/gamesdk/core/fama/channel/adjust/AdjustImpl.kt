@@ -25,6 +25,11 @@ class AdjustImpl : IEventObserver {
     private var bean: AdjustEventBean? = null
 
     override fun onInitialize(context: Context) {
+        if (!ParamsUtils.isAdjustEnable(context)) {
+            Logger.e("FLYFUN_ENABLE = false")
+            isInitSuccess = false
+            return
+        }
         val appToken = ParamsUtils.getAdjustAppId(context)
         bean = AdjustEventBean.toBean(getLogJson(context))
         if (TextUtils.isEmpty(appToken)) {
