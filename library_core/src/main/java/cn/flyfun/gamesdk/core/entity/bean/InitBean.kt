@@ -1,6 +1,5 @@
 package cn.flyfun.gamesdk.core.entity.bean
 
-import android.text.TextUtils
 import cn.flyfun.support.JsonUtils
 import org.json.JSONException
 import org.json.JSONObject

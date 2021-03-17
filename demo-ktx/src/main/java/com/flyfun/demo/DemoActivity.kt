@@ -21,6 +21,7 @@ import cn.flyfun.support.encryption.Md5Utils
 import cn.flyfun.support.jarvis.Toast
 import org.json.JSONException
 import org.json.JSONObject
+import java.io.File
 import kotlin.system.exitProcess
 
 /**
@@ -275,6 +276,18 @@ class DemoActivity : Activity(), View.OnClickListener {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         FlyFunGame.getInstance()
             .onRequestPermissionsResult(this, requestCode, permissions, grantResults)
+    }
+
+    fun getAllLogFiles(path: String): ArrayList<String> {
+        val fileTree = File(path).walk()
+        val logs = arrayListOf<String>()
+        fileTree.maxDepth(1)
+            .filter { it.isFile }
+            .filter { it.extension == "log" }
+            .forEach {
+                logs.add(it.name)
+            }
+        return logs
     }
 
 

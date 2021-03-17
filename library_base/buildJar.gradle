@@ -1,5 +1,5 @@
 def SDK_BASENAME = "flyfun_base"
-def SDK_VERSION = "1.1.5"
+def SDK_VERSION = "1.1.6"
 def SEPARATOR = "_"
 def sdkDestinationPath = "build/jar/"
 def zipFile = file('build/intermediates/packaged-classes/release/classes.jar')

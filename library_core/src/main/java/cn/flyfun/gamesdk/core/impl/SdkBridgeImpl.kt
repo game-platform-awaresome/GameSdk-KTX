@@ -11,10 +11,10 @@ import cn.flyfun.gamesdk.base.entity.GameRoleInfo
 import cn.flyfun.gamesdk.base.internal.ICallback
 import cn.flyfun.gamesdk.base.utils.Logger
 import cn.flyfun.gamesdk.base.utils.ParamsUtils
-import cn.flyfun.gamesdk.core.fama.EventSubject
 import cn.flyfun.gamesdk.core.entity.ResultInfo
 import cn.flyfun.gamesdk.core.entity.SdkBackLoginInfo
 import cn.flyfun.gamesdk.core.entity.bean.InitBean
+import cn.flyfun.gamesdk.core.fama.EventSubject
 import cn.flyfun.gamesdk.core.fama.channel.adjust.AdjustImpl
 import cn.flyfun.gamesdk.core.fama.channel.firebase.FirebaseImpl
 import cn.flyfun.gamesdk.core.impl.login.LoginActivity
@@ -31,6 +31,7 @@ import cn.flyfun.support.DensityUtils
 import cn.flyfun.support.device.DeviceInfoUtils
 import cn.flyfun.support.encryption.Md5Utils
 import cn.flyfun.support.gaid.GAIDUtils
+import cn.flyfun.support.ui.circleprogress.CircleProgressLoadingDialog
 import java.net.URLEncoder
 
 
@@ -59,6 +60,10 @@ class SdkBridgeImpl {
     private var isSubmitRoleData = false
     private var gameCode = ""
     private lateinit var eventSubject: EventSubject
+    private var initLoadingDialog: CircleProgressLoadingDialog? = null
+
+    @Volatile
+    private var timeCount = 0
 
     fun attachBaseContext(application: Application, context: Context) {
         GAIDUtils.initGoogleAdid(application) { code: Int, _ ->
@@ -71,6 +76,7 @@ class SdkBridgeImpl {
                 NTools.putParam("device_id", DeviceInfoUtils.getAndroidDeviceId(application))
                 NTools.putParam("adid", DeviceInfoUtils.getAndroidDeviceId(application))
             }
+            hasReadAaid = true
         }
         eventSubject = EventSubject().apply {
             attach(AdjustImpl())
@@ -102,7 +108,29 @@ class SdkBridgeImpl {
 
         //获取当前屏幕尺寸
         NTools.putParam("screen", DensityUtils.getResolutionByFullScreen(activity))
-        startSdkInit(activity, callback)
+        if (!hasReadAaid) {
+            Logger.e("还未读取到aaid，将延迟初始化")
+            showInitLoading(activity)
+            Thread {
+                while (!hasReadAaid) {
+                    try {
+                        Logger.e("还未读取到aaid，延迟1s初始化，$hasReadAaid")
+                        Thread.sleep(1000)
+                        timeCount++
+                    } catch (e: InterruptedException) {
+                        e.printStackTrace()
+                    }
+                }
+                activity.runOnUiThread {
+                    Logger.e("读取到aaid，共延迟${timeCount}s初始化接口，将进行初始化...")
+                    hideInitLoading()
+                    startSdkInit(activity, callback)
+                }
+            }.start()
+        } else {
+            Logger.e("读取到aaid，开始初始化...");
+            startSdkInit(activity, callback)
+        }
     }
 
     private fun startSdkInit(activity: Activity, callback: ICallback) {
@@ -453,7 +481,28 @@ class SdkBridgeImpl {
         return initBean.initGm.gmSwitch == 1
     }
 
+    private fun showInitLoading(context: Context) {
+        initNoticeDialog?.apply {
+            if (isShowing) {
+                dismiss()
+                initLoadingDialog = null
+            }
+        }
+        initLoadingDialog = DialogUtils.showCircleProgressLoadingDialog(context, "")
+        initLoadingDialog?.show()
+    }
+
+    private fun hideInitLoading() {
+        initLoadingDialog?.apply {
+            dismiss()
+            initLoadingDialog = null
+        }
+    }
+
     companion object {
+
+        private var hasReadAaid = false
+
         var isLandscape = false
 
         lateinit var initBean: InitBean
