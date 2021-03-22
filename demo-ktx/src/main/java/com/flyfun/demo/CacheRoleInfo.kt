@@ -17,13 +17,14 @@ class CacheRoleInfo {
         fun setDemoRoleInfo(context: Context, userId: String): RoleInfo {
             Logger.d("setDemoRoleInfo")
             val roleInfo = RoleInfo(
-                    roleId = "aaa${System.currentTimeMillis()}",
-                    roleName = "角色名123",
-                    roleLevel = "110",
-                    serverCode = "333",
-                    serverName = "服务器名333",
-                    vipLevel = "1",
-                    balance = "600")
+                roleId = "aaa${System.currentTimeMillis()}",
+                roleName = "角色名123",
+                roleLevel = "110",
+                serverCode = "333",
+                serverName = "服务器名333",
+                vipLevel = "1",
+                balance = "600"
+            )
             val info = roleInfo.toJsonString()
             val sp = context.getSharedPreferences("app_role_info", Context.MODE_PRIVATE)
             val editor = sp.edit()
@@ -42,13 +43,14 @@ class CacheRoleInfo {
                 } else {
                     val jsonObject = JSONObject(info!!)
                     RoleInfo(
-                            roleId = jsonObject.getString("role_id"),
-                            roleName = jsonObject.getString("role_name"),
-                            roleLevel = jsonObject.getString("role_level"),
-                            serverCode = jsonObject.getString("server_code"),
-                            serverName = jsonObject.getString("server_name"),
-                            vipLevel = jsonObject.getString("vip_level"),
-                            balance = jsonObject.getString("balance"))
+                        roleId = jsonObject.getString("role_id"),
+                        roleName = jsonObject.getString("role_name"),
+                        roleLevel = jsonObject.getString("role_level"),
+                        serverCode = jsonObject.getString("server_code"),
+                        serverName = jsonObject.getString("server_name"),
+                        vipLevel = jsonObject.getString("vip_level"),
+                        balance = jsonObject.getString("balance")
+                    )
                 }
 
             } catch (e: Exception) {
@@ -57,9 +59,11 @@ class CacheRoleInfo {
             return null
         }
 
-        data class RoleInfo(val roleId: String, val roleName: String, val roleLevel: String,
-                            val serverCode: String, val serverName: String, val vipLevel: String,
-                            val balance: String) {
+        data class RoleInfo(
+            var roleId: String = "", var roleName: String = "", var roleLevel: String = "",
+            var serverCode: String = "", var serverName: String = "", var vipLevel: String = "",
+            var balance: String = ""
+        ) {
 
 
             fun toJsonString(): String {

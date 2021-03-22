@@ -165,6 +165,13 @@ class ChargeImpl private constructor() {
             list?.apply {
                 if (size > 0) {
                     Logger.d("存在未消耗的订单，发起补单流程")
+                    if (this[0].sku == SdkBridgeImpl.initBean.initReward.rewardId) {
+                        Logger.e("存在阻塞的预注册奖励，停止支付流程")
+                        Toast.toastInfo(activity, "In-app Billing has some error , please restart app and try again")
+                        dismissDialog()
+                        disConnection()
+                        return
+                    }
                     //消耗完了再发起支付
                     try {
                         val cache = SPUtils.getCacheOrder(activity)
@@ -276,6 +283,7 @@ class ChargeImpl private constructor() {
     private fun notifyOrder2Backend(activity: Activity, orderId: String, originalJson: String, signature: String, isCache: Boolean) {
         SdkRequest.getInstance().notifyOrder(activity, orderId, originalJson, signature, object : IRequestCallback {
             override fun onResponse(resultInfo: ResultInfo) {
+                Logger.d("result : $resultInfo")
                 try {
                     saveOrder2Local(activity, orderId, originalJson)
                     val jsonObject = JSONObject(originalJson)

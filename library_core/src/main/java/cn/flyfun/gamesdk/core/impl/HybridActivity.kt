@@ -178,7 +178,7 @@ class HybridActivity : Activity() {
                 val hitTestResult = view.hitTestResult
                 if (url.startsWith("http:") || url.startsWith("https:")) {
                     //解决重定向加载的问题 return false
-                    if (!view.canGoBack() || hitTestResult == null) {
+                    if (!view.canGoBack()) {
                         return false
                     }
                     //解决重定向加载的问题 return false

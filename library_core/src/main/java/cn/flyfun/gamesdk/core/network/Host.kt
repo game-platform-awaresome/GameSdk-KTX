@@ -26,6 +26,7 @@ object Host {
     var BASIC_URL_FORGET_PASSWORD = "/login-api/v1/user/reset-pwd"
     var BASIC_URL_GET_ORDER_ID = "/pay-api/v1/api/pay/init-order"
     var BASIC_URL_NOTIFY_ORDER = "/pay-api/v1/api/pay/check-order"
+    var BASIC_URL_NOTIFY_REWARD = "/pay-api/v1/api/pay/check-pre-registration-order"
     var BASIC_URL_SUBMIT_ROLE = "/adv-api/v1/new-role/save"
 
     private var GAME_HOST = ""
@@ -67,6 +68,7 @@ object Host {
         BASIC_URL_FORGET_PASSWORD = LOGIN_HOST + BASIC_URL_FORGET_PASSWORD
         BASIC_URL_GET_ORDER_ID = PAY_HOST + BASIC_URL_GET_ORDER_ID
         BASIC_URL_NOTIFY_ORDER = PAY_HOST + BASIC_URL_NOTIFY_ORDER
+        BASIC_URL_NOTIFY_REWARD = PAY_HOST + BASIC_URL_NOTIFY_REWARD
         BASIC_URL_SUBMIT_ROLE = ADV_HOST + BASIC_URL_SUBMIT_ROLE
     }
 

@@ -45,6 +45,7 @@ import cn.flyfun.support.ui.circleprogress.CircleProgressLoadingDialog
 import com.google.android.material.tabs.TabLayout
 import org.json.JSONException
 import org.json.JSONObject
+import java.io.File
 import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.lang.Exception
@@ -265,8 +266,9 @@ class LoginActivity : FragmentActivity() {
 
         val ivLogo = findViewById<ImageView>(ResUtils.getResId(this, "ffg_iv_login_logo", "id"))
         val logoName = Md5Utils.encodeByMD5(SdkBridgeImpl.initBean.initGm.iconUrl) + ".png"
-        ivLogo.setImageBitmap(getLocalBitmap("${this@LoginActivity.getExternalFilesDir(".cache")!!.absolutePath}/$logoName"))
-
+        if (File("${this@LoginActivity.getExternalFilesDir(".cache")!!.absolutePath}/$logoName").exists()){
+            ivLogo.setImageBitmap(getLocalBitmap("${this@LoginActivity.getExternalFilesDir(".cache")!!.absolutePath}/$logoName"))
+        }
         etAccount = findViewById(ResUtils.getResId(this, "ffg_et_forget_account", "id"))
         etAccount.apply {
             leftImageView.setBackgroundResource(

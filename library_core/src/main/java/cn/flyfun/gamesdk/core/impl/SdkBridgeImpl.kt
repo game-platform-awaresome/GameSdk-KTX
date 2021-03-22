@@ -11,6 +11,7 @@ import cn.flyfun.gamesdk.base.entity.GameRoleInfo
 import cn.flyfun.gamesdk.base.internal.ICallback
 import cn.flyfun.gamesdk.base.utils.Logger
 import cn.flyfun.gamesdk.base.utils.ParamsUtils
+import cn.flyfun.gamesdk.core.entity.GameRewardInfo
 import cn.flyfun.gamesdk.core.entity.ResultInfo
 import cn.flyfun.gamesdk.core.entity.SdkBackLoginInfo
 import cn.flyfun.gamesdk.core.entity.bean.InitBean
@@ -128,7 +129,7 @@ class SdkBridgeImpl {
                 }
             }.start()
         } else {
-            Logger.e("读取到aaid，开始初始化...");
+            Logger.e("读取到aaid，开始初始化...")
             startSdkInit(activity, callback)
         }
     }
@@ -141,7 +142,9 @@ class SdkBridgeImpl {
                     //检查公告配置
                     showInitNotice(activity, callback)
                     //下载登录框图片
-                    SdkRequest.getInstance().downloadImageFile(activity, initBean.initGm.iconUrl)
+                    if (!TextUtils.isEmpty(initBean.initGm.iconUrl)) {
+                        SdkRequest.getInstance().downloadImageFile(activity, initBean.initGm.iconUrl)
+                    }
                 } else {
                     callback.onResult(-1, "SDK初始化失败")
                     initState = false
@@ -325,6 +328,17 @@ class SdkBridgeImpl {
         params["server_name"] = roleInfo.serverName.toString()
         with(eventSubject) {
             onRoleLauncher(activity, params)
+        }
+        //检查预注册奖励
+        with(GameRewardInfo()) {
+            userId = roleInfo.userId
+            serverCode = roleInfo.serverCode
+            serverName = roleInfo.serverName
+            roleId = roleInfo.roleId
+            roleName = roleInfo.roleName
+            roleLevel = roleInfo.roleLevel
+            rewardId = initBean.initReward.rewardId
+            PreRewardImpl.getInstance().checkPreReward(activity, this)
         }
     }
 

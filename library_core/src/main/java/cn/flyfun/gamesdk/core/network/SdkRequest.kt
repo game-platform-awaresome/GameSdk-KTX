@@ -4,6 +4,7 @@ import android.content.Context
 import cn.flyfun.gamesdk.base.entity.GameChargeInfo
 import cn.flyfun.gamesdk.base.entity.GameRoleInfo
 import cn.flyfun.gamesdk.base.utils.Logger
+import cn.flyfun.gamesdk.core.entity.GameRewardInfo
 import cn.flyfun.gamesdk.core.internal.IFileRequestCallback
 import cn.flyfun.gamesdk.core.internal.IRequestCallback
 import cn.flyfun.support.volley.VolleyError
@@ -90,6 +91,23 @@ class SdkRequest {
             e.printStackTrace()
         }
         VolleyRequest.post(context, Host.BASIC_URL_NOTIFY_ORDER, jsonObject, callback)
+    }
+
+    fun notifyReward(context: Context, rewardInfo: GameRewardInfo,  callback: IRequestCallback) {
+        val jsonObject = JSONObject()
+        try {
+            jsonObject.put("user_id", rewardInfo.userId)
+            jsonObject.put("server_code", rewardInfo.serverCode)
+            jsonObject.put("server_name", rewardInfo.serverName)
+            jsonObject.put("role_id", rewardInfo.roleId)
+            jsonObject.put("role_name", rewardInfo.roleName)
+            jsonObject.put("role_level", rewardInfo.roleLevel)
+            jsonObject.put("product_id", rewardInfo.rewardId)
+            jsonObject.put("third_plat_content", rewardInfo.purchaseToken)
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        VolleyRequest.post(context, Host.BASIC_URL_NOTIFY_REWARD, jsonObject, callback)
     }
 
     fun submitRoleData(context: Context, roleInfo: GameRoleInfo, callback: IRequestCallback) {

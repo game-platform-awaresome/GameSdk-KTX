@@ -14,8 +14,8 @@ android {
         applicationId 'com.flyfun.demo'
         minSdkVersion MIN_SDK_VERSION
         targetSdkVersion TARGET_SDK_VERSION
-        versionCode 103
-        versionName "1.0.3"
+        versionCode 104
+        versionName "1.0.4"
         multiDexEnabled true
 
         ndk {

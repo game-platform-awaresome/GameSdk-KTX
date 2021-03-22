@@ -13,6 +13,7 @@ class InitBean {
     lateinit var initNotice: InitNotice
     lateinit var initPrivacy: InitPrivacy
     lateinit var initGm: InitGm
+    lateinit var initReward: InitReward
     override fun toString(): String {
         return "InitBean{" +
                 "initNotice=" + initNotice +
@@ -61,12 +62,22 @@ class InitBean {
         }
     }
 
+    class InitReward {
+        var rewardId = ""
+        override fun toString(): String {
+            return "InitReward{" +
+                    "rewardId='" + rewardId + '\'' +
+                    '}'
+        }
+    }
+
     companion object {
         fun toBean(json: String): InitBean {
             val bean = InitBean()
             bean.initNotice = InitNotice()
             bean.initPrivacy = InitPrivacy()
             bean.initGm = InitGm()
+            bean.initReward = InitReward()
             try {
                 val jsonObject = JSONObject(json)
                 if (JsonUtils.hasJsonKey(jsonObject, "notice_switch")) {
@@ -95,6 +106,9 @@ class InitBean {
                 }
                 if (JsonUtils.hasJsonKey(jsonObject, "icon_pic")) {
                     bean.initGm.iconUrl = jsonObject.getString("icon_pic")
+                }
+                if (JsonUtils.hasJsonKey(jsonObject, "reward_id")) {
+                    bean.initReward.rewardId = jsonObject.getString("reward_id")
                 }
             } catch (e: JSONException) {
                 e.printStackTrace()
