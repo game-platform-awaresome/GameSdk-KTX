@@ -10,7 +10,6 @@ import cn.flyfun.support.jarvis.LogRvds
 object Logger {
 
     private const val TAG: String = "flyfun_game"
-    var debug: Boolean = true
     var handler: Handler? = null
 
     fun i(any: Any) {
@@ -28,7 +27,7 @@ object Logger {
 
     @JvmStatic
     fun d(tag: String, any: Any) {
-        if (debug) {
+        if (LogRvds.DEBUG) {
             LogRvds.d(tag, any)
         }
     }

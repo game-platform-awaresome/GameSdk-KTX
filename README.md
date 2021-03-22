@@ -10,6 +10,7 @@
 |	2021-1-18	|	1.1.2	|	1）修复5.0以下多个Dex文件加载问题	| 麦锦培 |
 |	2021-1-22	|	1.1.3	|	1）修复客服中心提交问题上传图片失败的问题	| 麦锦培 |
 |	2021-2-19	|	1.1.4	|	1）接入Firebase Crashlytics崩溃服务	| 麦锦培 |
+|	2021-3-22	|	1.1.6	|	1）优化Native层代码；<br/>2)优化获取谷歌id的逻辑；<br/>3）接入谷歌预注册奖励	| 麦锦培 |
 
 # 1.接入前检查
 
@@ -60,43 +61,55 @@ android.enableJetifier=true
 	</application>
 ```
 
-- 4.在项目**`build.gradle`**中**`dependencies`**节点下添加SDK依赖，目前只提供以下两种引入形式
+- 4.在应用**`build.gradle`**中**`dependencies`**节点下添加SDK依赖，目前只提供以下两种引入形式
 
 > <font color=red size=4>**1.远程依赖（推荐）**：</font>
 
+在项目级**`build.gradle`**文件下的**`allprojects`**节点下添加仓库的url
+
+```groovy
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+			...
+		}
+}
+```
+
 java
 ```groovy
-	implementation 'cn.flyfun.gamesdk:core:1.1.4'
+	implementation 'com.flyfungame.git.client:FlyFunGameSdk:v1.1.6'
 ```
 - - -
 kotlin
 ```groovy
-	implementation 'cn.flyfun.gamesdk:core-ktx:1.1.4'
+	implementation 'com.flyfungame.git.client:FlyFunGameSdk-KTX:v1.1.6'
 ```
 
 > <font color=red size=4>**2.本地aar依赖：**</font>
-拷贝lib目录下**`flyfun_core_1.1.4.aar`**到项目中，并在引入
+拷贝lib目录下**`flyfun_core_1.1.6.aar`**到项目中，并在引入
 
 kotlin版本目前只提供远程依赖，需本地aar请联系我方技术获取
 
 ```groovy
-	api(name: 'flyfun_core_1.1.4.aar', ext: 'aar')
+	api(name: 'flyfun_core_1.1.6.aar', ext: 'aar')
 ```
 
 添加谷歌、Facebook等第三方库资源
 
 ```groovy
 	implementation 'androidx.core:core:1.3.2'
-	implementation 'androidx.fragment:fragment:1.3.0'
+	implementation 'androidx.fragment:fragment:1.3.1'
 	implementation 'com.google.android.material:material:1.3.0'
 	implementation 'com.android.installreferrer:installreferrer:2.2'
 	implementation 'com.facebook.android:facebook-login:9.0.0'
 	implementation 'com.google.android.gms:play-services-auth:19.0.0'
-	implementation 'com.android.billingclient:billing:3.0.2'
+	implementation 'com.android.billingclient:billing:3.0.3'
 	implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 	implementation 'com.adjust.sdk:adjust-android:4.25.0'
 	implementation 'com.google.firebase:firebase-analytics:18.0.2'
-	implementation 'com.google.firebase:firebase-crashlytics:17.3.1'
+	implementation 'com.google.firebase:firebase-crashlytics:17.4.0'
 ```
 
 # 3.接口说明
