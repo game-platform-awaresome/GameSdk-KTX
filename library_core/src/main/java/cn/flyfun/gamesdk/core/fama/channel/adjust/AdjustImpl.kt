@@ -6,7 +6,7 @@ import cn.flyfun.gamesdk.base.utils.Logger
 import cn.flyfun.gamesdk.base.utils.ParamsUtils
 import cn.flyfun.gamesdk.core.entity.SdkBackLoginInfo
 import cn.flyfun.gamesdk.core.internal.IEventObserver
-import cn.flyfun.gamesdk.core.utils.NTools
+import cn.flyfun.support.SdkDriveTools
 import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustConfig
 import com.adjust.sdk.AdjustEvent
@@ -64,7 +64,7 @@ class AdjustImpl : IEventObserver {
         resetSessionParams()
         val loginEvent = AdjustEvent(bean!!.eventLoginSuccess)
         Adjust.addSessionCallbackParameter("user_id", SdkBackLoginInfo.instance.userId)
-        Adjust.addSessionCallbackParameter("device_id", NTools.getParam("device_id"))
+        Adjust.addSessionCallbackParameter("device_id", SdkDriveTools.getParam("device_id"))
         Adjust.trackEvent(loginEvent)
     }
 
@@ -82,7 +82,7 @@ class AdjustImpl : IEventObserver {
         resetSessionParams()
         val registerEvent = AdjustEvent(bean!!.eventUserRegister)
         Adjust.addSessionCallbackParameter("user_id", SdkBackLoginInfo.instance.userId)
-        Adjust.addSessionCallbackParameter("device_id", NTools.getParam("device_id"))
+        Adjust.addSessionCallbackParameter("device_id", SdkDriveTools.getParam("device_id"))
         Adjust.trackEvent(registerEvent)
     }
 
@@ -100,7 +100,7 @@ class AdjustImpl : IEventObserver {
         resetSessionParams()
         val chargeEvent = AdjustEvent(bean!!.eventChargeSuccess)
         Adjust.addSessionCallbackParameter("user_id", SdkBackLoginInfo.instance.userId)
-        Adjust.addSessionCallbackParameter("device_id", NTools.getParam("device_id"))
+        Adjust.addSessionCallbackParameter("device_id", SdkDriveTools.getParam("device_id"))
         if (eventMap.containsKey("role_id")) {
             Adjust.addSessionCallbackParameter("role_id", eventMap["role_id"] as String)
         } else {
@@ -149,7 +149,7 @@ class AdjustImpl : IEventObserver {
         resetSessionParams()
         val roleCreateEvent = AdjustEvent(bean!!.eventRoleCreate)
         Adjust.addSessionCallbackParameter("user_id", SdkBackLoginInfo.instance.userId)
-        Adjust.addSessionCallbackParameter("device_id", NTools.getParam("device_id"))
+        Adjust.addSessionCallbackParameter("device_id", SdkDriveTools.getParam("device_id"))
         if (eventMap.containsKey("role_id")) {
             Adjust.addSessionCallbackParameter("role_id", eventMap["role_id"] as String)
         } else {
@@ -187,7 +187,7 @@ class AdjustImpl : IEventObserver {
         resetSessionParams()
         val roleLauncherEvent = AdjustEvent(bean!!.eventRoleLauncher)
         Adjust.addSessionCallbackParameter("user_id", SdkBackLoginInfo.instance.userId)
-        Adjust.addSessionCallbackParameter("device_id", NTools.getParam("device_id"))
+        Adjust.addSessionCallbackParameter("device_id", SdkDriveTools.getParam("device_id"))
         if (eventMap.containsKey("role_id")) {
             Adjust.addSessionCallbackParameter("role_id", eventMap["role_id"] as String)
         } else {

@@ -6,7 +6,7 @@ import cn.flyfun.gamesdk.base.utils.Logger
 import cn.flyfun.gamesdk.base.utils.ParamsUtils
 import cn.flyfun.gamesdk.core.entity.SdkBackLoginInfo
 import cn.flyfun.gamesdk.core.internal.IEventObserver
-import cn.flyfun.gamesdk.core.utils.NTools
+import cn.flyfun.support.SdkDriveTools
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
@@ -27,14 +27,14 @@ class FirebaseImpl : IEventObserver {
 
     override fun onLogin(context: Context) {
         val bundle = Bundle()
-        bundle.putString("device_id", NTools.getParam("device_id"))
+        bundle.putString("device_id", SdkDriveTools.getParam("device_id"))
         bundle.putString("user_id", SdkBackLoginInfo.instance.userId)
         Firebase.analytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
     }
 
     override fun onRegister(context: Context) {
         val bundle = Bundle()
-        bundle.putString("device_id", NTools.getParam("device_id"))
+        bundle.putString("device_id", SdkDriveTools.getParam("device_id"))
         bundle.putString("user_id", SdkBackLoginInfo.instance.userId)
         Firebase.analytics.logEvent("event_user_register", bundle)
     }
@@ -46,7 +46,7 @@ class FirebaseImpl : IEventObserver {
         }
 
         val bundle = Bundle()
-        bundle.putString("device_id", NTools.getParam("device_id"))
+        bundle.putString("device_id", SdkDriveTools.getParam("device_id"))
         bundle.putString("user_id", SdkBackLoginInfo.instance.userId)
         if (eventMap.containsKey("role_id")) {
             bundle.putString("role_id", eventMap["role_id"] as String)
@@ -89,7 +89,7 @@ class FirebaseImpl : IEventObserver {
         }
 
         val bundle = Bundle()
-        bundle.putString("device_id", NTools.getParam("device_id"))
+        bundle.putString("device_id", SdkDriveTools.getParam("device_id"))
         bundle.putString("user_id", SdkBackLoginInfo.instance.userId)
         if (eventMap.containsKey("role_id")) {
             bundle.putString("role_id", eventMap["role_id"] as String)
@@ -122,7 +122,7 @@ class FirebaseImpl : IEventObserver {
         }
 
         val bundle = Bundle()
-        bundle.putString("device_id", NTools.getParam("device_id"))
+        bundle.putString("device_id", SdkDriveTools.getParam("device_id"))
         bundle.putString("user_id", SdkBackLoginInfo.instance.userId)
         if (eventMap.containsKey("role_id")) {
             bundle.putString("role_id", eventMap["role_id"] as String)

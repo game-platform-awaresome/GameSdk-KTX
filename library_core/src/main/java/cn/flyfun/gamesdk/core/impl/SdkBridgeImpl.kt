@@ -25,10 +25,10 @@ import cn.flyfun.gamesdk.core.network.SdkRequest
 import cn.flyfun.gamesdk.core.ui.DialogUtils
 import cn.flyfun.gamesdk.core.ui.dialog.InitDialog
 import cn.flyfun.gamesdk.core.ui.dialog.TipsDialog
-import cn.flyfun.gamesdk.core.utils.NTools
 import cn.flyfun.gamesdk.core.utils.SPUtils
 import cn.flyfun.support.BeanUtils
 import cn.flyfun.support.DensityUtils
+import cn.flyfun.support.SdkDriveTools
 import cn.flyfun.support.device.DeviceInfoUtils
 import cn.flyfun.support.encryption.Md5Utils
 import cn.flyfun.support.gaid.GAIDUtils
@@ -70,12 +70,12 @@ class SdkBridgeImpl {
         GAIDUtils.initGoogleAdid(application) { code: Int, _ ->
             if (code == 0) {
                 Logger.d("谷歌框架可以访问，请求adid")
-                NTools.putParam("device_id", GAIDUtils.getGoogleAdid())
-                NTools.putParam("adid", GAIDUtils.getGoogleAdid())
+                SdkDriveTools.putParam("device_id", GAIDUtils.getGoogleAdid())
+                SdkDriveTools.putParam("adid", GAIDUtils.getGoogleAdid())
             } else {
                 Logger.e("谷歌框架不可以访问，使用android_id替代")
-                NTools.putParam("device_id", DeviceInfoUtils.getAndroidDeviceId(application))
-                NTools.putParam("adid", DeviceInfoUtils.getAndroidDeviceId(application))
+                SdkDriveTools.putParam("device_id", DeviceInfoUtils.getAndroidDeviceId(application))
+                SdkDriveTools.putParam("adid", DeviceInfoUtils.getAndroidDeviceId(application))
             }
             hasReadAaid = true
         }
@@ -108,7 +108,7 @@ class SdkBridgeImpl {
         }
 
         //获取当前屏幕尺寸
-        NTools.putParam("screen", DensityUtils.getResolutionByFullScreen(activity))
+        SdkDriveTools.putParam("screen", DensityUtils.getResolutionByFullScreen(activity))
         if (!hasReadAaid) {
             Logger.e("还未读取到aaid，将延迟初始化")
             showInitLoading(activity)

@@ -5,9 +5,9 @@ import cn.flyfun.gamesdk.base.utils.Logger
 import cn.flyfun.gamesdk.core.entity.ResultInfo
 import cn.flyfun.gamesdk.core.internal.IFileRequestCallback
 import cn.flyfun.gamesdk.core.internal.IRequestCallback
-import cn.flyfun.gamesdk.core.utils.NTools
 import cn.flyfun.support.FileUtils
 import cn.flyfun.support.JsonUtils
+import cn.flyfun.support.SdkDriveTools
 import cn.flyfun.support.encryption.Md5Utils
 import cn.flyfun.support.volley.*
 import cn.flyfun.support.volley.toolbox.HttpHeaderParser
@@ -35,7 +35,7 @@ object VolleyRequest {
             //val aesKey = "1234567890abcdef"
             var requestJson: JSONObject? = null
             try {
-                requestJson = JSONObject(NTools.invokeFuseJob(context, url, jsonObject.toString()))
+                requestJson = JSONObject(SdkDriveTools.invokeFuseJob(context, url, jsonObject.toString()))
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -48,7 +48,7 @@ object VolleyRequest {
                         resultInfo.code = it.getInt("code")
                         resultInfo.msg = it.getString("message")
                         if (JsonUtils.hasJsonKey(it, "data")) {
-                            resultInfo.data = NTools.parseFuseJob(context, it.getString("data"))
+                            resultInfo.data = SdkDriveTools.parseFuseJob(context, it.getString("data"))
                         } else {
                             resultInfo.data = ""
                         }
